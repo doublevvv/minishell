@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:36:57 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/01 14:23:05 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/10/03 11:03:50 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,3 +34,5 @@ void	printcmd(t_main *msh);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstnew(char **msh);
 t_list	*ft_lstlast(t_list *lst);
+
+//sassa
