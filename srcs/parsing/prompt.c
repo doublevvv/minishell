@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/04 17:32:24 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/04 17:35:35 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,10 @@ bool	ft_check_quotes(t_main *msh, char *str)
 	int	i;
 	int	count_double_quotes;
 	int	count_simple_quotes;
-	int	even;
 
 	i = 0;
 	count_double_quotes = 0;
 	count_simple_quotes = 0;
-	even = 0;
 	while (str[i])
 	{
 		if (str[i] == '"')
