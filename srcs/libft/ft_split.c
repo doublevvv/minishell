@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:11:56 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/04 17:08:09 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/07 13:39:43 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@ int	ft_count_words(char const *str, char delimiter)
 {
 	int	i;
 	int	count;
-	int j;
 
 	i = 0;
 	count = 0;
-	j = 0;
+	printf("STR vaut %s\n", str);
 	while (str[i] != '\0')
 	{
 		while (str[i] == delimiter)
@@ -40,8 +39,8 @@ int	ft_count_words(char const *str, char delimiter)
 				}
 				if (str[i - 1] == '"')
 				{
-					i++;
 					count++;
+					break ;
 				}
 			}
 			else if (str[i - 1] == delimiter && str[i] != delimiter)
@@ -51,6 +50,7 @@ int	ft_count_words(char const *str, char delimiter)
 			}
 			i++;
 		}
+		i++;
 	}
 	printf("nb words = %d\n", count);
 	return (count);
@@ -116,9 +116,24 @@ static char	**ft_copy_word(char const *s, char c, char **new_string, int i)
 		j = 0;
 		while (s[i] != '\0' && s[i] != c)
 		{
-			new_string[word][j] = s[i];
-			i++;
-			j++;
+			if (s[i] == '"')
+			{
+				new_string[word][j] = s[i];
+				i++;
+				j++;
+				while (s[i] != '\0' && s[i] != '"')
+				{
+					new_string[word][j] = s[i];
+					i++;
+					j++;
+				}
+			}
+			else
+			{
+				new_string[word][j] = s[i];
+				i++;
+				j++;
+			}
 		}
 		new_string[word][j] = '\0';
 		word++;
