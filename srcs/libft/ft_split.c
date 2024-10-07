@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:11:56 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/07 13:39:43 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/07 15:20:39 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	ft_count_words(char const *str, char delimiter)
 {
 	int	i;
 	int	count;
+	char	d;
 
 	i = 0;
 	count = 0;
@@ -24,33 +25,23 @@ int	ft_count_words(char const *str, char delimiter)
 	{
 		while (str[i] == delimiter)
 			i++;
-		if (str[i] != '\0' && str[i] != delimiter)
+		// if (str[i] != '\0' && str[i] != delimiter)
+		// {
+		// 	count++;
+		// }
+		while (str[i] != '\0' && str[i] != delimiter)
 		{
-			count++;
-		}
-		while (str[i] != '\0')
-		{
-			if (str[i] == '"')
+			if (str[i] == '\'' || str[i] == '"')
 			{
-				printf("====== ICI ========\n");
-				while (str[i] != '\0')
+				d = str[i++];
+				while (str[i] != '\0' && str[i] != d)
 				{
 					i++;
 				}
-				if (str[i - 1] == '"')
-				{
-					count++;
-					break ;
-				}
-			}
-			else if (str[i - 1] == delimiter && str[i] != delimiter)
-			{
-				count++;
-				i++;
 			}
 			i++;
 		}
-		i++;
+		count++;
 	}
 	printf("nb words = %d\n", count);
 	return (count);
@@ -60,28 +51,32 @@ int	ft_word_length(char const *s, char c)
 {
 	int	i;
 	int	word_length;
+	char	d;
 
+	(void)d;
 	i = 0;
 	word_length = 0;
-	while (s[i] != '\0' && s[i] == c)
-		i++;
-	while (s[i] != '\0' && s[i] != c)
-	{
-		if (s[i] == '"')
+		while (s[i] == c)
 		{
 			i++;
-			while (s[i] != '\0' && s[i] != '"')
+		}
+		while (s[i] != '\0' && s[i] != c)
+		{
+			if (s[i] == '"')
+			{
+				i++;
+				while (s[i] != '\0' && s[i] != '"')
+				{
+					word_length++;
+					i++;
+				}
+			}
+			else
 			{
 				word_length++;
 				i++;
 			}
 		}
-		else
-		{
-			i++;
-			word_length++;
-		}
-	}
 	printf("word length = %d\n", word_length);
 	return (word_length);
 }
