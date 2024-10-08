@@ -3,34 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/27 15:36:57 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/01 14:23:05 by vlaggoun         ###   ########.fr       */
+/*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
+/*   Updated: 2024/10/08 15:15:40 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<stdio.h>
-#include<stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "./libft/libft.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-typedef	struct t_list
-{
-	char	**command;
-	struct t_list	*next;
-}		t_list;
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <stdbool.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
-typedef struct l_list
+enum type
 {
+	CMD,
+	PIPE,
+	REDIRECTION
+};
+
+typedef struct s_lst
+{
+	char			**cmd_name;
+	struct s_lst	*next;
+	int				type;
+}	t_lst;
+
+typedef struct s_main
+{
+	char	*line;
 	char	**cmd;
-	t_list	*linked_list;
-}		t_main;
+	bool	double_quote;
+	bool	simple_quote;
+	int		count;
+	t_lst	*cmd_lst;
+}	t_main;
 
-char	display_prompt(char *line);
-char	*manage_command(t_main *msh, char *argv);
-void	printcmd(t_main *msh);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-t_list	*ft_lstnew(char **msh);
-t_list	*ft_lstlast(t_list *lst);
+void	ft_init_data(t_main *msh);
+
+char	display_prompt(t_main *msh);
+
+void	*ft_memset(void *s, int c, size_t n);
+
+bool	ft_check_quotes(t_main *msh, char *str);
+
+char	**ft_split(char const *s, char c);
+
+int		ft_count_words(char const *str, char delimiter);
+
+void	ft_add_cmd_to_lst(t_main *msh);
+
+void	ft_lstadd_back(t_lst **lst, t_lst *new);
+
+t_lst	*ft_lstnew(char **name);
+
+void	ft_display_lst(t_main *msh);
+
+void	ft_assign_type(t_main *msh);
+
+#endif
