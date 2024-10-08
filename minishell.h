@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/04 11:20:11 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/08 15:15:40 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,18 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+enum type
+{
+	CMD,
+	PIPE,
+	REDIRECTION
+};
 
 typedef struct s_lst
 {
 	char			**cmd_name;
 	struct s_lst	*next;
+	int				type;
 }	t_lst;
 
 typedef struct s_main
@@ -45,7 +52,7 @@ void	*ft_memset(void *s, int c, size_t n);
 
 bool	ft_check_quotes(t_main *msh, char *str);
 
-char	**ft_split(t_main *msh, char const *s, char c);
+char	**ft_split(char const *s, char c);
 
 int		ft_count_words(char const *str, char delimiter);
 
@@ -56,5 +63,7 @@ void	ft_lstadd_back(t_lst **lst, t_lst *new);
 t_lst	*ft_lstnew(char **name);
 
 void	ft_display_lst(t_main *msh);
+
+void	ft_assign_type(t_main *msh);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:36:14 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/03 16:33:08 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/08 15:49:39 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_display_lst(t_main *msh)
 		while (tmp->cmd_name[i] != NULL)
 		{
 			printf("%d | %s\n", i, tmp->cmd_name[i]);
+			printf("valeur type = %d\n", tmp->type);
 			i++;
 		}
 		tmp = tmp->next;
