@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/08 15:15:40 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/09 15:01:07 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,11 @@ t_lst	*ft_lstnew(char **name);
 void	ft_display_lst(t_main *msh);
 
 void	ft_assign_type(t_main *msh);
+
+int	ft_is_quotes(char c);
+
+int	check_incorrect_signs(char c);
+
+int	ft_is_redirection(char *str);
 
 #endif

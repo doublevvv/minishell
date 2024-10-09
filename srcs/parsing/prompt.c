@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/08 15:49:55 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/09 15:38:38 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	ft_check_quotes(t_main *msh, char *str)
 		}
 		i++;
 	}
-	if ((count_double_quotes % 2 == 0) || (count_simple_quotes % 2 == 0))
+	if ((count_double_quotes % 2 == 0) && (count_simple_quotes % 2 == 0))
 	{
 		return (true);
 	}
@@ -103,6 +103,11 @@ char	display_prompt(t_main *msh)
 		{
 			printf("odd nb of quotes");
 			exit (1);
+		}
+		if (ft_is_redirection(line) == 0)
+		{
+			printf("syntax error near unexpected token `newline'");
+			exit (1);	
 		}
 		printf("line = %s\n", line);
 		msh->cmd = ft_split(line, ' ');

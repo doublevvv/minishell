@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:11:56 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/08 16:01:16 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/09 13:35:46 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,9 @@ int    ft_count_words(char const *str, char delimiter)
     {
         while (str[i] == delimiter)
             i++;
-        // if (str[i] != '\0' && str[i] != delimiter)
-        // {
-        //     count++;
-        // }
         while (str[i] != '\0' && str[i] != delimiter)
         {
-            if (str[i] == '\'' || str[i] == '"')
+            if (ft_is_quotes(str[i]))
             {
                 d = str[i++];
                 while (str[i] != '\0' && str[i] != d)
@@ -61,16 +57,31 @@ int    ft_word_length(char const *s, char c)
 	}
 	while (s[i] != '\0' && s[i] != c)
     {
-        if (s[i] == '"')
+        if (ft_is_quotes(s[i]))
         {
+			d = s[i];
+			printf("d = %c\n", d);
             i++;
-            while (s[i] != '\0' && s[i] != '"')
-            {
-                word_length++;
-                i++;
-            }
-            i++;
-            word_length += 2;
+			if (d == '\'')
+			{
+				while (s[i] != '\0' && s[i] != d)
+            	{
+                	word_length++;
+                	i++;
+            	}
+            	i++;
+            	word_length += 2;
+			}
+			else if (d == '"')
+			{
+            	while (s[i] != '\0' && s[i] != d)
+            	{
+                	word_length++;
+                	i++;
+            	}
+            	i++;
+            	word_length += 2;
+			}
         }
         else
         {
@@ -101,6 +112,7 @@ char	**ft_copy_word(char const *s, char c, char **new_string, int i)
 	// printf("WORD LENGTH = %d\n", ft_word_length(&s[i], c));
 	int	j;
 	int	word;
+	char	d;
 
 	word = 0;
 	while (word < ft_count_words(s, c))
@@ -113,21 +125,22 @@ char	**ft_copy_word(char const *s, char c, char **new_string, int i)
 		j = 0;
 		while (s[i] != '\0' && s[i] != c)
 		{
-			if (s[i] == '"')
-			{
-				// printf("JE SUIS DOUBLE QUOTE\n");
-				new_string[word][j] = s[i];
+			if (ft_is_quotes(s[i]))
+        	{
+				d = s[i];
+				printf("d = %c\n", d);
+				new_string[word][j] = d;
 				i++;
 				j++;
-				while (s[i] != '\0' && s[i] != '"')
-				{
-					new_string[word][j] = s[i];
+				while (s[i] != '\0' && s[i] != d)
+            	{
+            		new_string[word][j] = s[i];
 					i++;
 					j++;
-				}
-					new_string[word][j] = s[i];
-					i++;
-					j++;
+            	}
+				new_string[word][j] = s[i];
+				i++;
+				j++;		
 			}
 			else
 			{
