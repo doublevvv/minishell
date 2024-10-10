@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:36:14 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/09 15:17:03 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:17:04 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_display_lst(t_main *msh)
 		while (tmp->cmd_name[i] != NULL)
 		{
 			printf("%d | %s\n", i, tmp->cmd_name[i]);
-			//printf("valeur type = %d\n", tmp->type);
+			printf("valeur type = %d\n", tmp->type);
 			i++;
 		}
 		tmp = tmp->next;
@@ -48,7 +48,7 @@ void	ft_display_lst(t_main *msh)
 	printf("----------------------------------\n");
 }
 
-t_lst	*ft_lstnew(char **name)
+t_lst	*ft_lstnew(char **name, int token)
 {
 	t_lst	*new_node;
 
@@ -56,6 +56,8 @@ t_lst	*ft_lstnew(char **name)
 	if (!new_node)
 		return (NULL);
 	new_node->cmd_name = name;
+	new_node->type = token;
+	printf("type = %d\n", new_node->type);
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -86,7 +88,8 @@ void	ft_lstadd_back(t_lst **lst, t_lst *new)
 
 void	ft_add_cmd_to_lst(t_main *msh)
 {
-	ft_lstadd_back(&msh->cmd_lst, ft_lstnew(msh->cmd));
+	printf("msh token = %d\n", msh->token);
+	ft_lstadd_back(&msh->cmd_lst, ft_lstnew(msh->cmd, msh->token));
 }
 
 int	ft_is_quotes(char c)
@@ -106,7 +109,7 @@ int	ft_is_quotes(char c)
 
 int	ft_is_redirection(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -114,17 +117,19 @@ int	ft_is_redirection(char *str)
 		if (str[i] == '>' || str[i] == '<')
 		{
 			if (str[i - 2] >= 'a' && str[i - 2] <= 'z' && str[i + 2] >= 'a' && str[i + 2] <= 'z')
-						 return (1);
-			else if (str[i] == '>' && str[i + 1] == '>')
+				return (1);
+			else if ((str[i - 2] == '"' || str[i - 2] == '\'') && (str[i + 2] == '"' || str[i + 2] == '\''))
+				return (1);
+			else if ((str[i - 2] == '"' || str[i - 2] == '\'') || (str[i + 2] == '"' || str[i + 2] == '\''))
 				return (1);
 			else if (str[i] == '<' && str[i + 1] == '<')
 				return (1);
+			else if (str[i] == '>' && str[i + 1] == '>')
+				return (1);
 			else
 				return (0);
-			//ne pas oublier le cas '<< cat file >> ls'
 		}
 		i++;
-		
 	}
-	return (0);
+	return (1);
 }
