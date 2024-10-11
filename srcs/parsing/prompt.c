@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/10 15:43:02 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/11 14:25:00 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 bool	ft_check_quotes(t_main *msh, char *str)
 {
-	(void)*msh;
 	int	i;
 
 	i = 0;
@@ -71,7 +70,7 @@ void	ft_assign_type(t_main *msh)
 {
 	int		i;
 	int		j;
-	t_lst	*tmp;
+	t_lst	*tmp; 
 
 	i = 0;
 	tmp = msh->cmd_lst;
@@ -109,6 +108,9 @@ void	ft_assign_type(t_main *msh)
 				j++;
 			}
 			i++;
+			printf("ICI valeur token = %d\n", msh->token);
+			t_lst  *lst;
+			lst = ft_lstnew(msh->cmd, msh->token);
 		}
 		tmp = tmp->next;
 	}
@@ -164,7 +166,9 @@ char	display_prompt(t_main *msh)
 		ft_add_cmd_to_lst(msh);
 		printf("----------------------------------\n");
 		ft_display_lst(msh);
-		//ft_assign_type(msh);
+		ft_assign_type(msh);
+		printf("----------LISTE AVEC TOKEN------------\n");
+		ft_display_lst(msh);
 		//return (*line);
 	}
 }

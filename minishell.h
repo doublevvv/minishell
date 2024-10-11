@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/10 15:23:28 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/11 17:22:52 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@
 
 enum e_type
 {
-	CMD = 0,
-	PIPE = 1,
-	REDIRECTION = 2,
-	DOUBLE_REDIRECTION = 3,
-	// differencier gauche ou droite exec ?
+	CMD,
+	PIPE,
+	REDIRECTION,
+	DOUBLE_REDIRECTION,
 };
 
 // typedef struct s_redir
@@ -40,7 +39,7 @@ enum e_type
 // typedef struct s_cmd
 // {
 // 	char			**cmd; // Command et ses arguments
-// 	struct s_redir	*redir;
+// 	t_redir	*redir;
 // 	struct s_cmd	*next; // Liste chainee
 // }	t_cmd;
 
@@ -70,9 +69,9 @@ void	*ft_memset(void *s, int c, size_t n);
 
 bool	ft_check_quotes(t_main *msh, char *str);
 
-char    **ft_split_pipe(char const *s, char c);
+char	**ft_split_pipe(char const *s, char c);
 
-char    **ft_split_quote(char const *s, char c);
+char	**ft_split_quote(char const *s, char c);
 
 int		ft_count_words(char const *str, char delimiter);
 
@@ -86,9 +85,9 @@ void	*ft_free_alloc(char **new_string, int word);
 
 void	*ft_free_alloc_pipe(char **new_string, int word);
 
-int	ft_word_length(char const *s, char c);
+int		ft_word_length(char const *s, char c);
 
-int	ft_word_length_pipe(char const *s, char c);
+int		ft_word_length_pipe(char const *s, char c);
 
 void	ft_add_cmd_to_lst(t_main *msh);
 
@@ -100,10 +99,10 @@ void	ft_display_lst(t_main *msh);
 
 void	ft_assign_type(t_main *msh);
 
-int	ft_is_quotes(char c);
+int		ft_is_quotes(char c);
 
-int	check_incorrect_signs(char c);
+int		check_incorrect_signs(char c);
 
-int	ft_is_redirection(char *str);
+int		ft_is_redirection(char *str);
 
 #endif
