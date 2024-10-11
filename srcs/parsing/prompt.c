@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/11 14:25:00 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/11 17:55:47 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,16 +128,26 @@ char	display_prompt(t_main *msh)
 			exit (1);
 		}
 		add_history(line);
+		i = 0;
+		while (line[i])
+		{
+			if ((line[i] == '|' && line[i + 1] == '|') || (line[i] == '|' && line[i + 2] == '|'))
+			{
+				printf("syntax error unexpected token `%c`\n", line[i]);
+				exit (1);
+			}
+			i++;
+		}
 		if (ft_check_quotes(msh, line) == 0)
 		{
 			printf("syntax error: unexpected end of file");
 			exit (1);
 		}
-		if (ft_is_redirection(line) == 0)
-		{
-			printf("syntax error near unexpected token `newline'");
-			exit (1);
-		}
+		// if (ft_is_redirection(line) == 0)
+		// {
+		// 	printf("syntax error near unexpected token `newline'");
+		// 	exit (1);
+		// }
 		printf("line = %s\n", line);
 		msh->tab_pipe = ft_split_pipe(line, '|');
 		if (msh->tab_pipe == NULL)
@@ -167,7 +177,7 @@ char	display_prompt(t_main *msh)
 		printf("----------------------------------\n");
 		ft_display_lst(msh);
 		ft_assign_type(msh);
-		printf("----------LISTE AVEC TOKEN------------\n");
+		//printf("----------LISTE AVEC TOKEN------------\n");
 		ft_display_lst(msh);
 		//return (*line);
 	}
