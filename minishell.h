@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/11 17:22:52 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/14 15:50:16 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_main
 	char	**cmd;
 	bool	double_quote;
 	bool	simple_quote;
-	int		token;
+	//int		token;
 	t_lst	*cmd_lst;
 }	t_main;
 
@@ -93,7 +93,7 @@ void	ft_add_cmd_to_lst(t_main *msh);
 
 void	ft_lstadd_back(t_lst **lst, t_lst *new);
 
-t_lst	*ft_lstnew(char **name, int token);
+t_lst	*ft_lstnew(char **name);
 
 void	ft_display_lst(t_main *msh);
 
@@ -104,5 +104,7 @@ int		ft_is_quotes(char c);
 int		check_incorrect_signs(char c);
 
 int		ft_is_redirection(char *str);
+
+int		check_prompt(char *str);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/11 17:55:47 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/14 15:40:05 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,34 +83,36 @@ void	ft_assign_type(t_main *msh)
 			{
 				if (tmp->cmd_name[i][j] == '|')
 				{
-					msh->token = PIPE;
+					//msh->token = PIPE;
+					tmp->type = PIPE;
 					printf("Je suis une pipe\n");
-					printf("valeur token = %d\n", msh->token);
+					printf("valeur token = %d\n", tmp->type);
 				}
 				else if (tmp->cmd_name[i][j] == '>')
 				{
-					msh->token = REDIRECTION;
+					//msh->token = REDIRECTION;
+					tmp->type = REDIRECTION;
 					printf("Je suis une redirection droite\n");
-					printf("valeur token = %d\n", msh->token);
+					printf("valeur token = %d\n", tmp->type);
 				}
 				else if (tmp->cmd_name[i][j] == '<')
 				{
-					msh->token = REDIRECTION;
+					//msh->token = REDIRECTION;
+					tmp->type = REDIRECTION;
 					printf("Je suis une redirection gauche\n");
-					printf("valeur token = %d\n", msh->token);
+					printf("valeur token = %d\n", tmp->type);
 				}
 				else if (tmp->cmd_name[i][j] != '|' && tmp->cmd_name[i][j] != '>')
 				{
-					msh->token = CMD;
+					//msh->token = CMD;
+					tmp->type = CMD;
 					printf("Je suis une commande\n");
-					printf("valeur token = %d\n", msh->token);
+					printf("valeur token = %d\n", tmp->type);
 				}
 				j++;
 			}
 			i++;
-			printf("ICI valeur token = %d\n", msh->token);
-			t_lst  *lst;
-			lst = ft_lstnew(msh->cmd, msh->token);
+			printf("ICI valeur token = %d\n", tmp->type);
 		}
 		tmp = tmp->next;
 	}
@@ -128,26 +130,13 @@ char	display_prompt(t_main *msh)
 			exit (1);
 		}
 		add_history(line);
-		i = 0;
-		while (line[i])
-		{
-			if ((line[i] == '|' && line[i + 1] == '|') || (line[i] == '|' && line[i + 2] == '|'))
-			{
-				printf("syntax error unexpected token `%c`\n", line[i]);
-				exit (1);
-			}
-			i++;
-		}
+		if (check_prompt(line) == 0)
+			exit (1);
 		if (ft_check_quotes(msh, line) == 0)
 		{
 			printf("syntax error: unexpected end of file");
 			exit (1);
 		}
-		// if (ft_is_redirection(line) == 0)
-		// {
-		// 	printf("syntax error near unexpected token `newline'");
-		// 	exit (1);
-		// }
 		printf("line = %s\n", line);
 		msh->tab_pipe = ft_split_pipe(line, '|');
 		if (msh->tab_pipe == NULL)
@@ -177,7 +166,7 @@ char	display_prompt(t_main *msh)
 		printf("----------------------------------\n");
 		ft_display_lst(msh);
 		ft_assign_type(msh);
-		//printf("----------LISTE AVEC TOKEN------------\n");
+		printf("----------LISTE AVEC TOKEN------------\n");
 		ft_display_lst(msh);
 		//return (*line);
 	}

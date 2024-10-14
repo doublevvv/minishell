@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:36:14 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/10 15:17:04 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/14 15:48:48 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_display_lst(t_main *msh)
 	printf("----------------------------------\n");
 }
 
-t_lst	*ft_lstnew(char **name, int token)
+t_lst	*ft_lstnew(char **name)
 {
 	t_lst	*new_node;
 
@@ -56,7 +56,6 @@ t_lst	*ft_lstnew(char **name, int token)
 	if (!new_node)
 		return (NULL);
 	new_node->cmd_name = name;
-	new_node->type = token;
 	printf("type = %d\n", new_node->type);
 	new_node->next = NULL;
 	return (new_node);
@@ -88,8 +87,7 @@ void	ft_lstadd_back(t_lst **lst, t_lst *new)
 
 void	ft_add_cmd_to_lst(t_main *msh)
 {
-	printf("msh token = %d\n", msh->token);
-	ft_lstadd_back(&msh->cmd_lst, ft_lstnew(msh->cmd, msh->token));
+	ft_lstadd_back(&msh->cmd_lst, ft_lstnew(msh->cmd));
 }
 
 int	ft_is_quotes(char c)
@@ -127,6 +125,28 @@ int	ft_is_redirection(char *str)
 			else if (str[i] == '>' && str[i + 1] == '>')
 				return (1);
 			else
+				return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	check_prompt(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '|' && str[i + 2] == '|')
+		{
+			printf("syntax error unexpected token `%c`\n", str[i]);
+				return (0);
+		}
+		if (str[i] == '>' && str[i + 2] == '>')
+		{
+			printf("syntax error unexpected token `%c`\n", str[i]);
 				return (0);
 		}
 		i++;
