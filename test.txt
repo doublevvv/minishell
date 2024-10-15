@@ -1,4 +1,0 @@
-ls | cat
-ls| wc
-abc "-la" LA | LA >> outfile
-cat> > ls 
