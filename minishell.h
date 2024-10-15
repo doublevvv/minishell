@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/08 15:15:40 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/15 15:49:33 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,28 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-enum type
+enum e_type
 {
 	CMD,
 	PIPE,
-	REDIRECTION
+	REDIRECTION,
+	DOUBLE_REDIRECTION,
 };
+
+// typedef struct s_redir
+// {
+// 	char *token; // Type
+// 	char *file; // filename
+// 	int fd; // fd
+// 	struct s_redir	*next; // Liste chainee
+// }	t_redir;
+
+// typedef struct s_cmd
+// {
+// 	char			**cmd; // Command et ses arguments
+// 	t_redir	*redir;
+// 	struct s_cmd	*next; // Liste chainee
+// }	t_cmd;
 
 typedef struct s_lst
 {
@@ -37,10 +53,11 @@ typedef struct s_lst
 typedef struct s_main
 {
 	char	*line;
+	char	**tab_pipe;
 	char	**cmd;
 	bool	double_quote;
 	bool	simple_quote;
-	int		count;
+	int		token;
 	t_lst	*cmd_lst;
 }	t_main;
 
@@ -50,20 +67,44 @@ char	display_prompt(t_main *msh);
 
 void	*ft_memset(void *s, int c, size_t n);
 
+int		check_prompt(char *str);
+
 bool	ft_check_quotes(t_main *msh, char *str);
 
-char	**ft_split(char const *s, char c);
+char	**ft_split_pipe(char const *s, char c);
+
+char	**ft_split_quote(char const *s, char c);
 
 int		ft_count_words(char const *str, char delimiter);
+
+int		ft_count_words_pipe(char const *str, char delimiter);
+
+char	**ft_copy_word(char const *s, char c, char **new_string, int i);
+
+char	**ft_copy_word_pipe(char const *s, char c, char **new_string, int i);
+
+void	*ft_free_alloc(char **new_string, int word);
+
+void	*ft_free_alloc_pipe(char **new_string, int word);
+
+int		ft_word_length(char const *s, char c);
+
+int		ft_word_length_pipe(char const *s, char c);
 
 void	ft_add_cmd_to_lst(t_main *msh);
 
 void	ft_lstadd_back(t_lst **lst, t_lst *new);
 
-t_lst	*ft_lstnew(char **name);
+t_lst	*ft_lstnew(char **name, int token);
 
 void	ft_display_lst(t_main *msh);
 
 void	ft_assign_type(t_main *msh);
+
+int		ft_is_quotes(char c);
+
+int		check_incorrect_signs(char c);
+
+int		ft_is_redirection(char *str);
 
 #endif
