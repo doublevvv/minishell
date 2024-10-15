@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/11 17:22:52 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/15 15:49:33 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	ft_init_data(t_main *msh);
 char	display_prompt(t_main *msh);
 
 void	*ft_memset(void *s, int c, size_t n);
+
+int		check_prompt(char *str);
 
 bool	ft_check_quotes(t_main *msh, char *str);
 

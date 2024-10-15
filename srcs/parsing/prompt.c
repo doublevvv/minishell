@@ -6,11 +6,38 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/11 17:55:47 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/15 15:54:15 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+int	check_prompt(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '|' && str[i + 1] == '|')
+		{
+			printf("syntax error unexpected token `%c`\n", str[i]);
+			exit (1);
+		}
+		else if (str[i] == '>' && str[i + 2] == '>')
+		{
+			printf("syntax error unexpected token `%c`\n", str[i]);
+			exit (1);
+		}
+		else if (str[i] == '<' && str[i + 2] == '<')
+		{
+			printf("syntax error unexpected token `%c`\n", str[i]);
+			exit (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 bool	ft_check_quotes(t_main *msh, char *str)
 {
@@ -128,26 +155,12 @@ char	display_prompt(t_main *msh)
 			exit (1);
 		}
 		add_history(line);
-		i = 0;
-		while (line[i])
-		{
-			if ((line[i] == '|' && line[i + 1] == '|') || (line[i] == '|' && line[i + 2] == '|'))
-			{
-				printf("syntax error unexpected token `%c`\n", line[i]);
-				exit (1);
-			}
-			i++;
-		}
+		check_prompt(line);
 		if (ft_check_quotes(msh, line) == 0)
 		{
 			printf("syntax error: unexpected end of file");
 			exit (1);
 		}
-		// if (ft_is_redirection(line) == 0)
-		// {
-		// 	printf("syntax error near unexpected token `newline'");
-		// 	exit (1);
-		// }
 		printf("line = %s\n", line);
 		msh->tab_pipe = ft_split_pipe(line, '|');
 		if (msh->tab_pipe == NULL)
