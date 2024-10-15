@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:11:56 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/10 14:27:57 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/15 17:53:33 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,13 @@ int	ft_word_length_pipe(char const *s, char c)
 			word_length++;
 			i++;
 		}
-		i++;
-		word_length++;
+		if (s[i] != '\0')
+		{
+			i++;
+			word_length++;
+		}
 	}
-	printf("s[i] = %c\n", s[i]);
+	//printf("s[i] = %c\n", s[i]);
 	printf("LEN WORD = %d\n", word_length);
 	return (word_length);
 }
@@ -95,7 +98,7 @@ char	**ft_copy_word_pipe(char const *s, char c, char **new_string, int i)
 			i++;
 		new_string[word] = malloc(ft_word_length_pipe(&s[i], c) + 1);
 		if (!new_string[word])
-			return (ft_free_alloc(new_string, i));
+			return (ft_free_alloc_pipe(new_string, i));
 		j = 0;
 		while (s[i])
 		{
@@ -106,15 +109,18 @@ char	**ft_copy_word_pipe(char const *s, char c, char **new_string, int i)
 					i++;
 					j++;
 			}
-			printf("s[i] = %c\n", s[i]);
-			printf("C = %c\n", c);
+			//printf("s[i] = %c\n", s[i]);
+			//printf("C = %c\n", c);
 			if (s[i] == c)
 			{
 				new_string[word][j] = c;
-				printf("j = %c\n", new_string[word][j]);
+				//printf("j = %c\n", new_string[word][j]);
 			}
-			j++;
-			i++;
+			if (s[i] != '\0')
+			{
+				j++;
+				i++;
+			}
 		}
 		new_string[word][j] = '\0';
 		printf("N  WORD = %s\n", new_string[word]);
