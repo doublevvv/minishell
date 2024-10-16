@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 09:56:54 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/16 11:16:38 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/16 16:14:56 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,11 @@
 // 	return (1);
 // }
 
-void	ft_check_redirection(t_main *msh, t_redir *lst_redirection)
+void	ft_check_redirection(t_main *msh, t_redir **lst_redirection)
 {
-	(void)*lst_redirection;
 	int		i;
+	int		j;
 	t_lst	*tmp;
-	char	*redir;
 
 	i = 0;
 	tmp = msh->cmd_lst;
@@ -52,11 +51,12 @@ void	ft_check_redirection(t_main *msh, t_redir *lst_redirection)
 	{
 		while (tmp->cmd_name[i] != NULL)
 		{
-			redir = ft_strstr(tmp->cmd_name[i], ">");
-			printf("on recupere => %s\n", redir);
+			j = 0;
+			msh->redir = ft_strstr(tmp->cmd_name[i], ">");
+			printf("on recupere => %s\n", msh->redir);
+			ft_add_redirection_to_lst(msh, lst_redirection);
 			i++;
 		}
-		ft_lstnew_redir(redir);
 		tmp = tmp->next;
 	}
 }

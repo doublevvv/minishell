@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/16 11:09:37 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/16 15:12:38 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,9 +180,8 @@ char	display_prompt(t_main *msh, t_redir *lst_redirection)
 		}
 		ft_add_cmd_to_lst(msh);
 		ft_display_lst(msh);
-		ft_check_redirection(msh, lst_redirection);
+		ft_check_redirection(msh, &lst_redirection);
 		printf("-------------LISTE REDIRECTION-----------\n");
-		ft_add_redirection_to_lst(lst_redirection);
 		ft_display_lst_redir(lst_redirection);
 	}
 }

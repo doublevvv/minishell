@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 09:46:00 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/16 11:18:01 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/16 14:20:51 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,16 @@ void	ft_lstadd_back_redir(t_redir **lst_redirection, t_redir *new)
 	}
 	if (!*lst_redirection)
 	{
+		// if (new)
+		// 	printf("NEW MALLOC\n");
 		*lst_redirection = new;
+		if (lst_redirection)
+			printf("OK tout bon\n");
 		return ;
 	}
 	if (*lst_redirection)
 	{
+		// printf("add new\n");
 		tmp = *lst_redirection;
 		while (tmp->next != NULL)
 		{
@@ -118,21 +123,21 @@ t_redir	*ft_lstnew_redir(char *name)
 	return (new_node);
 }
 
-void	ft_add_redirection_to_lst(t_redir *lst_redirection)
+void	ft_add_redirection_to_lst(t_main *msh, t_redir **lst_redirection)
 {
-	ft_lstadd_back_redir(&lst_redirection, ft_lstnew_redir(lst_redirection->token));
+	ft_lstadd_back_redir(lst_redirection, ft_lstnew_redir(msh->redir));
+	if (lst_redirection)
+		printf("NON NULL\n");
 }
 
 void	ft_display_lst_redir(t_redir *lst_redirection)
 {
-	int		i;
 	t_redir	*tmp;
 
 	tmp = lst_redirection;
 	printf("DANS LISTE REDIRECTION\n");
 	while (tmp != NULL)
 	{
-		i = 0;
 		printf("DANS LISTE %s\n", tmp->token);
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/16 11:11:30 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/16 15:31:20 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 
 enum e_type
 {
-	CMD,
-	PIPE,
-	REDIRECTION,
-	DOUBLE_REDIRECTION,
+	REDIRECTION_LEFT,
+	REDIRECTION_RIGHT,
+	DOUBLE_REDIRECTION_LEFT,
+	DOUBLE_REDIRECTION_RIGHT
 };
 
 typedef struct s_redir
@@ -57,12 +57,13 @@ typedef struct s_main
 	char	**cmd;
 	bool	double_quote;
 	bool	simple_quote;
-	int		token;
-	char	*redirection;
+	char	*redir;
+	char	*token;
+	char	*filename;
 	t_lst	*cmd_lst;
 }	t_main;
 
-void	ft_init_data(t_main *msh);
+// void	ft_init_data(t_main *msh);
 
 void	*ft_memset(void *s, int c, size_t n);
 
@@ -88,7 +89,7 @@ void	*ft_free_alloc_pipe(char **new_string, int word);
 
 char	**ft_copy_word_pipe(char const *s, char c, char **new_string);
 
-void	ft_check_redirection(t_main *msh, t_redir *lst_redirection);
+void	ft_check_redirection(t_main *msh, t_redir **lst_redirection);
 
 //void	ft_assign_type(t_main *msh);
 
@@ -104,7 +105,7 @@ void	ft_lstadd_back(t_lst **lst, t_lst *new);
 
 void	ft_display_lst(t_main *msh);
 
-void	ft_add_redirection_to_lst(t_redir *lst_redirection);
+void	ft_add_redirection_to_lst(t_main *msh, t_redir **lst_redirection);
 
 t_redir	*ft_lstnew_redir(char *name);
 
