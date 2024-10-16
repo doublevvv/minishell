@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/15 17:32:53 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/16 11:11:30 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ enum e_type
 	DOUBLE_REDIRECTION,
 };
 
-// typedef struct s_redir
-// {
-// 	char *token; // Type
-// 	char *file; // filename
-// 	int fd; // fd
-// 	struct s_redir	*next; // Liste chainee
-// }	t_redir;
+typedef struct s_redir
+{
+	char			*token;
+	char			*file;
+	int				fd;
+	struct s_redir	*next;
+}	t_redir;
 
 // typedef struct s_cmd
 // {
@@ -43,35 +43,40 @@ enum e_type
 // 	struct s_cmd	*next; // Liste chainee
 // }	t_cmd;
 
-// typedef struct s_lst
-// {
-// 	char			**cmd_name;
-// 	int				type;
-// 	struct s_lst	*next;
-// }	t_lst;
+typedef struct s_lst
+{
+	char			**cmd_name;
+	t_redir			*redir;
+	struct s_lst	*next;
+}	t_lst;
 
 typedef struct s_main
 {
 	char	*line;
 	char	**tab_pipe;
-	//char	**cmd;
+	char	**cmd;
 	bool	double_quote;
 	bool	simple_quote;
-	//int		token;
-	//t_lst	*cmd_lst;
+	int		token;
+	char	*redirection;
+	t_lst	*cmd_lst;
 }	t_main;
 
 void	ft_init_data(t_main *msh);
 
 void	*ft_memset(void *s, int c, size_t n);
 
-char	display_prompt(t_main *msh);
+char	display_prompt(t_main *msh, t_redir *lst_redirection);
 
 int		check_prompt(char *str);
 
 bool	ft_check_quotes(t_main *msh, char *str);
 
 int		ft_is_quotes(char c);
+
+//int		ft_isspace(char c);
+
+char	*ft_strstr(const char *big, const char *little);
 
 char	**ft_split_pipe(char const *s, char c);
 
@@ -81,6 +86,30 @@ int		ft_word_length_pipe(char const *s, char c);
 
 void	*ft_free_alloc_pipe(char **new_string, int word);
 
-char	**ft_copy_word_pipe(char const *s, char c, char **new_string, int i);
+char	**ft_copy_word_pipe(char const *s, char c, char **new_string);
+
+void	ft_check_redirection(t_main *msh, t_redir *lst_redirection);
+
+//void	ft_assign_type(t_main *msh);
+
+/* ************************************************************************* */
+/*                               LISTES CHAINEES                             */
+/* ************************************************************************* */
+
+void	ft_add_cmd_to_lst(t_main *msh);
+
+t_lst	*ft_lstnew(char **name);
+
+void	ft_lstadd_back(t_lst **lst, t_lst *new);
+
+void	ft_display_lst(t_main *msh);
+
+void	ft_add_redirection_to_lst(t_redir *lst_redirection);
+
+t_redir	*ft_lstnew_redir(char *name);
+
+void	ft_lstadd_back_redir(t_redir **lst, t_redir *new);
+
+void	ft_display_lst_redir(t_redir *lst_redirection);
 
 #endif

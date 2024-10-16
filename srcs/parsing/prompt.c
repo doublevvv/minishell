@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/15 17:07:49 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/16 11:09:37 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ bool	ft_check_quotes(t_main *msh, char *str)
 // {
 // 	int		i;
 // 	int		j;
-// 	t_lst	*tmp; 
+// 	t_lst	*tmp;
 
 // 	i = 0;
 // 	tmp = msh->cmd_lst;
@@ -138,16 +138,15 @@ bool	ft_check_quotes(t_main *msh, char *str)
 // 				}
 // 				j++;
 // 			}
+// 			tmp->type = msh->token;
 // 			i++;
 // 			printf("ICI valeur token = %d\n", msh->token);
-// 			// t_lst  *lst;
-// 			// lst = ft_lstnew(msh->cmd, msh->token);
 // 		}
 // 		tmp = tmp->next;
 // 	}
 // }
 
-char	display_prompt(t_main *msh)
+char	display_prompt(t_main *msh, t_redir *lst_redirection)
 {
 	char	*line;
 	int		i;
@@ -167,17 +166,23 @@ char	display_prompt(t_main *msh)
 			free(line);
 			exit (1);
 		}
-		msh->tab_pipe = ft_split_pipe(line, '|');
-		if (msh->tab_pipe == NULL)
+		msh->cmd = ft_split_pipe(line, '|');
+		if (msh->cmd == NULL)
 		{
 			free(line);
 			exit (1);
 		}
 		i = 0;
-		while (msh->tab_pipe[i])
+		while (msh->cmd[i])
 		{
-			printf("cmd = %s\n", msh->tab_pipe[i]);
+			printf("cmd = %s\n", msh->cmd[i]);
 			i++;
 		}
+		ft_add_cmd_to_lst(msh);
+		ft_display_lst(msh);
+		ft_check_redirection(msh, lst_redirection);
+		printf("-------------LISTE REDIRECTION-----------\n");
+		ft_add_redirection_to_lst(lst_redirection);
+		ft_display_lst_redir(lst_redirection);
 	}
 }

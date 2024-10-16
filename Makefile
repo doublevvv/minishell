@@ -6,7 +6,7 @@
 #    By: evlim <evlim@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 08:37:40 by evlim             #+#    #+#              #
-#    Updated: 2024/10/15 16:31:08 by evlim            ###   ########.fr        #
+#    Updated: 2024/10/16 09:57:11 by evlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,11 @@ HEADER = minishell.h
 
 SOURCES = srcs/main.c	\
 		srcs/parsing/prompt.c	\
+		srcs/parsing/redirection.c	\
 		srcs/libft/ft_split_pipe.c	\
 		srcs/libft/ft_split_quote.c	\
-		srcs/libft/utils.c
+		srcs/libft/check.c	\
+		srcs/libft/lst.c
 
 SRCS = $(addprefix $(OBJ_DIR)/, $(SOURCES))
 
