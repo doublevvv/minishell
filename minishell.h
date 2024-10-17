@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/17 14:08:55 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/17 16:11:41 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_main
 	t_lst	*cmd_lst;
 }	t_main;
 
-// void	ft_init_data(t_main *msh);
+void	ft_init_data(t_main *msh);
 
 void	*ft_memset(void *s, int c, size_t n);
 
@@ -81,6 +81,8 @@ int		ft_is_quotes(char c);
 char	*ft_strstr(const char *big, const char *little);
 
 void	ft_check_redirection(t_main *msh, t_redir **lst_redirection);
+
+void	ft_redir_sep(t_redir *lst_redirection);
 
 //void	ft_assign_type(t_main *msh);
 

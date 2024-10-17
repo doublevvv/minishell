@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/17 16:03:38 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/17 16:04:13 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,6 @@ char	display_prompt(t_main *msh, t_redir *lst_redirection)
 		ft_display_lst_redir(lst_redirection);
 		printf("-------------LISTE REDIRECTION APRES SPLIT ENTRE TOKEN ET FILENAME-----------\n");
 		ft_redir_sep(lst_redirection);
-		/ft_display_lst_redir(lst_redirection);
+		ft_display_lst_redir(lst_redirection);
 	}
 }

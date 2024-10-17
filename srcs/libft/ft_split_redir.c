@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 08:28:07 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/17 15:59:33 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/17 16:17:59 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,6 +273,7 @@ char	**ft_copy_word_redir(char const *s, char c, char **new_string, int i)
 				new_string[word][j] = s[i];
 				i++;
 				j++;
+				printf("new string = %s\n", new_string[word]);
 				break ;
 			}
 			new_string[word][j] = s[i];

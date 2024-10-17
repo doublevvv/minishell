@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 09:56:54 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/17 14:43:59 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/17 16:11:49 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@
 
 void	ft_check_redirection(t_main *msh, t_redir **lst_redirection)
 {
-	(void)*lst_redirection;
 	int		i;
 	t_lst	*tmp;
 

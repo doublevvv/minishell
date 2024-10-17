@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 09:46:00 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/17 14:26:40 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/17 16:12:15 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ t_lst	*ft_lstnew(char **name)
 	if (!new_node)
 		return (NULL);
 	new_node->cmd_name = name;
-
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -97,7 +96,6 @@ void	ft_lstadd_back_redir(t_redir **lst_redirection, t_redir *new)
 	}
 	if (*lst_redirection)
 	{
-		// printf("add new\n");
 		tmp = *lst_redirection;
 		while (tmp->next != NULL)
 		{
