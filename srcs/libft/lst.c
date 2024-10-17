@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 09:46:00 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/16 14:20:51 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/17 14:26:40 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_lst	*ft_lstnew(char **name)
 	if (!new_node)
 		return (NULL);
 	new_node->cmd_name = name;
+
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -91,11 +92,7 @@ void	ft_lstadd_back_redir(t_redir **lst_redirection, t_redir *new)
 	}
 	if (!*lst_redirection)
 	{
-		// if (new)
-		// 	printf("NEW MALLOC\n");
 		*lst_redirection = new;
-		if (lst_redirection)
-			printf("OK tout bon\n");
 		return ;
 	}
 	if (*lst_redirection)
@@ -109,7 +106,7 @@ void	ft_lstadd_back_redir(t_redir **lst_redirection, t_redir *new)
 		tmp->next = new;
 	}
 }
-t_redir	*ft_lstnew_redir(char *name)
+t_redir	*ft_lstnew_redir(char *name, char *filename)
 {
 	t_redir	*new_node;
 
@@ -118,6 +115,7 @@ t_redir	*ft_lstnew_redir(char *name)
 		return (NULL);
 	printf("AVANT name = %s\n", name);
 	new_node->token = name;
+	new_node->file = filename;
 	printf("new_node token = %s\n", new_node->token);
 	new_node->next = NULL;
 	return (new_node);
@@ -125,9 +123,7 @@ t_redir	*ft_lstnew_redir(char *name)
 
 void	ft_add_redirection_to_lst(t_main *msh, t_redir **lst_redirection)
 {
-	ft_lstadd_back_redir(lst_redirection, ft_lstnew_redir(msh->redir));
-	if (lst_redirection)
-		printf("NON NULL\n");
+	ft_lstadd_back_redir(lst_redirection, ft_lstnew_redir(msh->redir, NULL));
 }
 
 void	ft_display_lst_redir(t_redir *lst_redirection)
@@ -138,8 +134,10 @@ void	ft_display_lst_redir(t_redir *lst_redirection)
 	printf("DANS LISTE REDIRECTION\n");
 	while (tmp != NULL)
 	{
-		printf("DANS LISTE %s\n", tmp->token);
+		printf("DANS LISTE token = %s\n", tmp->token);
+		printf("DANS LISTE file = %s\n", tmp->file);
 		tmp = tmp->next;
 	}
 	printf("----------------------------------\n");
 }
+

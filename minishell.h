@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/16 15:31:20 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/17 14:08:55 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_main
 	char	*line;
 	char	**tab_pipe;
 	char	**cmd;
+	char	**redirection_filename;
 	bool	double_quote;
 	bool	simple_quote;
 	char	*redir;
@@ -79,6 +80,14 @@ int		ft_is_quotes(char c);
 
 char	*ft_strstr(const char *big, const char *little);
 
+void	ft_check_redirection(t_main *msh, t_redir **lst_redirection);
+
+//void	ft_assign_type(t_main *msh);
+
+/* ************************************************************************* */
+/*                                  SPLIT                                    */
+/* ************************************************************************* */
+
 char	**ft_split_pipe(char const *s, char c);
 
 int		ft_count_words_pipe(char const *str, char delimiter);
@@ -89,9 +98,15 @@ void	*ft_free_alloc_pipe(char **new_string, int word);
 
 char	**ft_copy_word_pipe(char const *s, char c, char **new_string);
 
-void	ft_check_redirection(t_main *msh, t_redir **lst_redirection);
+char	**ft_split_redir(char const *s, char delimiter);
 
-//void	ft_assign_type(t_main *msh);
+int		ft_count_words_redir(char const *str, char delimiter);
+
+int		ft_word_length_redir(char const *s, char delimiter);
+
+char	**ft_copy_word_redir(char const *s, char delimiter, char **new_string, int i);
+
+void	*ft_free_alloc_redir(char **new_string, int word);
 
 /* ************************************************************************* */
 /*                               LISTES CHAINEES                             */
@@ -107,7 +122,7 @@ void	ft_display_lst(t_main *msh);
 
 void	ft_add_redirection_to_lst(t_main *msh, t_redir **lst_redirection);
 
-t_redir	*ft_lstnew_redir(char *name);
+t_redir	*ft_lstnew_redir(char *name, char *filename);
 
 void	ft_lstadd_back_redir(t_redir **lst, t_redir *new);
 

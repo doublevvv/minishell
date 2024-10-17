@@ -6,7 +6,7 @@
 #    By: evlim <evlim@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 08:37:40 by evlim             #+#    #+#              #
-#    Updated: 2024/10/16 09:57:11 by evlim            ###   ########.fr        #
+#    Updated: 2024/10/17 08:28:21 by evlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SOURCES = srcs/main.c	\
 		srcs/parsing/prompt.c	\
 		srcs/parsing/redirection.c	\
 		srcs/libft/ft_split_pipe.c	\
+		srcs/libft/ft_split_redir.c	\
 		srcs/libft/ft_split_quote.c	\
 		srcs/libft/check.c	\
 		srcs/libft/lst.c
