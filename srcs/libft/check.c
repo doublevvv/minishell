@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 09:47:55 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/16 10:45:09 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/18 09:15:51 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ int	ft_is_quotes(char c)
 		return (1);
 	return (0);
 }
+
+// // int	check_incorrect_signs(char c)
+// // {
+// // 	if (c != '\'' || c != '"' || c != "|" || c != '>' || c != '<' || c != '$' /
+// // 		(c <= 'a' && c >= 'z'))
+// // 		return (0);
+// // 	return (1);
+// // }
 
 char	*ft_strstr(const char *big, const char *little)
 {
@@ -87,3 +95,35 @@ char	*ft_strstr(const char *big, const char *little)
 // 	}
 // 	return (1);
 // }
+
+int	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
+}
+
+char	*ft_strdup(const char *s)
+{
+	char	*dst;
+	int		i;
+
+	dst = malloc((ft_strlen(s) + 1) * sizeof(char));
+	if (dst == NULL)
+	{
+		return (NULL);
+	}
+	i = 0;
+	while (s[i] != '\0')
+	{
+		dst[i] = s[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
+}

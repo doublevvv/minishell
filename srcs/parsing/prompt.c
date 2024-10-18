@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/17 16:04:13 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/18 10:23:26 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,33 +146,33 @@ bool	ft_check_quotes(t_main *msh, char *str)
 // 	}
 // }
 
-void	ft_redir_sep(t_redir *lst_redirection)
-{
-	char	**linked_list;
-	int		i;
-	t_redir	*tmp;
+// void	ft_redir_sep(t_redir *lst_redirection)
+// {
+// 	char	**linked_list;
+// 	int		i;
+// 	t_redir	*tmp;
 
-	linked_list = ft_split_redir(lst_redirection->token, '>');
-	i = 0;
-	while (linked_list[i] != NULL)
-	{
-		if (i == 0)
-		{
-			lst_redirection->token = linked_list[i];
-			i++;
-			printf("token = %s\n", lst_redirection->token);
-			lst_redirection->file = linked_list[i];
-			i++;
-			printf("file = %s\n", lst_redirection->file);
-		}
-		else
-		{
-			tmp = ft_lstnew_redir(linked_list[i], linked_list[i + 1]);
-			ft_lstadd_back_redir(&lst_redirection, tmp);
-			i += 2;
-		}
-	}
-}
+// 	linked_list = ft_split_redir(lst_redirection->token, '>');
+// 	i = 0;
+// 	while (linked_list[i] != NULL)
+// 	{
+// 		if (i == 0)
+// 		{
+// 			lst_redirection->token = linked_list[i];
+// 			i++;
+// 			printf("token = %s\n", lst_redirection->token);
+// 			lst_redirection->file = linked_list[i];
+// 			i++;
+// 			printf("file = %s\n", lst_redirection->file);
+// 		}
+// 		else
+// 		{
+// 			tmp = ft_lstnew_redir(linked_list[i], linked_list[i + 1]);
+// 			ft_lstadd_back_redir(&lst_redirection, tmp);
+// 			i += 2;
+// 		}
+// 	}
+// }
 
 char	display_prompt(t_main *msh, t_redir *lst_redirection)
 {

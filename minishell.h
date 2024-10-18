@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/17 16:11:41 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/18 10:27:38 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_redir
 {
 	char			*token;
 	char			*file;
+	//int				type;
 	int				fd;
 	struct s_redir	*next;
 }	t_redir;
@@ -59,6 +60,7 @@ typedef struct s_main
 	bool	double_quote;
 	bool	simple_quote;
 	char	*redir;
+	int		type;
 	char	*token;
 	char	*filename;
 	t_lst	*cmd_lst;
@@ -83,6 +85,10 @@ char	*ft_strstr(const char *big, const char *little);
 void	ft_check_redirection(t_main *msh, t_redir **lst_redirection);
 
 void	ft_redir_sep(t_redir *lst_redirection);
+
+int		ft_strlen(const char *s);
+
+char	*ft_strdup(const char *s);
 
 //void	ft_assign_type(t_main *msh);
 
