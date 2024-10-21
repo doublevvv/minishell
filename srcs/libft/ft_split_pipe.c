@@ -6,169 +6,170 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 12:11:56 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/16 09:35:26 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/21 10:55:24 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	ft_count_words_pipe(char const *str, char delimiter)
-{
-	int		i;
-	int		count;
-	char	d;
+// int	ft_count_words_pipe(char const *str, char delimiter)
+// {
+// 	int		i;
+// 	int		count;
+// 	char	d;
 
-	i = 0;
-	count = 0;
-	while (str[i] != '\0')
-	{
-		while (str[i] == delimiter)
-		{
-			i++;
-		}
-		if (str[i] == '\0')
-		{
-			break ;
-		}
-		count++;
-		while (str[i] != '\0' && str[i] != delimiter)
-		{
-			if (ft_is_quotes(str[i]))
-			{
-				d = str[i++];
-				while (str[i] != '\0' && str[i] != d)
-				{
-					i++;
-				}
-			}
-			if (str[i] != '\0')
-			{
-				i++;
-			}
-		}
-	}
-	printf("count = %d\n", count);
-	return (count);
-}
+// 	i = 0;
+// 	count = 0;
+// 	while (str[i] != '\0')
+// 	{
+// 		while (str[i] == delimiter)
+// 		{
+// 			i++;
+// 		}
+// 		if (str[i] == '\0')
+// 		{
+// 			break ;
+// 		}
+// 		count++;
+// 		while (str[i] != '\0' && str[i] != delimiter)
+// 		{
+// 			if (ft_is_quotes(str[i]))
+// 			{
+// 				d = str[i++];
+// 				while (str[i] != '\0' && str[i] != d)
+// 				{
+// 					i++;
+// 				}
+// 			}
+// 			if (str[i] != '\0')
+// 			{
+// 				i++;
+// 			}
+// 		}
+// 	}
+// 	printf("count = %d\n", count);
+// 	return (count);
+// }
 
-int	ft_word_length_pipe(char const *s, char c)
-{
-	int		i;
-	int		word_length;
-	char	quote;
+// int	ft_word_length_pipe(char const *s, char c)
+// {
+// 	int		i;
+// 	int		word_length;
+// 	char	quote;
 
-	i = 0;
-	word_length = 0;
-	while (s[i] && s[i] != c)
-	{
-		if (ft_is_quotes(s[i]))
-		{
-			quote = s[i++];
-			while (s[i] && s[i] != quote)
-			{
-				i++;
-			}
-			if (s[i])
-			{
-				i++;
-			}
-		}
-		else
-		{
-			i++;
-		}
-		word_length++;
-	}
-	return (word_length);
-}
+// 	i = 0;
+// 	word_length = 0;
+// 	while (s[i] && s[i] != c)
+// 	{
+// 		if (ft_is_quotes(s[i]))
+// 		{
+// 			quote = s[i++];
+// 			while (s[i] && s[i] != quote)
+// 			{
+// 				i++;
+// 			}
+// 			if (s[i])
+// 			{
+// 				i++;
+// 			}
+// 		}
+// 		else
+// 		{
+// 			i++;
+// 		}
+// 		word_length++;
+// 	}
+// 	return (word_length);
+// }
 
-void	*ft_free_alloc_pipe(char **new_string, int word)
-{
-	int	i;
+// void	*ft_free_alloc_pipe(char **new_string, int word)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < word)
-	{
-		free(new_string[i]);
-		i++;
-	}
-	free(new_string);
-	return (NULL);
-}
+// 	i = 0;
+// 	while (i < word)
+// 	{
+// 		free(new_string[i]);
+// 		i++;
+// 	}
+// 	free(new_string);
+// 	return (NULL);
+// }
 
-char	**ft_copy_word_pipe(char const *s, char c, char **new_string)
-{
-	int		i;
-	int		j;
-	int		word;
-	int		length;
-	char	quote;
+// char	**ft_copy_word_pipe(char const *s, char c, char **new_string)
+// {
+// 	int		i;
+// 	int		j;
+// 	int		word;
+// 	int		length;
+// 	char	quote;
 
-	i = 0;
-	word = 0;
-	length = 0;
-	while (s[i])
-	{
-		while (s[i] == c)
-		{
-			i++;
-		}
-		if (s[i] == '\0')
-		{
-			break ;
-		}
-		length = ft_word_length_pipe(&s[i], c);
-		new_string[word] = malloc(length + 1);
-		if (!new_string[word])
-		{
-			return (ft_free_alloc_pipe(new_string, word));
-		}
-		j = 0;
-		while (s[i] && s[i] != c)
-		{
-			if (ft_is_quotes(s[i]))
-			{
-				quote = s[i++];
-				while (s[i] && s[i] != quote)
-				{
-					new_string[word][j] = s[i];
-					i++;
-					j++;
-				}
-				if (s[i])
-				{
-					i++;
-				}
-			}
-			else
-			{
-				new_string[word][j++] = s[i++];
-			}
-		}
-		new_string[word][j] = '\0';
-		word++;
-	}
-	return (new_string);
-}
+// 	i = 0;
+// 	word = 0;
+// 	length = 0;
+// 	while (s[i])
+// 	{
+// 		while (s[i] == c)
+// 		{
+// 			i++;
+// 		}
+// 		if (s[i] == '\0')
+// 		{
+// 			break ;
+// 		}
+// 		length = ft_word_length_pipe(&s[i], c);
+// 		new_string[word] = malloc(length + 1);
+// 		if (!new_string[word])
+// 		{
+// 			return (ft_free_alloc_pipe(new_string, word));
+// 		}
+// 		j = 0;
+// 		while (s[i] && s[i] != c)
+// 		{
+// 			if (ft_is_quotes(s[i]))
+// 			{
+// 				quote = s[i++];
+// 				while (s[i] && s[i] != quote)
+// 				{
+// 					new_string[word][j] = s[i];
+// 					i++;
+// 					j++;
+// 				}
+// 				if (s[i])
+// 				{
+// 					i++;
+// 				}
+// 			}
+// 			else
+// 			{
+// 				new_string[word][j++] = s[i++];
+// 			}
+// 		}
+// 		new_string[word][j] = '\0';
+// 		word++;
+// 	}
+// 	return (new_string);
+// }
 
-char	**ft_split_pipe(char const *s, char c)
-{
-	int		counter_words;
-	char	**new_string;
+// char	**ft_split_pipe(char const *s, char c)
+// {
+// 	int		counter_words;
+// 	char	**new_string;
 
-	if (!s)
-	{
-		return (NULL);
-	}
-	counter_words = ft_count_words_pipe(s, c);
-	new_string = malloc((counter_words + 1) * sizeof(char *));
-	if (!new_string)
-	{
-		return (NULL);
-	}
-	new_string[counter_words] = NULL;
-	return (ft_copy_word_pipe(s, c, new_string));
-}
+// 	if (!s)
+// 	{
+// 		return (NULL);
+// 	}
+// 	counter_words = ft_count_words_pipe(s, c);
+// 	new_string = malloc((counter_words + 1) * sizeof(char *));
+// 	if (!new_string)
+// 	{
+// 		return (NULL);
+// 	}
+// 	new_string[counter_words] = NULL;
+// 	return (ft_copy_word_pipe(s, c, new_string));
+// }
+
 
 // int	ft_isspace(char c)
 // {

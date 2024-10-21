@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 09:47:55 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/18 09:15:51 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/21 16:04:06 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,60 @@ void	*ft_memset(void *s, int c, size_t n)
 	return (s);
 }
 
-int	ft_is_quotes(char c)
+// while (str[i] ) // while white space && !\0
+// 	i++;
+// while (str[i] ) // while !\0 && !|
+// 	i++;
+// while (str[i]) // while !\0 && white space
+// 	i++;
+// int addr = strstr("|") // => si !| return parsing
+// // si !:
+// while strstr > 0
+// {
+// 	strstr = addr;
+// 	str[strstr]--
+// 	if (str[strstr] != whitespace)
+// 		return (true);
+// 	strstr = addr;
+// 	str[strstr]++
+// 	if (str[strstr] != whitespace)
+// 		return (true);
+// }
+// bool	ft_is_token(char c)
+// {
+// 	if (c == '<' || c == '>' || c == '|')
+// 		return (true);
+// 	return (false);
+// 
+bool	ft_is_redirection(char *str)
 {
-	if (c == '\'' || c == '"')
-		return (1);
-	return (0);
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '|')
+		{
+			if (str[i - 2] >= 'a' && str[i - 2] <= 'z' && str[i + 2] >= 'a' && str[i + 2] <= 'z')
+				return (true);
+			else if ((str[i - 2] == '"' || str[i - 2] == '\'') && (str[i + 2] == '"' || str[i + 2] == '\''))
+				return (true);
+			else if ((str[i - 2] == '"' || str[i - 2] == '\'') || (str[i + 2] == '"' || str[i + 2] == '\''))
+				return (true);
+			else if (str[i + 2] == '>')
+				return (true);
+		}
+		i++;
+	}
+	return (false);
 }
+
+// int	ft_is_quotes(char c)
+// {
+// 	if (c == '\'' || c == '"')
+// 		return (1);
+// 	return (0);
+// }
 
 // // int	check_incorrect_signs(char c)
 // // {
@@ -43,87 +91,11 @@ int	ft_is_quotes(char c)
 // // 	return (1);
 // // }
 
-char	*ft_strstr(const char *big, const char *little)
-{
-	size_t	i;
-	size_t	j;
-
-	if (!big)
-		return (NULL);
-	if (*little == '\0')
-		return ((char *)(big));
-	i = 0;
-	while (big[i] != '\0')
-	{
-		j = 0;
-		while (big[i + j] && little[j] != '\0'
-			&& big[i + j] == little[j])
-		{
-			j++;
-		}
-		if (little[j] == '\0')
-		{
-			return ((char *)(big + i));
-		}
-		i++;
-	}
-	return (NULL);
-}
-// int	ft_is_redirection(char *str)
+// void	ft_free_all(t_main *msh, char *error)
 // {
-// 	int	i;
-
-// 	i = 0;
-// 	while (str[i])
+// 	if (pipex->line!= NULL)
 // 	{
-// 		if (str[i] == '>' || str[i] == '<')
-// 		{
-// 			if (str[i - 2] >= 'a' && str[i - 2] <= 'z' && str[i + 2] >= 'a' && str[i + 2] <= 'z')
-// 				return (1);
-// 			else if ((str[i - 2] == '"' || str[i - 2] == '\'') && (str[i + 2] == '"' || str[i + 2] == '\''))
-// 				return (1);
-// 			else if ((str[i - 2] == '"' || str[i - 2] == '\'') || (str[i + 2] == '"' || str[i + 2] == '\''))
-// 				return (1);
-// 			else if (str[i] == '<' && str[i + 1] == '<')
-// 				return (1);
-// 			else if (str[i] == '>' && str[i + 1] == '>')
-// 				return (1);
-// 			else
-// 				return (0);
-// 		}
-// 		i++;
+// 		free(line);
 // 	}
-// 	return (1);
+// 	exit(1);
 // }
-
-int	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
-}
-
-char	*ft_strdup(const char *s)
-{
-	char	*dst;
-	int		i;
-
-	dst = malloc((ft_strlen(s) + 1) * sizeof(char));
-	if (dst == NULL)
-	{
-		return (NULL);
-	}
-	i = 0;
-	while (s[i] != '\0')
-	{
-		dst[i] = s[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
-}

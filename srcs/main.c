@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 13:34:37 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/16 13:42:11 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/21 10:24:24 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ int	main(void)
 
 	lst_redirection = NULL;
 	ft_init_data(&msh);
-	display_prompt(&msh, lst_redirection);
+	ft_display_prompt(&msh, lst_redirection);
 	return (0);
 }

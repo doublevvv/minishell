@@ -1,8 +1,18 @@
 CHECK PIPES/CHEVRONS
-ls || cat => correct
-ls ||| cat => incorrect
-ls >>> file => incorrect
-ls |>> file => correct
+ls     | => incorrect (pipe non ferme)
+   |   => incorrect (pipe non ferme)
+     ls |     abc        | => incorrect (pipe non ferme)
+ls || cat => incorrect -> ok
+ls ||| cat => incorrect -> ok
+
+ls >>> cat => incorrect -> ok
+ls <<< cat => incorrect -> ok
+ls |> cat => correct ->
+ls >| cat => correct ->
+ls |< cat => correct ->
+ls |< ok => incorrect (No such file or directory)
+ls |>> cat => correct ->
+ls >>| cat => correct ->
 
 CHECK QUOTES
 echo "' => incorrect

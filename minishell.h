@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/18 10:27:38 by evlim            ###   ########.fr       */
+/*   Updated: 2024/10/21 16:03:11 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_redir
 
 typedef struct s_lst
 {
-	char			**cmd_name;
+	char			**cmd_name; 
 	t_redir			*redir;
 	struct s_lst	*next;
 }	t_lst;
@@ -70,70 +70,20 @@ void	ft_init_data(t_main *msh);
 
 void	*ft_memset(void *s, int c, size_t n);
 
-char	display_prompt(t_main *msh, t_redir *lst_redirection);
+char	ft_display_prompt(t_main *msh, t_redir *lst_redirection);
 
-int		check_prompt(char *str);
+void	ft_check_prompt(char *str);
 
-bool	ft_check_quotes(t_main *msh, char *str);
+bool	ft_check_token(char *str);
 
-int		ft_is_quotes(char c);
-
-//int		ft_isspace(char c);
-
-char	*ft_strstr(const char *big, const char *little);
-
-void	ft_check_redirection(t_main *msh, t_redir **lst_redirection);
-
-void	ft_redir_sep(t_redir *lst_redirection);
-
-int		ft_strlen(const char *s);
-
-char	*ft_strdup(const char *s);
-
-//void	ft_assign_type(t_main *msh);
+bool	ft_is_redirection(char *str);
 
 /* ************************************************************************* */
 /*                                  SPLIT                                    */
 /* ************************************************************************* */
 
-char	**ft_split_pipe(char const *s, char c);
-
-int		ft_count_words_pipe(char const *str, char delimiter);
-
-int		ft_word_length_pipe(char const *s, char c);
-
-void	*ft_free_alloc_pipe(char **new_string, int word);
-
-char	**ft_copy_word_pipe(char const *s, char c, char **new_string);
-
-char	**ft_split_redir(char const *s, char delimiter);
-
-int		ft_count_words_redir(char const *str, char delimiter);
-
-int		ft_word_length_redir(char const *s, char delimiter);
-
-char	**ft_copy_word_redir(char const *s, char delimiter, char **new_string, int i);
-
-void	*ft_free_alloc_redir(char **new_string, int word);
-
 /* ************************************************************************* */
 /*                               LISTES CHAINEES                             */
 /* ************************************************************************* */
-
-void	ft_add_cmd_to_lst(t_main *msh);
-
-t_lst	*ft_lstnew(char **name);
-
-void	ft_lstadd_back(t_lst **lst, t_lst *new);
-
-void	ft_display_lst(t_main *msh);
-
-void	ft_add_redirection_to_lst(t_main *msh, t_redir **lst_redirection);
-
-t_redir	*ft_lstnew_redir(char *name, char *filename);
-
-void	ft_lstadd_back_redir(t_redir **lst, t_redir *new);
-
-void	ft_display_lst_redir(t_redir *lst_redirection);
 
 #endif
