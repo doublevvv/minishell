@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:36:14 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/14 15:48:48 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:49:39 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ t_lst	*ft_lstnew(char **name)
 	if (!new_node)
 		return (NULL);
 	new_node->cmd_name = name;
-	printf("type = %d\n", new_node->type);
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -88,68 +87,4 @@ void	ft_lstadd_back(t_lst **lst, t_lst *new)
 void	ft_add_cmd_to_lst(t_main *msh)
 {
 	ft_lstadd_back(&msh->cmd_lst, ft_lstnew(msh->cmd));
-}
-
-int	ft_is_quotes(char c)
-{
-	if (c == '\'' || c == '"')
-		return (1);
-	return (0);
-}
-
-// int	check_incorrect_signs(char c)
-// {
-// 	if (c != '\'' || c != '"' || c != "|" || c != '>' || c != '<' || c != '$' /
-// 		(c <= 'a' && c >= 'z'))
-// 		return (0);
-// 	return (1);
-// }
-
-int	ft_is_redirection(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '>' || str[i] == '<')
-		{
-			if (str[i - 2] >= 'a' && str[i - 2] <= 'z' && str[i + 2] >= 'a' && str[i + 2] <= 'z')
-				return (1);
-			else if ((str[i - 2] == '"' || str[i - 2] == '\'') && (str[i + 2] == '"' || str[i + 2] == '\''))
-				return (1);
-			else if ((str[i - 2] == '"' || str[i - 2] == '\'') || (str[i + 2] == '"' || str[i + 2] == '\''))
-				return (1);
-			else if (str[i] == '<' && str[i + 1] == '<')
-				return (1);
-			else if (str[i] == '>' && str[i + 1] == '>')
-				return (1);
-			else
-				return (0);
-		}
-		i++;
-	}
-	return (1);
-}
-
-int	check_prompt(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '|' && str[i + 2] == '|')
-		{
-			printf("syntax error unexpected token `%c`\n", str[i]);
-				return (0);
-		}
-		if (str[i] == '>' && str[i + 2] == '>')
-		{
-			printf("syntax error unexpected token `%c`\n", str[i]);
-				return (0);
-		}
-		i++;
-	}
-	return (1);
 }
