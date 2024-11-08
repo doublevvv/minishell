@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: evlim <evlim@student.42.fr>                +#+  +:+       +#+         #
+#    By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 08:37:40 by evlim             #+#    #+#              #
-#    Updated: 2024/10/03 16:10:53 by evlim            ###   ########.fr        #
+#    Updated: 2024/11/07 14:07:32 by vlaggoun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ HEADER = minishell.h
 SOURCES = srcs/main.c	\
 		srcs/parsing/prompt.c	\
 		srcs/libft/ft_split.c	\
-		srcs/libft/utils.c
+		srcs/libft/utils.c exit.c
 
 SRCS = $(addprefix $(OBJ_DIR)/, $(SOURCES))
 
@@ -27,7 +27,8 @@ OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -g3 
+#-fsanitize=address
 #CFLAGS = -g3
 
 RM = rm -rf

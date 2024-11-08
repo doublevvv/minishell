@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/10/08 15:15:40 by evlim            ###   ########.fr       */
+/*   Updated: 2024/11/07 16:46:54 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <stdbool.h>
+# include <limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -38,6 +40,7 @@ typedef struct s_main
 {
 	char	*line;
 	char	**cmd;
+	char	**tmp;
 	bool	double_quote;
 	bool	simple_quote;
 	int		count;
@@ -65,5 +68,15 @@ t_lst	*ft_lstnew(char **name);
 void	ft_display_lst(t_main *msh);
 
 void	ft_assign_type(t_main *msh);
+
+char	*ft_strnstr(const char *s1, const char *s2, size_t n);
+
+int	ft_strncmp(const char *s1, const char *s2, unsigned int n);
+
+
+int ft_exit(char **arg);
+int	write_error(char **str);
+bool	is_numeric(char *str);
+long	ft_atol(char *str);
 
 #endif

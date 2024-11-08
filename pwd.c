@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/28 13:34:37 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/07 13:31:55 by vlaggoun         ###   ########.fr       */
+/*   Created: 2024/10/24 09:01:04 by vlaggoun          #+#    #+#             */
+/*   Updated: 2024/10/28 13:14:17 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include<unistd.h>
+#include<stdio.h>
+#include<limits.h>
 
-void	ft_init_data(t_main *msh)
-{
-	ft_memset(msh, 0, sizeof(t_main));
+void	ft_pwd(char *current_directory)
+{	
+	printf("%s\n", getcwd(current_directory, PATH_MAX));
+	//perror
 }
 
-int	main(void)
+int main()
 {
-	t_main	msh;
-
-	ft_init_data(&msh);
-	display_prompt(&msh);
-	
-	return (0);
+	char str[1000];
+	ft_pwd(str);
 }

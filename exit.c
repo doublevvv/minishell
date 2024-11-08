@@ -6,23 +6,17 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:16:46 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/04 16:30:47 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:19:01 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<unistd.h>
-#include<stdio.h>
-#include<limits.h>
-#include<stdlib.h>
-#include<string.h>
-#include<stdbool.h>
-
+#include "minishell.h"
 
 bool	is_numeric(char *str)
 {
 	int i;
 
-	i = 0;
+	i = 0;  
 	while (str[i])
 	{
 		if (str[i] >= '0' && str[i] <= '9')
@@ -32,52 +26,72 @@ bool	is_numeric(char *str)
 	return (false); 
 }
 
-
-int ft_exit(char *arg)
+long	ft_atol(char *str)
 {
-	int	exit_code;
-	
-	// if (!arg[1])
-	// {
-	// 	exit_code = 0;
-	// 	printf("NOARG\n");
-	// }
-	if (arg[1])
+	int		i;
+	unsigned long	res;
+	int		sign;
+	const unsigned long	max = LONG_MAX;
+	const unsigned long min = LONG_MIN;
+
+	i = 0;
+	res = 0;
+	sign = 1;
+	while (str[i] && ((str[i] >= 9 && str[i] <= 13) || str[i] == 32))
+		i++;
+	if (str[i] == '+')
+		i++;
+	if (str[i] == '-')
 	{
-		if (is_numeric(&arg[1]) == false)
-		{
-			exit_code = 2;
-			printf("exit\n");
-			printf("les loutres: exit: %c: numeric argument required\n", arg[1]);
-		}
-		if (!arg[1] && arg[2])
-		{
-			exit_code = 1;
-			printf("les loutres: exit: too many arguments\n");
-		}
+		sign = sign * -1;
+		i++;
 	}
-	return (0);
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = (res * 10) + (str[i++] - '0');
+		if (res > max + 2)
+			return (true);
+	}
+	return (false);
 }
 
-	int	main(int ac, char **av)
+int	write_error(char **str)
 {
-	av++;
-	int i = 1;
-	if (av[0] == NULL && strncmp("exit", av[0], 5) != 0) //mettre ft_strncmp
-		return (1);
-	if (av[0] && !av[1])
-		printf("exit\n");
-	while (av[i])
+	int i;
+
+	i = 0;
+	while (str[i])
 	{
-		ft_exit(av[i]);
+		printf("les loutres: exit: %s: numeric argument required\n", str[i]);
 		i++;
 	}
 	return (0);
-}
+} 
 
-typedef struct s_list
+int ft_exit(char **arg)
 {
 	int	exit_code;
-	char	**cmd;
 	
-}		t_list;
+	if (strncmp("exit", arg[0], 5) != 0)
+		return (1);
+	write(1, "exit1\n", 6);
+	exit_code = 0;
+	if (arg[1])
+	{
+		if ((ft_atol(arg[1]) == true))
+			(exit(printf("bash: exit: %s: numeric argument required\n", arg[1])));
+		if (is_numeric(arg[1]) == false)
+		{
+			exit_code = 2;
+			exit(write_error(&arg[1]));
+		}
+		if (arg[1] && arg[2])
+		{
+			write(2, "bash: exit: too many arguments\n", 31);
+			exit_code = 1;
+		}
+	}
+	//ne pas oublier de free
+	exit(1);
+}
+	

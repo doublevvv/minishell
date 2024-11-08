@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:36:14 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/08 15:49:39 by evlim            ###   ########.fr       */
+/*   Updated: 2024/11/07 13:24:57 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,12 @@ void	ft_lstadd_back(t_lst **lst, t_lst *new)
 
 void	ft_add_cmd_to_lst(t_main *msh)
 {
-	ft_lstadd_back(&msh->cmd_lst, ft_lstnew(msh->cmd));
+	t_lst *new;
+
+	new = ft_lstnew(msh->tmp);
+	if (!new)
+	{
+		//METTRE PLEIN DE PROTECTION
+	}
+	ft_lstadd_back(&msh->cmd_lst, new);
 }
