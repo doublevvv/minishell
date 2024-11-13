@@ -6,7 +6,7 @@
 #    By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 08:37:40 by evlim             #+#    #+#              #
-#    Updated: 2024/11/07 14:07:32 by vlaggoun         ###   ########.fr        #
+#    Updated: 2024/11/12 14:00:49 by vlaggoun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ HEADER = minishell.h
 SOURCES = srcs/main.c	\
 		srcs/parsing/prompt.c	\
 		srcs/libft/ft_split.c	\
-		srcs/libft/utils.c exit.c
+		srcs/libft/utils.c exit.c cd.c
 
 SRCS = $(addprefix $(OBJ_DIR)/, $(SOURCES))
 

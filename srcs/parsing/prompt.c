@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/07 14:50:31 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:04:44 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,9 @@ char	display_prompt(t_main *msh)
 			printf("CMD : %s\n", msh->tmp[i]);
 			i++;
 		}
-		ft_exit(msh->tmp);
+		//ft_exit(msh->tmp);
 		printf("------------------------\n");
+		ft_cd(msh->tmp);
 	}
 
 }

@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/11/07 16:46:54 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/13 15:34:46 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ enum type
 	PIPE,
 	REDIRECTION
 };
+
+type struct s_env
+{
+	
+};
+
 
 typedef struct s_lst
 {
@@ -78,5 +84,6 @@ int ft_exit(char **arg);
 int	write_error(char **str);
 bool	is_numeric(char *str);
 long	ft_atol(char *str);
+int	ft_cd(char **arg);
 
 #endif
