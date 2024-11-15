@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/28 13:34:37 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/15 15:10:39 by vlaggoun         ###   ########.fr       */
+/*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
+/*   Updated: 2024/11/15 15:47:22 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void	ft_init_data(t_main *msh)
+char	*ft_strncpy(char *dest, char *src, size_t n)
 {
-	ft_memset(msh, 0, sizeof(t_main));
-}
+	size_t i;
 
-int	main(int ac, char **av, char **envp)
-{
-	(void)ac;
-	(void)av;
-	// t_main	msh;
-	char	**environ;
-	
-	// int i = 0;
-	// while (envp[i])
-	// {
-	// 	printf("%s\n", envp[i]);
-	// 	i++;
-	// }
-	environ = get_env(envp);
-	// ft_init_data(&msh);
-	// display_prompt(&msh);
-	
-	return (0);
+	i = 0;
+	while (src[i] && i < n)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
 }

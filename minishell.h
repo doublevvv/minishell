@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/11/13 15:34:46 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:05:52 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "../libft/libft.h"
 
 enum type
 {
@@ -29,10 +30,12 @@ enum type
 	REDIRECTION
 };
 
-type struct s_env
+typedef struct s_env
 {
-	
-};
+	char *key;
+	char *value;
+	struct s_env *next;
+}		t_env;
 
 
 typedef struct s_lst
@@ -57,7 +60,7 @@ void	ft_init_data(t_main *msh);
 
 char	display_prompt(t_main *msh);
 
-void	*ft_memset(void *s, int c, size_t n);
+//void	*ft_memset(void *s, int c, size_t n);
 
 bool	ft_check_quotes(t_main *msh, char *str);
 
@@ -85,5 +88,6 @@ int	write_error(char **str);
 bool	is_numeric(char *str);
 long	ft_atol(char *str);
 int	ft_cd(char **arg);
+char	**get_env(char **environ);
 
 #endif
