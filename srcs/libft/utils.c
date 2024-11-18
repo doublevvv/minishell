@@ -6,26 +6,26 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:36:14 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/15 16:30:27 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/18 12:42:19 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	*ft_memset(void *s, int c, size_t n)
-{
-	size_t			i;
-	unsigned char	*str;
+// void	*ft_memset(void *s, int c, size_t n)
+// {
+// 	size_t			i;
+// 	unsigned char	*str;
 
-	str = (unsigned char *)s;
-	i = 0;
-	while (i < n)
-	{
-		str[i] = c;
-		i++;
-	}
-	return (s);
-}
+// 	str = (unsigned char *)s;
+// 	i = 0;
+// 	while (i < n)
+// 	{
+// 		str[i] = c;
+// 		i++;
+// 	}
+// 	return (s);
+// }
 
 void	ft_display_lst(t_main *msh)
 {

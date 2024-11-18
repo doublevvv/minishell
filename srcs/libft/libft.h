@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:45:07 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/15 15:48:41 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/18 12:50:10 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ char			*ft_strtrim(char const *s1, char const *set);
 char			*ft_itoa(int n);
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char			*ft_strncpy(char *dest, char *src, size_t n);
-void			*ft_memset(void *s, int c, unsigned int n);
 void			ft_bzero(void *s, size_t n);
+void			*ft_memset(void *s, int c, unsigned int n);
 void			*ft_memcpy(void *dest, const void *src, unsigned int n);
 void			*ft_memmove(void *dest, const void *src, unsigned int n);
 void			*ft_memchr(const void *memblck, int c, size_t n);
