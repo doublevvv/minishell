@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:54:35 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/18 13:06:42 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:21:55 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	ft_display_lst_env(t_main *environ)
 	{
 		i = 0;
 		j = 0;
-		while (tmp->key[i] != NULL && tmp->value[j] != NULL)
+		while (tmp->key != NULL && tmp->value != NULL)
 		{
-			printf("%d | %s\n", i, tmp->key[i]);
-			printf("%d | %s\n", i, tmp->value [i]);
+			printf("%d | %s\n", i, tmp->key);
+			printf("%d | %s\n", i, tmp->value);
 			//printf("valeur type = %d\n", tmp->key);
 			i++;
 			j++;
@@ -37,14 +37,15 @@ void	ft_display_lst_env(t_main *environ)
 	printf("----------------------------------\n");
 }
 
-t_env	*ft_lstnew_env(char **name)
+t_env	*ft_lstnew_env(char *key, char *value)
 {
 	t_env	*new_node;
 
 	new_node = malloc(sizeof(t_env));
 	if (!new_node)
 		return (NULL);
-	new_node->key = name;
+	new_node->key = key;
+	new_node->value = value;
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -52,18 +53,16 @@ t_env	*ft_lstnew_env(char **name)
 void	ft_lstadd_back_env(t_env **lst, t_env *new)
 {
 	t_env	*tmp;
-
-	if (!new)
-	{
-		//free
-	}
+	printf("HEREee\n");
 	if (!*lst)
 	{
+		printf("HER\n");
 		*lst = new;
 		return ;
 	}
 	if (*lst)
 	{
+
 		tmp = *lst;
 		while (tmp->next != NULL)
 		{
@@ -71,16 +70,4 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 		}
 		tmp->next = new;
 	}
-}
-
-void	ft_add_cmd_to_lst_env(t_main *msh)
-{
-	t_main *new;
-
-	new = ft_lstnew(msh->tmp);
-	if (!new)
-	{
-		//METTRE PLEIN DE PROTECTION
-	}
-	ft_lstadd_back(&msh->env, new);
 }
