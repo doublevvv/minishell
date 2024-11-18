@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/11/15 15:05:52 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/18 13:01:11 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ enum type
 
 typedef struct s_env
 {
-	char *key;
-	char *value;
+	char **key;
+	char **value;
 	struct s_env *next;
 }		t_env;
 
@@ -54,6 +54,7 @@ typedef struct s_main
 	bool	simple_quote;
 	int		count;
 	t_lst	*cmd_lst;
+	t_env	*env;
 }	t_main;
 
 void	ft_init_data(t_main *msh);
@@ -89,5 +90,9 @@ bool	is_numeric(char *str);
 long	ft_atol(char *str);
 int	ft_cd(char **arg);
 char	**get_env(char **environ);
+void	ft_display_lst_env(t_main *environ);
+t_env	*ft_lstnew_env(char **name);
+void	ft_lstadd_back_env(t_env **lst, t_env *new);
+void	ft_add_cmd_to_lst_env(t_main *msh);
 
 #endif
