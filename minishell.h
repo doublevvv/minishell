@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/11/21 16:50:59 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:08:25 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_env
 {
 	char *key;
 	char *value;
-	char *cpy;
 	struct s_env *next;
 }		t_env;
 
@@ -55,7 +54,7 @@ typedef struct s_main
 
 void	ft_init_data(t_main *msh);
 
-char	display_prompt(t_main *msh, char **env);
+char	display_prompt(t_main *msh, t_env *env);
 
 bool	ft_check_quotes(t_main *msh, char *str);
 
@@ -82,7 +81,7 @@ int ft_exit(char **arg);
 int	write_error(char **str);
 bool	is_numeric(char *str);
 long	ft_atol(char *str);
-int	ft_cd(char **arg, char **env, t_env **environ);
+int	ft_cd(char **arg, t_env **env);
 t_env	*get_env(char **environ);
 void	ft_display_lst_env(t_env *environ);
 t_env	*ft_lstnew_env(char *key, char *value);

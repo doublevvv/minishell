@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:54:35 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/19 09:57:59 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:11:35 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_env	*ft_lstnew_env(char *key, char *value)
 void	ft_lstadd_back_env(t_env **lst, t_env *new)
 {
 	t_env	*tmp;
+	
 	if (!*lst)
 	{
 		*lst = new;

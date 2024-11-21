@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 08:22:11 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/20 15:21:13 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:13:03 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_env	*get_env(char **environ)
 	size_t nbr3;
 
 	i = -1;
+	list = NULL;
 	while (environ[++i])
 	{
 		nbr = ft_strlen(environ[i]);

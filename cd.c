@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 13:39:45 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/21 16:53:48 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:25:39 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,23 @@ int	old_path(t_env **env, char *old_directory)
 	return (0);
 }
 
-int	ft_cd(char **arg, char **env, t_env **environ)
+int	ft_cd(char **arg, t_env **env)
 {
-	int i;
-	char *home;
 	char *path;
 	char *old_path;
 	t_env	*cpy;
 
-	cpy->cpy = *environ;
+	cpy = *env;
 	old_path = getcwd(NULL, 0);
 	printf("PATH : %s\n", old_path);
-	i = 0;
-	while (env[i] != NULL)
+	printf("CPY :%p\n", cpy);
+	while (cpy != NULL)
 	{
-		home = ft_strnstr(env[i], "HOME=", 5);
-		if (home != NULL)
+		//printf("CLE : %s\n",cpy->key);
+		if (ft_strnstr(cpy->key, "HOME", 4) != NULL)
 			break;
-		i++;
+		cpy = cpy->next;
 	}
-	printf("%s\n", home);
 	if (strncmp("cd", arg[0], 3) != 0)
 	{
 		printf("%s: command not found\n", arg[0]);
@@ -68,7 +65,7 @@ int	ft_cd(char **arg, char **env, t_env **environ)
 	if (arg[0] && !arg[1])
 	{
 		//printf("here\n");
-		if (chdir(home) == -1)
+		if (chdir(cpy->value) == -1)
 		{
 			printf("les loutres: cd: HOME not set\n");
 			return (0);
@@ -83,10 +80,11 @@ int	ft_cd(char **arg, char **env, t_env **environ)
 			write(1, "les loutres: cd: too many arguments\n", 37);
 			return (0);
 		}
-		path = getcwd(arg[1], PATH_MAX);
+		path = getcwd(arg[1], 0);
+		//proteger path
 		if (ft_strnstr(cpy->key, "OLDPWD", 6))
 			cpy->value = old_path;
-		printf("%s\n", cpy->value);;
+		printf("HERE : %s\n", cpy->value);;
 	}
 	return (0);
 }

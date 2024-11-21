@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/20 09:40:08 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:25:53 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 // 	ft_display_lst(msh);
 // }
 
-char	display_prompt(t_main *msh, char **env)
+char	display_prompt(t_main *msh, t_env *env)
 {
 	char	*line;
 
@@ -56,7 +56,7 @@ char	display_prompt(t_main *msh, char **env)
 		// }
 		//ft_exit(msh->tmp);
 		printf("------------------------\n");
-		ft_cd(msh->tmp, env);
+		ft_cd(msh->tmp, &env);
 	}
 
 }
