@@ -6,47 +6,60 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 13:39:45 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/12 14:18:46 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:53:48 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int	main(int ac, char **av)
-// {
-// 	char s[1000];
-// 	// if (ac != X)
-// 	// 	ft_putendl_fd();	
-// 	if (chdir(av[1]) == -1)
-// 		perror("cd");
-// 	if ()
-	
-// 	printf("%s\n", getcwd(s, PATH_MAX));
-// }
 
-// void	ft_cd(char *path)
-// {
-// 	char *current_directory;
-	
 // 	path = getcwd(current_directory, PATH_MAX);
 // 	chdir(path);
 // 	if (chdir(path) == -1)
 // 	{
 // 		perror("Error ");
 // 	}
-	
-// }
 
-// void	cd_error(char *str)
-// {
-	
-// }
-
-int	ft_cd(char **arg)
+int	old_path(t_env **env, char *old_directory)
 {
-	char *home;
+	t_env *tmp;
+	char *cpy;
 	
-	home = NULL;
+	tmp = *env;
+	while (tmp)
+	{
+		if (ft_strnstr(tmp->key, "OLDPWD", 6))
+		{
+			printf("%s\n", tmp->key);
+			if (tmp->value)
+				free(tmp->value);
+			cpy = ft_strjoin("OLDPWD=", old_directory);
+			
+		}
+	}
+	return (0);
+}
+
+int	ft_cd(char **arg, char **env, t_env **environ)
+{
+	int i;
+	char *home;
+	char *path;
+	char *old_path;
+	t_env	*cpy;
+
+	cpy->cpy = *environ;
+	old_path = getcwd(NULL, 0);
+	printf("PATH : %s\n", old_path);
+	i = 0;
+	while (env[i] != NULL)
+	{
+		home = ft_strnstr(env[i], "HOME=", 5);
+		if (home != NULL)
+			break;
+		i++;
+	}
+	printf("%s\n", home);
 	if (strncmp("cd", arg[0], 3) != 0)
 	{
 		printf("%s: command not found\n", arg[0]);
@@ -54,7 +67,8 @@ int	ft_cd(char **arg)
 	}
 	if (arg[0] && !arg[1])
 	{
-		if (!home)
+		//printf("here\n");
+		if (chdir(home) == -1)
 		{
 			printf("les loutres: cd: HOME not set\n");
 			return (0);
@@ -68,7 +82,11 @@ int	ft_cd(char **arg)
 		{
 			write(1, "les loutres: cd: too many arguments\n", 37);
 			return (0);
-		}	
+		}
+		path = getcwd(arg[1], PATH_MAX);
+		if (ft_strnstr(cpy->key, "OLDPWD", 6))
+			cpy->value = old_path;
+		printf("%s\n", cpy->value);;
 	}
 	return (0);
 }

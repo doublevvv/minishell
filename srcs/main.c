@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 13:34:37 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/18 17:19:54 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/20 09:43:14 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,14 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	t_main	msh;
 	
-	// int i = 0;
-	// while (envp[i])
-	// {
-	// 	printf("%s\n", envp[i]);
-	// 	i++;
-	// }
 	msh.env = get_env(envp);
-	while (msh.env)
-	{
-		printf("key : %s, value : %s\n", msh.env->key, msh.env->value);
-		msh.env = msh.env->next;
-	}
-	// ft_init_data(&msh);
-	// display_prompt(&msh);
-	
+	//ft_display_lst_env(msh.env);
+	// while (msh.env)
+	// {
+	// 	printf("key : %s, value : %s\n", msh.env->key, msh.env->value);
+	// 	msh.env = msh.env->next;
+	// }
+	ft_init_data(&msh);
+	display_prompt(&msh, envp);
 	return (0);
 }

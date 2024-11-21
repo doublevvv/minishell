@@ -6,33 +6,23 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:54:35 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/18 17:21:55 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/19 09:57:59 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_display_lst_env(t_main *environ)
+void	ft_display_lst_env(t_env *environ)
 {
-	int		i;
-	int		j;
-	t_env	*tmp;
+	(void)environ;
+	t_env	*cpy;
 
-	tmp = environ->env;
+	cpy = environ;
 	printf("DANS LISTE\n");
-	while (tmp != NULL)
+	while (cpy != NULL)
 	{
-		i = 0;
-		j = 0;
-		while (tmp->key != NULL && tmp->value != NULL)
-		{
-			printf("%d | %s\n", i, tmp->key);
-			printf("%d | %s\n", i, tmp->value);
-			//printf("valeur type = %d\n", tmp->key);
-			i++;
-			j++;
-		}
-		tmp = tmp->next;
+		printf("KEY : %s | VALUE : %s\n", cpy->key, cpy->value);
+		cpy = cpy->next;
 	}
 	printf("----------------------------------\n");
 }
@@ -53,16 +43,13 @@ t_env	*ft_lstnew_env(char *key, char *value)
 void	ft_lstadd_back_env(t_env **lst, t_env *new)
 {
 	t_env	*tmp;
-	printf("HEREee\n");
 	if (!*lst)
 	{
-		printf("HER\n");
 		*lst = new;
 		return ;
 	}
 	if (*lst)
 	{
-
 		tmp = *lst;
 		while (tmp->next != NULL)
 		{

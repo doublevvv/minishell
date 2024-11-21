@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/18 11:40:37 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/20 09:40:08 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 // 	ft_display_lst(msh);
 // }
 
-char	display_prompt(t_main *msh)
+char	display_prompt(t_main *msh, char **env)
 {
 	char	*line;
 
@@ -48,15 +48,15 @@ char	display_prompt(t_main *msh)
 		}
 		add_history(line);
 		msh->tmp = ft_split(line, ' ');
-		int i = 0;
-		while (msh->tmp[i] != NULL)
-		{
-			printf("CMD : %s\n", msh->tmp[i]);
-			i++;
-		}
+		// int i = 0;
+		// while (msh->tmp[i] != NULL)
+		// {
+		// 	printf("CMD : %s\n", msh->tmp[i]);
+		// 	i++;
+		// }
 		//ft_exit(msh->tmp);
 		printf("------------------------\n");
-		ft_cd(msh->tmp);
+		ft_cd(msh->tmp, env);
 	}
 
 }

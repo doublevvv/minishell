@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 09:01:04 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/19 14:40:55 by vlaggoun         ###   ########.fr       */
+/*   Created: 2024/11/20 15:18:24 by vlaggoun          #+#    #+#             */
+/*   Updated: 2024/11/20 15:38:58 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<unistd.h>
-#include<stdio.h>
-#include<limits.h>
+#include "minishell.h"
 
-void	ft_pwd(char *current_directory)
-{	
-	printf("%s\n", getcwd(current_directory, PATH_MAX));
-	//perror
-}
-
-int main()
+int	export(char **arg, char **env)
 {
-	char str[1000];
-	ft_pwd(str);
+	if (ft_strncmp("export", arg[0], 7) != 0)
+	{
+		printf("%s: command not found\n", arg[0]);
+		return (0);
+	}
+	if (arg[0] && ft_strchr(arg[1], "="))
+	{
+			
+	}
 }

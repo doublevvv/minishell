@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/11/18 17:16:02 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:50:59 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_env
 {
 	char *key;
 	char *value;
+	char *cpy;
 	struct s_env *next;
 }		t_env;
 
@@ -47,21 +48,14 @@ typedef struct s_lst
 
 typedef struct s_main
 {
-	char	*line;
-	char	**cmd;
 	char	**tmp;
-	bool	double_quote;
-	bool	simple_quote;
-	int		count;
 	t_lst	*cmd_lst;
 	t_env	*env;
 }	t_main;
 
 void	ft_init_data(t_main *msh);
 
-char	display_prompt(t_main *msh);
-
-//void	*ft_memset(void *s, int c, size_t n);
+char	display_prompt(t_main *msh, char **env);
 
 bool	ft_check_quotes(t_main *msh, char *str);
 
@@ -88,11 +82,12 @@ int ft_exit(char **arg);
 int	write_error(char **str);
 bool	is_numeric(char *str);
 long	ft_atol(char *str);
-int	ft_cd(char **arg);
+int	ft_cd(char **arg, char **env, t_env **environ);
 t_env	*get_env(char **environ);
-void	ft_display_lst_env(t_main *environ);
+void	ft_display_lst_env(t_env *environ);
 t_env	*ft_lstnew_env(char *key, char *value);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
 void	ft_add_cmd_to_lst_env(t_env **env, char *key, char *value);
+int	old_path( t_env **env, char *old_directory);
 
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_in.c                                         :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 13:43:56 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/10/24 08:17:15 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/19 11:08:47 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,15 @@ bool	option_echo(char *str)
 int	echo(char **argv)
 {
 	int i;
-	
+
+	if (!argv[1])
+		printf("\n");
 	i = 1;
 	while (argv[i] && option_echo(argv[i]))
 		i++;
 	while (argv[i])
 	{
+		//printf("%d", i);
 		printf("%s", argv[i]);
 		i++;
 		if (argv[i] != NULL)
