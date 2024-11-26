@@ -1,0 +1,277 @@
+CD(1POSIX)                            POSIX Programmer's Manual                            CD(1POSIX)
+
+PPRROOLLOOGG
+       This  manual  page is part of the POSIX Programmer's Manual.  The Linux implementation of this
+       interface may differ (consult the corresponding Linux manual page for details of Linux  behav‐
+       ior), or the interface may not be implemented on Linux.
+
+NNAAMMEE
+       cd — change the working directory
+
+SSYYNNOOPPSSIISS
+       cd [[-L|-P]] [[_d_i_r_e_c_t_o_r_y]]
+
+       cd -
+
+DDEESSCCRRIIPPTTIIOONN
+       The  _c_d  utility shall change the working directory of the current shell execution environment
+       (see _S_e_c_t_i_o_n _2_._1_2, _S_h_e_l_l _E_x_e_c_u_t_i_o_n _E_n_v_i_r_o_n_m_e_n_t) by executing the following steps in  sequence.
+       (In  the following steps, the symbol ccuurrppaatthh represents an intermediate value used to simplify
+       the description of the algorithm used by _c_d.  There is no requirement  that  ccuurrppaatthh  be  made
+       visible to the application.)
+
+        1. If  no _d_i_r_e_c_t_o_r_y operand is given and the _H_O_M_E environment variable is empty or undefined,
+           the default behavior is implementation-defined and no further steps shall be taken.
+
+        2. If no _d_i_r_e_c_t_o_r_y operand is given and the _H_O_M_E environment variable is set to  a  non-empty
+           value, the _c_d utility shall behave as if the directory named in the _H_O_M_E environment vari‐
+           able was specified as the _d_i_r_e_c_t_o_r_y operand.
+
+        3. If the _d_i_r_e_c_t_o_r_y operand begins with a <slash> character, set ccuurrppaatthh to the  operand  and
+           proceed to step 7.
+
+        4. If the first component of the _d_i_r_e_c_t_o_r_y operand is dot or dot-dot, proceed to step 6.
+
+        5. Starting with the first pathname in the <colon>-separated pathnames of _C_D_P_A_T_H (see the EN‐
+           VIRONMENT VARIABLES section) if the pathname is non-null, test  if  the  concatenation  of
+           that  pathname, a <slash> character if that pathname did not end with a <slash> character,
+           and the _d_i_r_e_c_t_o_r_y operand names a directory. If the pathname is null, test if the concate‐
+           nation  of dot, a <slash> character, and the operand names a directory. In either case, if
+           the resulting string names an existing directory, set ccuurrppaatthh to that string  and  proceed
+           to  step  7.  Otherwise, repeat this step with the next pathname in _C_D_P_A_T_H until all path‐
+           names have been tested.
+
+        6. Set ccuurrppaatthh to the _d_i_r_e_c_t_o_r_y operand.
+
+        7. If the --PP option is in effect, proceed to step 10.  If  ccuurrppaatthh  does  not  begin  with  a
+           <slash>  character,  set ccuurrppaatthh to the string formed by the concatenation of the value of
+           _P_W_D, a <slash> character if the value of _P_W_D did not end with  a  <slash>  character,  and
+           ccuurrppaatthh.
+
+        8. The  ccuurrppaatthh  value shall then be converted to canonical form as follows, considering each
+           component from beginning to end, in sequence:
+
+            a. Dot components and any <slash> characters that separate them from the  next  component
+               shall be deleted.
+
+            b. For  each  dot-dot component, if there is a preceding component and it is neither root
+               nor dot-dot, then:
+
+                i.  If the preceding component does not refer (in the context of pathname  resolution
+                    with  symbolic  links followed) to a directory, then the _c_d utility shall display
+                    an appropriate error message and no further steps shall be taken.
+
+               ii.  The preceding component, all <slash> characters separating the  preceding  compo‐
+                    nent  from  dot-dot,  dot-dot, and all <slash> characters separating dot-dot from
+                    the following component (if any) shall be deleted.
+
+            c. An implementation may further simplify ccuurrppaatthh by removing any trailing <slash>  char‐
+               acters  that  are  not also leading <slash> characters, replacing multiple non-leading
+               consecutive <slash> characters with a single <slash>,  and  replacing  three  or  more
+               leading  <slash> characters with a single <slash>.  If, as a result of this canonical‐
+               ization, the ccuurrppaatthh variable is null, no further steps shall be taken.
+
+        9. If ccuurrppaatthh is longer than {PATH_MAX} bytes (including the terminating null) and the _d_i_r_e_c_‐
+           _t_o_r_y  operand  was not longer than {PATH_MAX} bytes (including the terminating null), then
+           ccuurrppaatthh shall be converted from an absolute pathname to an equivalent relative pathname if
+           possible.  This conversion shall always be considered possible if the value of _P_W_D, with a
+           trailing <slash> added if it does not already have one, is an initial  substring  of  ccuurr‐‐
+           ppaatthh.   Whether or not it is considered possible under other circumstances is unspecified.
+           Implementations may also apply this conversion if ccuurrppaatthh is not  longer  than  {PATH_MAX}
+           bytes or the _d_i_r_e_c_t_o_r_y operand was longer than {PATH_MAX} bytes.
+
+       10. The  _c_d  utility shall then perform actions equivalent to the _c_h_d_i_r() function called with
+           ccuurrppaatthh as the _p_a_t_h argument. If these actions fail for any reason, the _c_d  utility  shall
+           display an appropriate error message and the remainder of this step shall not be executed.
+           If the --PP option is not in effect, the _P_W_D environment variable shall be set to the  value
+           that  ccuurrppaatthh  had on entry to step 9 (i.e., before conversion to a relative pathname). If
+           the --PP option is in effect, the _P_W_D environment variable shall be set to the  string  that
+           would  be  output by _p_w_d --PP.  If there is insufficient permission on the new directory, or
+           on any parent of that directory, to determine the current working directory, the value  of
+           the _P_W_D environment variable is unspecified.
+
+       If,  during  the execution of the above steps, the _P_W_D environment variable is set, the _O_L_D_P_W_D
+       environment variable shall also be set to the value of the old working directory (that is  the
+       current working directory immediately prior to the call to _c_d).
+
+OOPPTTIIOONNSS
+       The  _c_d  utility  shall  conform to the Base Definitions volume of POSIX.1‐2017, _S_e_c_t_i_o_n _1_2_._2,
+       _U_t_i_l_i_t_y _S_y_n_t_a_x _G_u_i_d_e_l_i_n_e_s.
+
+       The following options shall be supported by the implementation:
+
+       --LL        Handle the operand dot-dot logically; symbolic link components shall not be resolved
+                 before dot-dot components are processed (see steps 8.  and 9. in the DESCRIPTION).
+
+       --PP        Handle  the  operand  dot-dot physically; symbolic link components shall be resolved
+                 before dot-dot components are processed (see step 7. in the DESCRIPTION).
+
+       If both --LL and --PP options are specified, the last of these options shall be used and all  oth‐
+       ers  ignored.  If  neither  --LL nor --PP is specified, the operand shall be handled dot-dot logi‐
+       cally; see the DESCRIPTION.
+
+OOPPEERRAANNDDSS
+       The following operands shall be supported:
+
+       _d_i_r_e_c_t_o_r_y An absolute or relative pathname of the directory that shall become the new  working
+                 directory.  The interpretation of a relative pathname by _c_d depends on the --LL option
+                 and the _C_D_P_A_T_H and _P_W_D environment variables. If _d_i_r_e_c_t_o_r_y is an empty  string,  the
+                 results are unspecified.
+
+       -         When  a  <hyphen-minus> is used as the operand, this shall be equivalent to the com‐
+                 mand:
+
+                     cd "$OLDPWD" && pwd
+
+                 which changes to the previous working directory and then writes its name.
+
+SSTTDDIINN
+       Not used.
+
+IINNPPUUTT FFIILLEESS
+       None.
+
+EENNVVIIRROONNMMEENNTT VVAARRIIAABBLLEESS
+       The following environment variables shall affect the execution of _c_d:
+
+       _C_D_P_A_T_H    A <colon>-separated list of pathnames that refer  to  directories.  The  _c_d  utility
+                 shall  use this list in its attempt to change the directory, as described in the DE‐
+                 SCRIPTION. An empty string in place of a directory pathname represents  the  current
+                 directory. If _C_D_P_A_T_H is not set, it shall be treated as if it were an empty string.
+
+       _H_O_M_E      The name of the directory, used when no _d_i_r_e_c_t_o_r_y operand is specified.
+
+       _L_A_N_G      Provide  a  default  value  for the internationalization variables that are unset or
+                 null. (See the Base Definitions volume of POSIX.1‐2017, _S_e_c_t_i_o_n _8_._2,  _I_n_t_e_r_n_a_t_i_o_n_a_l_‐
+                 _i_z_a_t_i_o_n  _V_a_r_i_a_b_l_e_s  for the precedence of internationalization variables used to de‐
+                 termine the values of locale categories.)
+
+       _L_C___A_L_L    If set to a non-empty string value, override the values of all  the  other  interna‐
+                 tionalization variables.
+
+       _L_C___C_T_Y_P_E  Determine  the  locale  for the interpretation of sequences of bytes of text data as
+                 characters (for example, single-byte as opposed to multi-byte  characters  in  argu‐
+                 ments).
+
+       _L_C___M_E_S_S_A_G_E_S
+                 Determine  the locale that should be used to affect the format and contents of diag‐
+                 nostic messages written to standard error.
+
+       _N_L_S_P_A_T_H   Determine the location of message catalogs for the processing of _L_C___M_E_S_S_A_G_E_S.
+
+       _O_L_D_P_W_D    A pathname of the previous working directory, used by _c_d --.
+
+       _P_W_D       This variable shall be set as specified in the DESCRIPTION. If an  application  sets
+                 or unsets the value of _P_W_D, the behavior of _c_d is unspecified.
+
+AASSYYNNCCHHRROONNOOUUSS EEVVEENNTTSS
+       Default.
+
+SSTTDDOOUUTT
+       If a non-empty directory name from _C_D_P_A_T_H is used, or if _c_d -- is used, an absolute pathname of
+       the new working directory shall be written to the standard output as follows:
+
+           "%s\n", <_n_e_w _d_i_r_e_c_t_o_r_y>
+
+       Otherwise, there shall be no output.
+
+SSTTDDEERRRR
+       The standard error shall be used only for diagnostic messages.
+
+OOUUTTPPUUTT FFIILLEESS
+       None.
+
+EEXXTTEENNDDEEDD DDEESSCCRRIIPPTTIIOONN
+       None.
+
+EEXXIITT SSTTAATTUUSS
+       The following exit values shall be returned:
+
+        0    The directory was successfully changed.
+
+       >0    An error occurred.
+
+CCOONNSSEEQQUUEENNCCEESS OOFF EERRRROORRSS
+       The working directory shall remain unchanged.
+
+       _T_h_e _f_o_l_l_o_w_i_n_g _s_e_c_t_i_o_n_s _a_r_e _i_n_f_o_r_m_a_t_i_v_e_.
+
+AAPPPPLLIICCAATTIIOONN UUSSAAGGEE
+       Since _c_d affects the current shell execution environment, it is always  provided  as  a  shell
+       regular  built-in.  If  it  is called in a subshell or separate utility execution environment,
+       such as one of the following:
+
+           (cd /tmp)
+           nohup cd
+           find . -exec cd {} \;
+
+       it does not affect the working directory of the caller's environment.
+
+       The user must have execute (search) permission in _d_i_r_e_c_t_o_r_y in order to change to it.
+
+EEXXAAMMPPLLEESS
+       The following template can be used to perform processing in the directory specified  by  _l_o_c_a_‐
+       _t_i_o_n  and  end  up in the current working directory in use before the first _c_d command was is‐
+       sued:
+
+           cd _l_o_c_a_t_i_o_n
+           if [ $? -ne 0 ]
+           then
+               print error message
+               exit 1
+           fi
+           ... do whatever is desired as long as the OLDPWD environment variable
+               is not modified
+           cd -
+
+RRAATTIIOONNAALLEE
+       The use of the _C_D_P_A_T_H was introduced in the System V shell. Its use is analogous to the use of
+       the  _P_A_T_H  variable  in the shell. The BSD C shell used a shell parameter _c_d_p_a_t_h for this pur‐
+       pose.
+
+       A common extension when _H_O_M_E is undefined is to get the login directory from the user database
+       for the invoking user. This does not occur on System V implementations.
+
+       Some  historical  shells,  such as the KornShell, took special actions when the directory name
+       contained a dot-dot component, selecting the logical parent of the directory, rather than  the
+       actual parent directory; that is, it moved up one level toward the ''//'' in the pathname, remem‐
+       bering what the user typed, rather than performing the equivalent of:
+
+           chdir("..");
+
+       In such a shell, the following commands would not necessarily produce  equivalent  output  for
+       all directories:
+
+           cd .. && ls      ls ..
+
+       This  behavior is now the default. It is not consistent with the definition of dot-dot in most
+       historical practice; that is, while this behavior has been optionally available in  the  Korn‐
+       Shell,  other  shells have historically not supported this functionality. The logical pathname
+       is stored in the _P_W_D environment variable when the _c_d utility completes and this value is used
+       to construct the next directory name if _c_d is invoked with the --LL option.
+
+FFUUTTUURREE DDIIRREECCTTIIOONNSS
+       None.
+
+SSEEEE AALLSSOO
+       _S_e_c_t_i_o_n _2_._1_2, _S_h_e_l_l _E_x_e_c_u_t_i_o_n _E_n_v_i_r_o_n_m_e_n_t, _p_w_d
+
+       The  Base  Definitions volume of POSIX.1‐2017, _C_h_a_p_t_e_r _8, _E_n_v_i_r_o_n_m_e_n_t _V_a_r_i_a_b_l_e_s, _S_e_c_t_i_o_n _1_2_._2,
+       _U_t_i_l_i_t_y _S_y_n_t_a_x _G_u_i_d_e_l_i_n_e_s
+
+       The System Interfaces volume of POSIX.1‐2017, _c_h_d_i_r()
+
+CCOOPPYYRRIIGGHHTT
+       Portions of this  text  are  reprinted  and  reproduced  in  electronic  form  from  IEEE  Std
+       1003.1-2017,  Standard  for  Information  Technology  --  Portable  Operating System Interface
+       (POSIX), The Open Group Base Specifications Issue 7, 2018 Edition, Copyright (C) 2018  by  the
+       Institute  of  Electrical  and Electronics Engineers, Inc and The Open Group.  In the event of
+       any discrepancy between this version and the original IEEE and The Open  Group  Standard,  the
+       original  IEEE  and The Open Group Standard is the referee document. The original Standard can
+       be obtained online at http://www.opengroup.org/unix/online.html .
+
+       Any typographical or formatting errors that appear in this page are most likely to  have  been
+       introduced  during  the  conversion of the source files to man page format. To report such er‐
+       rors, see https://www.kernel.org/doc/man-pages/reporting_bugs.html .
+
+IEEE/The Open Group                              2017                                      CD(1POSIX)

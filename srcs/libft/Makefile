@@ -3,13 +3,13 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vlaggoun <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/20 16:25:55 by vlaggoun          #+#    #+#              #
-#    Updated: 2023/12/31 11:18:58 by vlaggoun         ###   ########.fr        #
+#    Updated: 2024/11/26 15:53:30 by vlaggoun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-CC	= cc
+
 CFLAGS	= -Wall -Wextra -Werror
 NAME	= libft.a
 RM	= /bin/rm -f
@@ -21,7 +21,7 @@ SRCS	= ft_isascii.c ft_isprint.c ft_isalpha.c ft_isdigit.c ft_isalnum.c \
         ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c ft_striteri.c \
         ft_memchr.c ft_memcmp.c ft_strdup.c ft_calloc.c ft_itoa.c \
         ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
-        ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_strmapi.c
+        ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_strmapi.c ft_strcmp.c
 
 BONUS_S	= ft_lstnew.c ft_lstadd_front.c ft_lstlast.c ft_lstadd_back.c \
 	  ft_lstsize.c ft_lstdelone.c ft_lstclear.c 

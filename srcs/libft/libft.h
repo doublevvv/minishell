@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:45:07 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/18 12:50:10 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/26 15:53:14 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int				ft_memcmp(const void *s1, const void *s2, size_t n);
 int				ft_toupper(int c);
 int				ft_tolower(int c);
 int				ft_strncmp(const char *s1, const char *s2, unsigned int n);
+int				ft_strcmp(char *s1, char *s2);
 int				ft_atoi(const char *str);
 size_t			ft_strlen(const char *str);
 size_t			ft_strlcat(char *dest, const char *src, size_t size);

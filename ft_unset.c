@@ -1,27 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 15:14:29 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/26 15:50:11 by vlaggoun         ###   ########.fr       */
+/*   Created: 2024/11/26 12:39:29 by vlaggoun          #+#    #+#             */
+/*   Updated: 2024/11/26 16:22:00 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
+int	renew_linked_list(char *arg, t_env **head)
 {
-	unsigned int	i;
+	t_env	*current;
+	t_env	*previous;
 
-	i = 0;
-	if (!s1 && !s2)
+	current = *head;
+	while (current)
+	{
+		if (ft_strcmp(arg, current->key) == 0)
+		{
+			free(current->key);
+			free(current->value);
+		}
+		previous = 
+	}
+}
+int	unset(char **arg, t_env **env)
+{
+	int i;
+
+	i = 1;
+	if (arg[0] && !arg[i])
 		return (0);
-	while (s1[i] && s2[i] && s1[i] == s2[i] && i < n)
-		i++;
-	if (i < n)
-		return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-	return (0);
+	else if (arg[0] && arg[i])
+	{
+		
+	}
 }
