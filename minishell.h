@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/11/21 17:08:25 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:47:40 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ void	ft_assign_type(t_main *msh);
 
 char	*ft_strnstr(const char *s1, const char *s2, size_t n);
 
-int	ft_strncmp(const char *s1, const char *s2, unsigned int n);
-
 
 int ft_exit(char **arg);
 int	write_error(char **str);
@@ -88,5 +86,8 @@ t_env	*ft_lstnew_env(char *key, char *value);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
 void	ft_add_cmd_to_lst_env(t_env **env, char *key, char *value);
 int	old_path( t_env **env, char *old_directory);
+int	ft_unset(char **arg, t_env **env);
+int	delete_var(char *arg, t_env **head);
+int	ft_strcmp(char *s1, char *s2);
 
 #endif
