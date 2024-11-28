@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:39:29 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/27 16:39:17 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/28 14:12:47 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,23 @@ int	delete_var(char *arg, t_env **head)
 		{
 			free(current->key);
 			free(current->value);
+			if (previous == NULL)
+				*head = current->next;
+			else
+				previous->next = current->next;
 		}
 		previous = current;
+		// printf("current : %p\n", previous);
+		// printf("HEAD : %p\n", *head);
+		// printf("NOW : %p\n", current);
+		// printf("PREVIOUS : %p\n", previous);
 		current = current->next;
-		// if (previous == NULL)
-		// 	current->next = *head;
-		// else
-		// 	previous->next = current->next;
 	}
-	// free(current);
+	free(current);
 	return (0);
 }
+
+
 int	ft_unset(char **arg, t_env **env)
 {
 	int i;
@@ -62,7 +68,7 @@ int	ft_unset(char **arg, t_env **env)
 	// 	printf("%s: command not found\n", arg[0]);
 	// 	return (0);
 	// }
-	else if (arg[0] && arg[i])
+	if (arg[0] && arg[i])
 	{
 		delete_var(arg[i], env);
 		while (cpy)
