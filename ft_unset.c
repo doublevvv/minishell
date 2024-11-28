@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:39:29 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/28 14:12:47 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/11/28 16:08:30 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	delete_var(char *arg, t_env **head)
 	{
 		if (arg && ft_strcmp(arg, current->key) == 0)
 		{
+			printf("KEY KEY : %s\n");
 			free(current->key);
 			free(current->value);
 			if (previous == NULL)
@@ -49,7 +50,7 @@ int	delete_var(char *arg, t_env **head)
 		// printf("PREVIOUS : %p\n", previous);
 		current = current->next;
 	}
-	free(current);
+	//free(current);
 	return (0);
 }
 
@@ -58,7 +59,7 @@ int	ft_unset(char **arg, t_env **env)
 {
 	int i;
 
-	t_env *cpy = *env;
+	// t_env *cpy = *env;
 	i = 1;
 	if (strncmp("unset", arg[0], 5) == 0 && !arg[i]){
 		return (0);
@@ -71,12 +72,12 @@ int	ft_unset(char **arg, t_env **env)
 	if (arg[0] && arg[i])
 	{
 		delete_var(arg[i], env);
-		while (cpy)
-		{
-			printf("KEY : %s | VALUE : %s\n", cpy->key,cpy->value);
-			// printf("HELLO\n");
-			cpy = cpy->next;
-		}
+		// while (cpy)
+		// {
+		// 	printf("KEY : %s | VALUE : %s\n", cpy->key,cpy->value);
+		// 	// printf("HELLO\n");
+		// 	cpy = cpy->next;
+		// }
 	}
 	return (0);
 }
