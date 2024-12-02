@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:54:35 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/29 15:36:05 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/12/02 16:48:03 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	ft_display_lst_env(t_env *environ)
 	t_env	*cpy;
 
 	cpy = environ;
-	printf("DANS LISTE\n");
+	// printf("DANS LISTE\n");
 	while (cpy != NULL)
 	{
-		printf("KEY : |%s|\n",cpy->key);
-		printf(" VALUE : |%s|\n", cpy->value);
+		// printf("KEY : |%s|\n",cpy->key);
+		// printf(" VALUE : |%s|\n", cpy->value);
 		cpy = cpy->next;
 	}
 	printf("----------------------------------\n");

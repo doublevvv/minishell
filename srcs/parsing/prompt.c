@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/27 14:50:57 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/12/02 16:45:19 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ char	display_prompt(t_main *msh, t_env *env)
 		//ft_exit(msh->tmp);
 		printf("------------------------\n");
 		//ft_cd(msh->tmp, &env);
-		ft_unset(msh->tmp, &env);
+		// ft_unset(msh->tmp, &env);
+		ft_export(msh->tmp, &env);
 	}
 
 }

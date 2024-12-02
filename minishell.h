@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/11/27 14:47:40 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/12/02 19:09:46 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,8 @@ int	old_path( t_env **env, char *old_directory);
 int	ft_unset(char **arg, t_env **env);
 int	delete_var(char *arg, t_env **head);
 int	ft_strcmp(char *s1, char *s2);
+int	add_var(char *arg, t_env **env);
+int	case_sensivity(char *arg);
+int	ft_export(char **arg, t_env **env);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 08:37:40 by evlim             #+#    #+#              #
-#    Updated: 2024/11/29 16:36:20 by vlaggoun         ###   ########.fr        #
+#    Updated: 2024/12/02 19:38:35 by vlaggoun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SOURCES = srcs/main.c	\
 		srcs/libft/ft_strlen.c \
 		ft_env.c srcs/libft/ft_strchr.c srcs/libft/ft_strncpy.c \
 		srcs/libft/ft_memset.c utils_linked_list_env.c srcs/libft/ft_strnstr.c \
-		srcs/libft/ft_strjoin.c ft_unset.c srcs/libft/ft_strncpy.c
+		srcs/libft/ft_strjoin.c ft_unset.c ft_export.c srcs/libft/ft_isalpha.c \
+		srcs/libft/ft_isdigit.c srcs/libft/ft_calloc.c
 		
 
 SRCS = $(addprefix $(OBJ_DIR)/, $(SOURCES))
