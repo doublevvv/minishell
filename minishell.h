@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/02 19:09:46 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:28:30 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,11 @@ void	ft_assign_type(t_main *msh);
 char	*ft_strnstr(const char *s1, const char *s2, size_t n);
 
 
-int ft_exit(char **arg);
+// ***********************************
+// *             BUILT_IN            *
+// ***********************************
+
+int ft_exit(char **arg, t_env **env);
 int	write_error(char **str);
 bool	is_numeric(char *str);
 long	ft_atol(char *str);
@@ -92,5 +96,8 @@ int	ft_strcmp(char *s1, char *s2);
 int	add_var(char *arg, t_env **env);
 int	case_sensivity(char *arg);
 int	ft_export(char **arg, t_env **env);
+int	ft_echo(char **arg, t_env **env);
+int	ft_pwd(char **arg, t_env **env);
+
 
 #endif

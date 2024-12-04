@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:18:24 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/03 16:59:22 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:47:28 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static void	print_ascii_order(t_env *env)
 {
 	while (env)
 	{
-		
-		printf("TAILLE : %d\n", env->key[0]);
+		printf("declare -x %s='%s'\n", env->key, env->value);
+		env = env->next;
 	}
 }
 
@@ -39,7 +39,6 @@ int	add_var(char *arg, t_env **env)
 	t_env	*new;
 	size_t nbr;
 	size_t nbr2;
-	// size_t nbr3;
 	
 	nbr = ft_strlen(arg);
 	tmp = ft_strchr(arg, '=');
@@ -51,8 +50,8 @@ int	add_var(char *arg, t_env **env)
 		free(key);
 	copy_var(value, tmp + 1, nbr2);
 	new = ft_lstnew_env(key, value);
-	// if (!new);
-		//PROTEGER (KEY/VALUE/LIST)
+	// if (!new)
+	// 	//free!!!!!!
 	ft_lstadd_back_env(env, new);
 	return (0);
 }
@@ -64,15 +63,13 @@ int	case_sensivity(char *arg)
 	i = 0;
 	while (arg[i] && arg[i] != '=')
 	{
-		if (ft_isalpha(arg[0]) && (ft_isdigit(arg[i]) || ft_isalpha(arg[i])))
-			printf("HERE\n");
-		else{
-			printf("wrong\n");// invalid arg return
+		if (!(ft_isalpha(arg[0]) && (ft_isdigit(arg[i]) || ft_isalpha(arg[i])))) //gerer underscore ? 
+		{
+			printf("les loutres: export: %s: not a valid identifier\n", arg);
 			return (1);
 		}
 		i++;
 	}
-	printf("%s\n", arg);
 	return (0);
 }
 int	ft_export(char **arg, t_env **env)
@@ -82,15 +79,13 @@ int	ft_export(char **arg, t_env **env)
 
 	i = 1;
 	t_env *cpy = *env;
-	if (strncmp("export", arg[0], 7) != 0)
+	if (ft_strncmp("export", arg[0], 7) != 0)
 	{
 		printf("%s: command not founds\n", arg[0]);
 		return (0);
 	}
 	if (arg[0] && !arg[i])
-	{
 		print_ascii_order(cpy);
-	}
 	while (arg[i])
 	{
 		if (case_sensivity(arg[i])){
@@ -103,7 +98,6 @@ int	ft_export(char **arg, t_env **env)
 			while (cpy)
 			{
 				printf("KEY : %s | VALUE : %s\n", cpy->key,cpy->value);
-				// printf("TAILLE : %d\n", cpy->key[0]);
 				cpy = cpy->next;
 			}
 		}

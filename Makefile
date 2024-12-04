@@ -6,7 +6,7 @@
 #    By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 08:37:40 by evlim             #+#    #+#              #
-#    Updated: 2024/12/02 19:38:35 by vlaggoun         ###   ########.fr        #
+#    Updated: 2024/12/04 13:22:36 by vlaggoun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,13 @@ HEADER = minishell.h
 SOURCES = srcs/main.c	\
 		srcs/parsing/prompt.c	\
 		srcs/libft/ft_split.c	\
-		srcs/libft/utils.c exit.c cd.c \
+		srcs/libft/utils.c ft_exit.c \
 		srcs/libft/ft_strlen.c \
 		ft_env.c srcs/libft/ft_strchr.c srcs/libft/ft_strncpy.c \
 		srcs/libft/ft_memset.c utils_linked_list_env.c srcs/libft/ft_strnstr.c \
 		srcs/libft/ft_strjoin.c ft_unset.c ft_export.c srcs/libft/ft_isalpha.c \
-		srcs/libft/ft_isdigit.c srcs/libft/ft_calloc.c
+		srcs/libft/ft_isdigit.c srcs/libft/ft_calloc.c ft_echo.c ft_cd.c ft_pwd.c \
+		srcs/libft/ft_strncmp.c
 		
 
 SRCS = $(addprefix $(OBJ_DIR)/, $(SOURCES))

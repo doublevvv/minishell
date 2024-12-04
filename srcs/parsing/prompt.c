@@ -6,34 +6,11 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/02 16:45:19 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:24:26 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-// char	display_prompt(t_main *msh)
-// {
-// 	char	*line;
-
-// 	while (1)
-// 	{
-// 		line = readline("les loutres > ");
-// 		if (!line)
-// 		{
-// 			exit (1);
-// 		}
-// 		add_history(line);
-// 	}
-// 	msh->cmd = &line;
-// 	int i = 0;
-// 	while (msh->cmd[i])
-// 	{
-// 		printf("==%s\n", msh->cmd[i]);
-// 		i++;
-// 	}
-// 	ft_display_lst(msh);
-// }
 
 char	display_prompt(t_main *msh, t_env *env)
 {
@@ -54,11 +31,13 @@ char	display_prompt(t_main *msh, t_env *env)
 		// 	printf("CMD : %s\n", msh->tmp[i]);
 		// 	i++;
 		// }
-		//ft_exit(msh->tmp);
 		printf("------------------------\n");
+		// ft_exit(msh->tmp, &env);
 		//ft_cd(msh->tmp, &env);
-		// ft_unset(msh->tmp, &env);
+		//ft_echo(msh->tmp, &env);
+		//ft_unset(msh->tmp, &env);
 		ft_export(msh->tmp, &env);
+		// ft_pwd(msh->tmp, &env);
 	}
 
 }

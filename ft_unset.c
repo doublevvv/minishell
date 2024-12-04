@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:39:29 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/02 16:43:38 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:24:01 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	ft_strcmp(char *s1, char *s2)
 	int	i;
 
 	i = 0;
-	// printf("dns strcmp : s1 = %s\n", s1);
-	// printf(" et s2 == %s\n", s2);
 	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);
@@ -40,9 +38,6 @@ int	delete_var(char *arg, t_env **head)
 		// printf("cocuou unset\n");
 		if (ft_strcmp(arg, current->key) == 0)
 		{
-			// printf("on a trouve ce au'on recherche\n");
-			// printf("ARG : %s\n", arg);
-			// printf("KEY KEY : %s\n", current->key);
 			free(current->key);
 			free(current->value);
 			if (previous == NULL)
@@ -53,10 +48,6 @@ int	delete_var(char *arg, t_env **head)
 			break;
 		}
 		previous = current;
-		// printf("current : %p\n", previous);
-		// printf("HEAD : %p\n", *head);
-		// printf("NOW : %p\n", current);
-		// printf("PREVIOUS : %p\n", previous);
 		current = current->next;
 	}
 	return (0);
