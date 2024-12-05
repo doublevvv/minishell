@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/04 11:28:30 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/12/05 17:12:06 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <string.h>
 # include <stdbool.h>
 # include <limits.h>
+# include <stddef.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
@@ -98,6 +99,9 @@ int	case_sensivity(char *arg);
 int	ft_export(char **arg, t_env **env);
 int	ft_echo(char **arg, t_env **env);
 int	ft_pwd(char **arg, t_env **env);
+
+char *ft_expand(char *arg, t_env *env);
+int	comp_var(char *var_name, char *key, int var_size);
 
 
 #endif

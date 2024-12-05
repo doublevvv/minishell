@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlaggoun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 06:54:41 by vlaggoun          #+#    #+#             */
-/*   Updated: 2023/12/23 14:59:20 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/12/05 17:56:59 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include"libft.h"
-//#include<string.h>
-//#include<stdio.h>
+
+#include "libft.h"
 
 void	*ft_memcpy(void *dest, const void *src, unsigned int n)
 {
@@ -21,6 +20,7 @@ void	*ft_memcpy(void *dest, const void *src, unsigned int n)
 
 	csrc = (char *)src;
 	cdest = (char *)dest;
+	// cdest = malloc(sizeof(char *) + 1);
 	if (!dest && !src)
 		return (NULL);
 	i = 0;

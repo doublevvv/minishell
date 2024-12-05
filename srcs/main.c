@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 13:34:37 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/11/29 14:47:04 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/12/05 17:35:55 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int ac, char **av, char **envp)
 	ft_init_data(&msh);
 	msh.env = get_env(envp);
 	//si null echec alloc 
-	ft_display_lst_env(msh.env);
+	//ft_display_lst_env(msh.env);
 	// while (msh.env)
 	// {
 	// 	printf("key : %s, value : %s\n", msh.env->key, msh.env->value);
