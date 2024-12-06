@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:18:24 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/04 13:47:28 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/12/06 11:17:18 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	print_ascii_order(t_env *env)
 {
 	while (env)
 	{
-		printf("declare -x %s='%s'\n", env->key, env->value);
+		printf("declare -x %s=\"%s\"\n", env->key, env->value);
 		env = env->next;
 	}
 }
