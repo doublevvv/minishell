@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/06 11:16:52 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/12/07 14:33:28 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ enum type
 	PIPE,
 	REDIRECTION
 };
+
+typedef struct s_size
+{
+	char *line;
+	int	capacity;
+	int line_size;
+}		t_size;
 
 typedef struct s_env
 {
@@ -103,6 +110,7 @@ int	ft_pwd(char **arg, t_env **env);
 
 char *ft_expand(char *arg, t_env *env);
 int	comp_var(char *var_name, char *key, int var_size);
-
+int	add_size_to_str(t_size *line, char *str);
+int	add_size(t_size *line, char c);
 
 #endif

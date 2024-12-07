@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 16:00:32 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/06 16:18:21 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/12/07 15:57:25 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,50 @@ enum{
 	SINGLE_QUOTE,
 	DOUBLE_QUOTE
 };
+
+int	add_size(t_size *line, char c)
+{
+	char *tmp;
+	
+	if (line->capacity == 0 ||  line->line_size == line->capacity)
+	{
+		if (line->capacity != 0)
+			line->capacity = line->capacity * 3;
+		else
+			line->capacity = 20;
+		tmp = malloc(sizeof(char) * (line->capacity + 1));
+		if (!tmp)//si ca echoue free la ligne actuielle
+		{
+			free(line->line);
+			return (0);
+		}
+		if (line->line_size > 0)
+		{
+			ft_memcpy(tmp, line->line, ft_strlen(line->line));
+			free(line->line);
+		}
+		line->line = tmp;
+	}
+	printf("size == %d, capaciity == %d\n", line->line_size, line->capacity);
+	line->line[line->line_size] = c;
+	line->line_size++;
+	line->line[line->line_size] = '\0';
+	return (1);
+}
+
+int	add_size_to_str(t_size *line, char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!add_size(line, str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int	comp_var(char *var_name, char *key, int var_size)
 {
@@ -36,7 +80,7 @@ int	comp_var(char *var_name, char *key, int var_size)
 	return (1);
 }
 
-void	check_quotes(char quote, int *index, int *quote_state)
+int	check_quotes(char quote, int *index, int *quote_state)
 {
 	if (quote == '"' && *quote_state == NO_QUOTE)
 	{
@@ -57,32 +101,44 @@ void	check_quotes(char quote, int *index, int *quote_state)
 	{
 		*index = *index + 1;
 		*quote_state = NO_QUOTE;
-	}	
+	}
+	else
+		return (0);
+	return (1);
 }
 
 char *ft_expand(char *arg, t_env *env)
 {
+	(void)env;
 	int i;
 	int	var_size;
-	char *res;
 	int	res_index;
 	t_env *cpy;
 	int	quote_state;
-	char *expand_value;
+	char *res;
+
+	t_size line;
 
 	i = 0;
+	int quote_true = 0;
 	quote_state = NO_QUOTE;
 	var_size = 0;
 	res_index = 0;
-	expand_value = NULL;
-	res = malloc(25000 * (sizeof(char) + 1));
-	if (!res)
-		return (NULL);
-	res[res_index] = 0;
-	while (arg[i])
+	res = NULL;
+	line.capacity = 0;
+	line.line_size = 0;
+	line.line = NULL;
+	printf("F :%zu\n", ft_strlen(arg));
+	
+	while (arg[i] && arg[i] != '\0')
 	{	
-		if (arg[i] == '\'' || '"')
-			check_quotes(arg[i], &i, &quote_state);
+		if (quote_state != NO_QUOTE)
+			quote_true = 1;
+		if (arg[i] == '\'' || arg[i] == '"')
+		{
+			if (check_quotes(arg[i], &i, &quote_state))
+				continue ;
+		}
 		if (arg[i] == '$' && arg[i + 1] != '\0' && quote_state != SINGLE_QUOTE) //gerer le else si ce n'est pas un dollar, cpier juste caractere dasn variable
 		{
 			i++;
@@ -97,26 +153,33 @@ char *ft_expand(char *arg, t_env *env)
 				cpy = env;
 				while (cpy)
 				{
-					// printf("HRE\n");
 					if (comp_var(arg + i, cpy->key, var_size) == 0)
 					{
-						printf("HERE\n");
-						ft_memcpy(res + res_index, cpy->value, ft_strlen(cpy->value));
-						res_index += ft_strlen(cpy->value);
-						res[res_index] = 0;
+						if (!add_size_to_str(&line, cpy->value))
+							return (NULL);
 						break ;
 					}
 					cpy = cpy->next;
 				}
 				i += var_size;
 			}
-			printf("EXPAND : %s\n", res);
-			return (res);// ne pas retourner res en plein milieu, boucle cassee 
 		}
 		else
-			expand_value = ft_strdup(arg);//expand_value[expand_index] = arg[i]; i++; expand_index++;
+		{
+			if (!add_size(&line, arg[i]))
+				return (NULL);
+			i++;
+		}
+		printf("I : %d\n", i);
 	}
-	return (expand_value);
+	printf("size == %d, line == %s quote == %d\n", line.line_size, line.line, quote_true);
+	if (line.line_size == 0 && quote_true != 0)
+	{
+		line.line = malloc(1);
+		line.line[0] = 0;
+	}
+	printf("RESULT : %s\n", line.line);
+	return (line.line);
 }
 
 //corriger le malloc 2500
