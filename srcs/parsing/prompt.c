@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/07 15:31:41 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:44:26 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	display_prompt(t_main *msh, t_env *env)
 		}
 		add_history(line);
 		msh->tmp = ft_split(line, ' ');
+		set_signal();
 		// int i = 0;
 		// while (msh->tmp[i] != NULL)
 		// {
@@ -37,10 +38,10 @@ char	display_prompt(t_main *msh, t_env *env)
 		//ft_echo(msh->tmp, &env);
 		//ft_unset(msh->tmp, &env);
 		// ft_export(msh->tmp, &env);
-		// ft_pwd(msh->tmp, &env);
+		ft_pwd(msh->tmp, &env);
 		//write(1, *msh->tmp, ft_strlen(*msh->tmp));
-		printf("avant expand : %s\n", *msh->tmp);
 		ft_expand(*msh->tmp, env);
+		
 	}
 
-}
+}	

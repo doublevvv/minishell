@@ -6,12 +6,68 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 08:22:11 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/06 11:16:42 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:52:33 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// static void copy_var(char *src, char *dest, size_t size)
+// {
+// 	size_t j;
+	
+// 	j = -1;
+// 	while (++j < size)
+// 		src[j] = dest[j];
+// 	src[j] = 0;
+// } 
+
+// int	add_up_size_env(char *environ)
+// {
+// 	int i;
+// 	size_t	nbr;
+// 	size_t	nbr2;
+// 	size_t	nbr3;
+// 	char *tmp;
+// 	char *key;
+
+// 	i = -1;
+// 	while (environ[++i])
+// 	{
+// 		nbr = ft_strlen(environ[i]);
+// 		tmp = ft_strchr(environ[i], '=');
+// 		nbr2 = ft_strlen(tmp + 1) + 1;
+// 		key = malloc(nbr3 + 1);
+// 		key[nbr3] = 0;
+// 	}
+// }
+
+// t_env	*get_env(char **environ)
+// {
+// 	int		i;
+// 	char	*tmp;
+// 	char	*key;
+// 	char	*value;
+// 	t_env	*list;
+// 	t_env	*new;
+// 	size_t	nbr2;
+// 	size_t	nbr3;
+
+// 	i = -1;
+// 	list = NULL;
+// 	while (environ[++i])
+// 	{	
+// 		copy_var(key, environ[i], nbr3);
+// 		value = malloc(nbr2 + 1);
+// 		if (!value)
+// 			free(key);
+// 		copy_var(value, tmp + 1, nbr2);
+// 		new = ft_lstnew_env(key, value);
+// 		ft_lstadd_back_env(&list, new);
+// 	}
+// 	return (list);
+// }
+// t_env 
 
 static void copy_var(char *src, char *dest, size_t size)
 {

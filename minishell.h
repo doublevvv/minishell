@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/07 14:33:28 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:14:50 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
-
-enum type
-{
-	CMD,
-	PIPE,
-	REDIRECTION
-};
+# include <signal.h>
 
 typedef struct s_size
 {
@@ -42,6 +36,7 @@ typedef struct s_env
 {
 	char *key;
 	char *value;
+	int		exit_code;
 	struct s_env *next;
 }		t_env;
 
@@ -106,11 +101,22 @@ int	case_sensivity(char *arg);
 int	ft_export(char **arg, t_env **env);
 int	ft_echo(char **arg, t_env **env);
 int	ft_pwd(char **arg, t_env **env);
+int	add_up_size_env(char *environ);
 // void copy_var(char *src, char *dest, size_t size);
 
 char *ft_expand(char *arg, t_env *env);
 int	comp_var(char *var_name, char *key, int var_size);
 int	add_size_to_str(t_size *line, char *str);
 int	add_size(t_size *line, char c);
+int	interrogation_mark(char *str, t_env *env);
+
+
+// ***********************************
+// *            SIGNALS              *
+// ***********************************
+
+void	sigint_handler(int signal);
+void	set_signal(void);
+
 
 #endif

@@ -6,7 +6,7 @@
 #    By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 08:37:40 by evlim             #+#    #+#              #
-#    Updated: 2024/12/06 09:23:55 by vlaggoun         ###   ########.fr        #
+#    Updated: 2024/12/10 10:34:24 by vlaggoun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SOURCES = srcs/main.c	\
 		srcs/libft/ft_strjoin.c ft_unset.c ft_export.c srcs/libft/ft_isalpha.c \
 		srcs/libft/ft_isdigit.c srcs/libft/ft_calloc.c ft_echo.c ft_cd.c ft_pwd.c \
 		srcs/libft/ft_strncmp.c expand.c srcs/libft/ft_isalnum.c srcs/libft/ft_memcpy.c \
-		srcs/libft/ft_strdup.c
+		srcs/libft/ft_strdup.c signal.c
 		
 
 SRCS = $(addprefix $(OBJ_DIR)/, $(SOURCES))

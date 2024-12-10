@@ -6,7 +6,7 @@
 /*   By: vlaggoun <vlaggoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 16:00:32 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/07 15:57:25 by vlaggoun         ###   ########.fr       */
+/*   Updated: 2024/12/09 13:43:44 by vlaggoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	add_size(t_size *line, char c)
 		}
 		line->line = tmp;
 	}
-	printf("size == %d, capaciity == %d\n", line->line_size, line->capacity);
+	//printf("size == %d, capaciity == %d\n", line->line_size, line->capacity);
 	line->line[line->line_size] = c;
 	line->line_size++;
 	line->line[line->line_size] = '\0';
@@ -74,7 +74,7 @@ int	comp_var(char *var_name, char *key, int var_size)
 	// printf("I SIZE : %d\n", i);
 	// printf("%.8s\n", var_name);
 	if (i == var_size && key[i] == 0){
-		printf(" i = %d && varsize = %d\n", i, var_size);
+		// printf(" i = %d && varsize = %d\n", i, var_size);
 		return (0);
 	}
 	return (1);
@@ -107,6 +107,23 @@ int	check_quotes(char quote, int *index, int *quote_state)
 	return (1);
 }
 
+int	interrogation_mark(char *str, t_env *env)
+{
+	int i;
+
+	i = 0;
+	if (str[i] == '$' && str[i + 1] == '?')
+		return (env->exit_code);
+	// else if (str[i] != '$')
+	// {
+	// 	//printf("HERE\n");
+	// 	printf("%c: command not found\n", str[i]);
+	// 	return (0);
+	// }
+	// message d'erreur gere dans l'exec ? 
+	return (1);
+}
+
 char *ft_expand(char *arg, t_env *env)
 {
 	(void)env;
@@ -130,6 +147,7 @@ char *ft_expand(char *arg, t_env *env)
 	line.line = NULL;
 	printf("F :%zu\n", ft_strlen(arg));
 	
+	interrogation_mark(&arg[i], env);
 	while (arg[i] && arg[i] != '\0')
 	{	
 		if (quote_state != NO_QUOTE)
