@@ -1,0 +1,44 @@
+(t_main) $1 = {
+  line = 0x0000000000421fa0 "Q\xf7C"
+  cmd = 0x000000000043f3e0 "\x9f\xf7C"
+  nb_cmd = 2
+  nb_cmd_array = 2
+  cmd_array = 0x000000000043f440
+  envp = 0x00007fffffffdf38
+  env_path = 0x0000000000000000
+  paths = 0x0000000000000000
+  full_path = 0x0000000000000000
+  cmd_valid = false
+  infile = 0x0000000000000000
+  outfile = 0x0000000000000000
+  fd_infile = -1
+  fd_outfile = -1
+  pipefd = ([0] = 3, [1] = -1)
+  prev_pipe = 3
+  in_pipeline = true
+  code_status = 0
+  head_command = NULL
+}
+
+
+(t_main) $0 = {
+  line = 0x0000000000000000
+  cmd = 0x0000000000000000
+  nb_cmd = 0
+  nb_cmd_array = 0
+  cmd_array = 0x0000000000000000
+  envp = 0x00007fffffffdf38
+  env_path = 0x0000000000000000
+  paths = 0x0000000000000000
+  full_path = 0x0000000000000000
+  cmd_valid = false
+  infile = 0x0000000000000000
+  outfile = 0x0000000000000000
+  fd_infile = -1
+  fd_outfile = -1
+  pipefd = ([0] = -1, [1] = -1)
+  prev_pipe = -1
+  in_pipeline = false
+  code_status = 0
+  head_command = NULL
+}

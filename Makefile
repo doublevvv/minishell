@@ -6,7 +6,7 @@
 #    By: evlim <evlim@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 08:37:40 by evlim             #+#    #+#              #
-#    Updated: 2024/10/21 13:25:04 by evlim            ###   ########.fr        #
+#    Updated: 2024/12/11 13:32:35 by evlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,31 @@ NAME = minishell
 HEADER = minishell.h
 
 SOURCES = srcs/main.c	\
-		srcs/parsing/prompt.c	\
 		srcs/libft/check.c	\
+		srcs/libft/lst.c	\
+		srcs/libft/ft_split.c	\
+		srcs/libft/ft_str.c	\
+		srcs/libft/ft_str2.c	\
+		srcs/libft/ft_str3.c	\
+		srcs/parsing/init.c	\
+		srcs/parsing/prompt.c	\
+		srcs/parsing/lst_to_array.c	\
+		srcs/parsing/env_path.c	\
+		srcs/parsing/path.c	\
+		srcs/parsing/free.c	\
+		srcs/env/ft_env.c	\
+		srcs/env/env_to_tab.c	\
+		srcs/env/env_utils.c	\
+		srcs/execution/exec.c	\
+		srcs/execution/exec2.c	\
+		srcs/execution/redirection.c	\
+		srcs/execution/free.c	\
+		srcs/builtin/ft_echo.c	\
+		srcs/builtin/ft_exit.c	\
+		srcs/builtin/ft_pwd.c	\
+		srcs/builtin/ft_cd.c	\
+		srcs/builtin/ft_export.c	\
+		srcs/builtin/ft_unset.c
 
 SRCS = $(addprefix $(OBJ_DIR)/, $(SOURCES))
 

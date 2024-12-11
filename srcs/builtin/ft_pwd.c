@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/28 13:34:37 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/11 14:03:20 by evlim            ###   ########.fr       */
+/*   Created: 2024/10/24 09:01:04 by vlaggoun          #+#    #+#             */
+/*   Updated: 2024/12/11 12:53:31 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_pwd(t_main *msh, t_env *env)
 {
-	(void)argc;
-	(void)argv;
-	t_main		msh;
+	(void)env;
 
-	ft_init_data(&msh, envp);
-	// ft_display_lst_env(msh.env);
-	ft_msh_loop(&msh);
+	if (ft_strncmp("pwd", msh->cmd_array[0], 4) != 0)
+	{
+		printf("%s: command not founds\n", msh->cmd_array[0]);
+		return (1);
+	}
+	printf("%s\n", getcwd(NULL, PATH_MAX));
+	//perror
 	return (0);
 }
