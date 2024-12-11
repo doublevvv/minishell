@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:41:13 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/11 14:07:22 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/11 15:19:03 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_execute_command(t_main *msh)
 {
+	ft_convert_lst_to_tab(msh);
 	ft_search_env_path(msh);
 	if (ft_get_paths(msh) == false)
 	{
@@ -33,7 +34,6 @@ void	ft_execute_command(t_main *msh)
 	}
 	//dprintf(2, "COMMANDE VALIDE\n");
 	//Conversion liste chainee env en char **
-	ft_convert_lst_to_tab(msh);
 	if (execve(msh->full_path, msh->cmd_array, msh->envp) == -1)
 	{
 		ft_free_all(msh, "execve failed");
