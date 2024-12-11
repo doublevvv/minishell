@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/11 13:37:17 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/11 17:32:00 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ enum e_result
 	SUCCESS
 };
 
+enum{
+	NO_QUOTE,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE
+};
+
 typedef struct s_lst
 {
 	int				token_type;
@@ -61,8 +67,16 @@ typedef struct s_env
 {
 	char			*key;
 	char			*value;
+	int				exit_code;
 	struct s_env	*next;
 }	t_env;
+
+typedef struct s_size
+{
+	char	*line;
+	int		capacity;
+	int		line_size;
+}	t_size;
 
 typedef struct s_main
 {
@@ -71,7 +85,6 @@ typedef struct s_main
 	int			nb_cmd;
 	int			nb_cmd_array;
 	char		**cmd_array;
-	t_env		*env;
 	char		**envp;
 	char		*env_path;
 	char		**paths;
@@ -85,6 +98,7 @@ typedef struct s_main
 	int			code_status;
 	char		*heredoc_filename;
 	int			file;
+	t_env		*env;
 	t_lst		*head_command;
 }	t_main;
 
@@ -151,6 +165,22 @@ char	*ft_join_key_to_value(t_env *lst_env);
 void	ft_convert_lst_to_tab(t_main *msh);
 
 /* ************************************************************************* */
+/*                                   EXPAND                                  */
+/* ************************************************************************* */
+
+char	*ft_expand(char *arg, t_env *env);
+
+int		interrogation_mark(char *str, t_env *env);
+
+int		check_quotes(char quote, int *index, int *quote_state);
+
+int		comp_var(char *var_name, char *key, int var_size);
+
+int		add_size_to_str(t_size *line, char *str);
+
+int		add_size(t_size *line, char c);
+
+/* ************************************************************************* */
 /*                                  EXECUTION                                */
 /* ************************************************************************* */
 
@@ -162,7 +192,7 @@ void	ft_dup_pipe(t_main *msh, t_lst *node);
 
 void	ft_execute_parent(t_main *msh);
 
-void	ft_create_cmd_array(t_main *msh, t_lst *tmp);
+void	ft_create_cmd_array(t_main *msh, t_lst *cmd);
 
 void	ft_final_execution(t_main *msh);
 
@@ -249,6 +279,10 @@ void	*ft_calloc(size_t count, size_t n);
 int		ft_isalpha(int c);
 
 int		ft_isdigit(int c);
+
+char	ft_isalnum(char c);
+
+void	*ft_memcpy(void *dest, const void *src, unsigned int n);
 
 /* ************************************************************************* */
 /*                               LISTES CHAINEES                             */

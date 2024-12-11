@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:25:39 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/06 16:57:11 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/11 18:47:00 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ about the command in a linked list. If not, we search for the command
 in the paths of the `PATH` environment variable. */
 void	ft_check_access(t_main *msh)
 {
+	//si commnd[0] == '\0' command not found et parti
 	if (access(msh->full_path, F_OK) == 0)
 	{
 		//dprintf(2, "fullpath: %s\n", msh->full_path);

@@ -6,7 +6,7 @@
 #    By: evlim <evlim@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 08:37:40 by evlim             #+#    #+#              #
-#    Updated: 2024/12/11 13:32:35 by evlim            ###   ########.fr        #
+#    Updated: 2024/12/11 17:29:00 by evlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ SOURCES = srcs/main.c	\
 		srcs/builtin/ft_pwd.c	\
 		srcs/builtin/ft_cd.c	\
 		srcs/builtin/ft_export.c	\
-		srcs/builtin/ft_unset.c
+		srcs/builtin/ft_unset.c	\
+		srcs/expand/expand.c	
 
 SRCS = $(addprefix $(OBJ_DIR)/, $(SOURCES))
 
