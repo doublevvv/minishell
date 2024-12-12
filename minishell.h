@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/12 17:44:36 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/12 18:20:04 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,11 +253,11 @@ void	ft_handle_redirections(t_main *msh, t_lst *cmd_args);
 
 void	ft_open_redir(t_main *msh, t_lst *cmd_args);
 
-void	ft_redirect_pipes(t_main *msh, int old_fd, int new_fd); //?
+void	ft_redirect_pipes(t_main *msh, int old_fd, int new_fd); //a utiliser
 
-void	ft_generate_random_filename(t_main *msh); //?
+void	ft_generate_random_filename(t_main *msh);
 
-void	ft_read_input_heredoc(char *cmd, int file); //?
+void	ft_read_input_heredoc(char *cmd, int file);
 
 /* ************************************************************************* */
 /*                                  LIBFT                                    */

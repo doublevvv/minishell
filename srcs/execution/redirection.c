@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 08:34:07 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/12 13:40:18 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/12 18:45:44 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	ft_generate_random_filename(t_main *msh)
 		i++;
 	}
 	str[8] = '\0';
-	msh->heredoc_filename = ft_strjoin(path, str); // a free
-	if (msh->heredoc_filename == NULL)
+	msh->heredoc_filename = ft_strjoin(path, str);
+	if (!msh->heredoc_filename)
 	{
 		ft_putstr_fd("Failed to join to create heredoc file name\n", 2);
 		ft_free_all(msh, NULL, true);
@@ -91,7 +91,7 @@ void	ft_open_redir(t_main *msh, t_lst *cmd_args)
 	{
 		dprintf(2, "REDIRECTION IN\n");
 		fd_infile = open(cmd_args->u_data.word, O_RDONLY);
-		//dprintf(2, "ICI fd_infile: %d\n", fd_infile);
+		dprintf(2, "ICI fd_infile: %d\n", fd_infile);
 		if (fd_infile == -1)
 		{
 			ft_open_file_error(msh, 0, 0);

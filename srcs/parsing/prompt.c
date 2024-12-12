@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/12 16:15:48 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/12 18:58:00 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ bool	ft_check_prompt(t_main *msh, char *str)
 				}
 				return (false);
 			}
+			//LEAK DANS HEREDOC
 			if (token == REDIRECTION_HEREDOC)
 			{
 				dprintf(2, "WORD = REDIRECTION_HEREDOC\n");
@@ -205,9 +206,11 @@ bool	ft_check_prompt(t_main *msh, char *str)
 				msh->file = open(msh->heredoc_filename, O_CREAT | O_WRONLY, 0644);
 				if (msh->file == -1)
 				{
+					dprintf(2, "HELLO HELLO\n");
 					ft_open_file_error(msh, 0, 0);
+					unlink(msh->heredoc_filename);
 					free(msh->heredoc_filename);
-					//autre a free
+					ft_free_all(msh, NULL, true);
 				}
 				dprintf(2, "msh->cmd = %s\n", msh->cmd);
 				ft_read_input_heredoc(msh->cmd, msh->file);
@@ -217,8 +220,10 @@ bool	ft_check_prompt(t_main *msh, char *str)
 				dprintf(2, "msh->fd_infile: %d\n", fd_infile);
 				if (fd_infile == -1)
 				{
-					//ft_open_file_error(msh);
-					;
+					ft_open_file_error(msh, 0, 0);
+					unlink(msh->heredoc_filename);
+					free(msh->heredoc_filename);
+					ft_free_all(msh, NULL, true);
 				}
 				dprintf(2, "file: %d\n", msh->file);
 				unlink(msh->heredoc_filename);
@@ -272,7 +277,7 @@ void	ft_msh_loop(t_main *msh)
 		add_history(msh->line);
 		if (ft_check_prompt(msh, msh->line) == false)
 		{
-			ft_free_all(msh, NULL, false); // a verifier
+			ft_free_all(msh, NULL, true);
 		}
 		else
 		{
