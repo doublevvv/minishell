@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 08:41:51 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/11 18:40:50 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/12 15:49:53 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_create_cmd_array(t_main *msh, t_lst *cmd)
 	if (!msh->cmd_array)
 	{
 		ft_print_error_message(ALLOCATION_FAILED, 0);
-		//exit (1);
+		ft_free_all(msh, NULL, true);
 	}
 }
 
@@ -51,7 +51,7 @@ void	ft_display_cmd_array(t_main *msh)
 	dprintf(2, "Array of commands\n");
 	while (msh->cmd_array[i] != NULL)
 	{
-		dprintf(2, "cmd %d, %s\n", i, msh->cmd_array[i]);
+		dprintf(2, "cmd %d : %s\n", i, msh->cmd_array[i]);
 		i++;
 	}
 }

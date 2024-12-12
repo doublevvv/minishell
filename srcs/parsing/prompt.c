@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/11 16:36:22 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/12 16:15:48 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,39 @@ void	ft_execute_builtin(t_main *msh, int i)
 {
 	//int status;
 
-	if (i == 0)
+	if (i == ECHO)
 	{
 		dprintf(2, "APPEL ECHO FONCTION\n");
 		ft_echo(msh, msh->env);
 		//ft_free_all(msh);
 		//exit(echo(msh));
 	}
-	else if (i == 1)
+	else if (i == CD)
 	{
 		dprintf(2, "APPEL CD FONCTION\n");
 		ft_cd(msh, msh->env);
 	}
-	else if (i == 2)
+	else if (i == PWD)
 	{
 		dprintf(2, "APPEL PWD FONCTION\n");
 		ft_pwd(msh, NULL);
 	}
-	else if (i == 3)
+	else if (i == EXPORT)
 	{
 		dprintf(2, "APPEL EXPORT FONCTION\n");
 		ft_export(msh, msh->env);
 	}
-	else if (i == 4)
+	else if (i == UNSET)
 	{
 		dprintf(2, "APPEL UNSET FONCTION\n");
 		ft_unset(msh, msh->env);
 	}
-	else if (i == 5)
+	else if (i == ENV)
 	{
 		dprintf(2, "APPEL ENV FONCTION\n");
-		ft_display_lst_env(msh->env);
+		ft_env(msh->env);
 	}
-	else if (i == 6)
+	else if (i == EXIT)
 	{
 		dprintf(2, "APPEL EXIT FONCTION\n");
 		ft_exit(msh, NULL);
@@ -184,7 +184,7 @@ bool	ft_check_prompt(t_main *msh, char *str)
 				ft_print_error_message(ALLOCATION_FAILED, 0);
 				return (false);
 			}
-			ft_lstadd_back(&msh->head_command, current_command);
+			ft_lstadd_back(msh, &msh->head_command, current_command);
 		}
 		else
 		{
@@ -193,7 +193,6 @@ bool	ft_check_prompt(t_main *msh, char *str)
 			{
 				if (is_word != EMPTY_LINE)
 				{
-					//printf("str[i] = %c\n", str[i]);
 					ft_print_error_message(is_word, str[i]);
 				}
 				return (false);
@@ -237,10 +236,11 @@ bool	ft_check_prompt(t_main *msh, char *str)
 				ft_print_error_message(ALLOCATION_FAILED, 0);
 				return (false);
 			}
-			ft_lstadd_back(&current_command->u_data.cmd_args, command);
+			ft_lstadd_back(msh, &current_command->u_data.cmd_args, command);
 		}
 		ft_isspace(str, &i);
 	}
+	// Laisser la fonction (lst.c) en commentaire
 	ft_display_lst(msh->head_command);
 	if (ft_verify_lst(msh->head_command) == false)
 	{
@@ -258,22 +258,21 @@ void	ft_msh_loop(t_main *msh)
 		msh->stdout_copy = dup(STDOUT_FILENO);
 		if (msh->stdin_copy == -1 || msh->stdout_copy == -1)
 		{
-			dprintf(2, "prompt loopp ; cpyin %d, cpyout %d\n", msh->stdin_copy, msh->stdout_copy);
-			ft_free_all(msh, "Failed to dup stdin/stdout");
-			exit(1);
+			ft_putstr_fd("Failed to dup stdin/stdout\n", 2);
+			ft_free_all(msh, NULL, true);
 		}
 		ft_init_data_bis(msh);
 		msh->line = readline("les loutres > ");
 		if (!msh->line)
 		{
 			//check erno == ENOMEN;
-			ft_free_all(msh, NULL);
+			ft_free_all(msh, NULL, false); //a verifier
 			break ;
 		}
 		add_history(msh->line);
 		if (ft_check_prompt(msh, msh->line) == false)
 		{
-			ft_free_all(msh, NULL);
+			ft_free_all(msh, NULL, false); // a verifier
 		}
 		else
 		{

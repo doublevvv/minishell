@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:25:39 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/11 18:47:00 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/12 17:48:17 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	ft_join_cmd_to_path(t_main *msh, int i)
 	if (!path_tmp)
 	{
 		ft_putstr_fd("Failed to join\n", 2);
-		ft_free_double_array(msh->cmd_array);
-		ft_free_all(msh, NULL);
+		ft_free_all(msh, NULL, true);
 	}
 	msh->full_path = ft_strjoin(path_tmp, msh->cmd_array[0]);
 	if (!msh->full_path)
@@ -71,9 +70,8 @@ void	ft_check_path(t_main *msh)
 			}
 			else
 			{
-				dprintf(2, "ICI\n");
 				ft_print_cmd_msg_error(msh, 2);
-				ft_free_all(msh, NULL);
+				ft_free_all(msh, NULL, true);
 				exit(126);
 			}
 		}
@@ -82,10 +80,9 @@ void	ft_check_path(t_main *msh)
 	}
 	if (msh->paths[i] == NULL)
 	{
-		dprintf(2, "ICI BIS\n");
 		ft_print_cmd_msg_error(msh, 1);
-		dprintf(2, "\t\tje suis le pid : %d\n", getpid());
-		ft_free_all(msh, NULL);
+		//dprintf(2, "\t\tje suis le pid : %d\n", getpid());
+		ft_free_all(msh, NULL, true);
 		exit(127);
 	}
 }
@@ -106,17 +103,15 @@ void	ft_check_access(t_main *msh)
 		}
 		else
 		{
-			dprintf(2, "LA\n");
 			ft_print_cmd_msg_error(msh, 2);
-			ft_free_all(msh, NULL);
+			ft_free_all(msh, NULL, true);
 			exit(126);
 		}
 	}
 	else
 	{
-		dprintf(2, "LA BIS\n");
 		ft_print_cmd_msg_error(msh, 1);
-		ft_free_all(msh, NULL);
+		ft_free_all(msh, NULL, true);
 		exit(127);
 	}
 }

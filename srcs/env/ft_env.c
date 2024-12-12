@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 08:22:11 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/11 13:17:17 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/12 10:08:27 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@ t_env	*get_env(char **environ)
 		nbr2 = ft_strlen(tmp + 1) + 1;
 		nbr3 = nbr - nbr2;
 		key = malloc(nbr3 + 1);
-		//	proteger malloc
+		if (!key)
+		{
+			ft_print_error_message(ALLOCATION_FAILED, 0);
+			exit(EXIT_FAILURE);
+		}
 		// printf("environ[%d] ==%s, nbr == %zu , nbr 2 == %zu, nbr 3 == %zu\n", i, environ[i], nbr, nbr2, nbr3);
 		// size_t j;
 		// for (j = 0; j < nbr3; j++)
@@ -57,15 +61,24 @@ t_env	*get_env(char **environ)
 		copy_var(key, environ[i], nbr3);
 		value = malloc(nbr2 + 1);
 		if (!value)
+		{
+			ft_print_error_message(ALLOCATION_FAILED, 0);
 			free(key);
+			exit(EXIT_FAILURE);
+		}
 		//ft_strncpy(value, tmp + 1, nbr2);
 		copy_var(value, tmp + 1, nbr2);
 		// for (j = 0; j < nbr2; j++)
 		// 	value[j] = environ[i][j];
 		// value[j] = 0;
 		new = ft_lstnew_env(key, value);
-		// if (!new);
-			//PROTEGER (KEY/VALUE/LIST)
+		if (!new)
+		{
+			ft_print_error_message(ALLOCATION_FAILED, 0);
+			free(key);
+			free(value);
+			exit(EXIT_FAILURE);
+		}
 		ft_lstadd_back_env(&list, new);
 	}
 	return (list);

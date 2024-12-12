@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:39:29 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/11 13:36:59 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/12 14:27:04 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	ft_unset(t_main *msh, t_env *env)
 	int	i;
 
 	i = 1;
+	// A VOIR : exec ?
 	if (ft_strncmp("unset", msh->cmd_array[0], 5) == 0 && !msh->cmd_array[i]) 
 		return (0);
 	if (ft_strncmp("unset", msh->cmd_array[0], 6) != 0)

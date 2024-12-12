@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 08:57:53 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/07 13:17:40 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/12 16:20:38 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ char	*ft_substr(char const *s, int start, int len)
 	while (j < len && start < ft_strlen(s))
 	{
 		sub_string[j] = s[i];
-		//printf("in substr char == %d\n", sub_string[j]);
 		i++;
 		j++;
 	}

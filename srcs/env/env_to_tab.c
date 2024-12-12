@@ -6,13 +6,13 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 09:26:02 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/11 17:39:50 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/12 17:04:35 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char	*ft_join_key_to_value(t_env *lst_env)
+char	*ft_join_key_to_value(t_main *msh, t_env *lst_env)
 {
 	char	*tmp;
 	char	*result;
@@ -21,14 +21,14 @@ char	*ft_join_key_to_value(t_env *lst_env)
 	if (!tmp)
 	{
 		ft_putstr_fd("Failed to join\n", 2);
-		return (NULL); //+ free
+		ft_free_all(msh, NULL, true);
 	}
 	result = ft_strjoin(tmp, lst_env->value);
 	free(tmp);
 	if (!result)
 	{
 		ft_putstr_fd("Failed to join\n", 2);
-		return (NULL); //+ free
+		ft_free_all(msh, NULL, true);
 	}
 	return (result);
 }
@@ -47,12 +47,12 @@ void	ft_convert_lst_to_tab(t_main *msh)
 	msh->envp = malloc((nb_env_variable + 1) * sizeof(char *));
 	if (!msh->envp)
 	{
-		;
-		//free
+		ft_print_error_message(ALLOCATION_FAILED, 0);
+		ft_free_all(msh, NULL, true);
 	}
 	while (current != NULL)
 	{
-		msh->envp[i] = ft_join_key_to_value(current);
+		msh->envp[i] = ft_join_key_to_value(msh, current);
 		if (!msh->envp[i])
 		{
 			y = 0;
@@ -63,7 +63,7 @@ void	ft_convert_lst_to_tab(t_main *msh)
 				y++;
 			}
 			ft_putstr_fd("Failed to join\n", 2);
-			//free all
+			ft_free_all(msh, NULL, true);
 		}
 		i++;
 		current = current->next;

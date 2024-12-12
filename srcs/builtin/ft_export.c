@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:18:24 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/11 13:18:59 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/12 14:22:07 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void copy_var(char *src, char *dest, size_t size)
 	src[j] = 0;
 }
 
-int	add_var(char *arg, t_env *env)
+int	add_var(t_main *msh, char *arg, t_env *env)
 {
 	char	*tmp;
 	char	*key;
@@ -47,11 +47,20 @@ int	add_var(char *arg, t_env *env)
 	copy_var(key, arg, nbr - nbr2);
 	value = malloc(nbr2 + 1);
 	if (!value)
+	{
+		ft_print_error_message(ALLOCATION_FAILED, 0);
 		free(key);
+		ft_free_all(msh, NULL, true);
+	}
 	copy_var(value, tmp + 1, nbr2);
 	new = ft_lstnew_env(key, value);
-	// if (!new)
-	// 	//free!!!!!!
+	if (!new)
+	{
+		ft_print_error_message(ALLOCATION_FAILED, 0);
+		free(key);
+		free(value);
+		ft_free_all(msh, NULL, true);
+	}
 	ft_lstadd_back_env(&env, new);
 	return (0);
 }
@@ -82,7 +91,7 @@ int	ft_export(t_main *msh, t_env *env)
 	cpy = env;
 	if (ft_strncmp("export", msh->cmd_array[0], 7) != 0)
 	{
-		printf("%s: command not founds\n", msh->cmd_array[0]);
+		ft_print_cmd_msg_error(msh, 1);
 		return (0);
 	}
 	if (msh->cmd_array[0] && !msh->cmd_array[i])
@@ -96,7 +105,7 @@ int	ft_export(t_main *msh, t_env *env)
 		}
 		if (msh->cmd_array[0] && msh->cmd_array[i]) // add var to env
 		{
-			add_var(msh->cmd_array[i], env);
+			add_var(msh, msh->cmd_array[i], env);
 			while (cpy)
 			{
 				printf("KEY : %s | VALUE : %s\n", cpy->key, cpy->value);

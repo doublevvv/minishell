@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 16:00:32 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/11 17:42:21 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/12 13:19:12 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int	comp_var(char *var_name, char *key, int var_size)
 	// printf("VAR SIZE : %d\n", var_size);
 	// printf("I SIZE : %d\n", i);
 	// printf("%.8s\n", var_name);
-	if (i == var_size && key[i] == 0){
+	if (i == var_size && key[i] == 0)
+	{
 		// printf(" i = %d && varsize = %d\n", i, var_size);
 		return (0);
 	}
@@ -118,7 +119,7 @@ int	interrogation_mark(char *str, t_env *env)
 	return (1);
 }
 
-char *ft_expand(char *arg, t_env *env)
+char	*ft_expand(char *arg, t_env *env)
 {
 	int		i;
 	int		quote_state;

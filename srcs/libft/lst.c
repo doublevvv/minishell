@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 13:28:50 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/11 10:36:39 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/12 16:17:34 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,18 @@ t_lst	*ft_lstnew(int type, char *name, int file)
 	{
 		new_node->u_data.fd = file;
 	}
-	dprintf(2, "new_node->u_data.fd: %d\n", new_node->u_data.fd);
+	//dprintf(2, "new_node->u_data.fd: %d\n", new_node->u_data.fd);
 	new_node->next = NULL;
 	return (new_node);
 }
 
-void	ft_lstadd_back(t_lst **lst, t_lst *new)
+void	ft_lstadd_back(t_main *msh, t_lst **lst, t_lst *new)
 {
 	t_lst	*tmp;
 
 	if (!new)
 	{
-		// return ?
-		// ft_free_lst(msh);
-		// free(msh->line);
+		ft_free_all(msh, NULL, true);
 	}
 	if (!*lst)
 	{
@@ -59,11 +57,6 @@ void	ft_lstadd_back(t_lst **lst, t_lst *new)
 		tmp->next = new;
 	}
 }
-// void	ft_add_cmd_to_cmd_args(t_main *msh)
-// {
-// 	ft_lstadd_back(&current_command->cmd_args, ft_lstnew(token, msh->cmd));
-// }
-
 // => A GARDER EN COMMENTAIRE
 void	ft_display_lst(t_lst *lst)
 {
@@ -111,7 +104,6 @@ bool	ft_verify_lst(t_lst *lst)
 		tmp_arg = tmp->u_data.cmd_args;
 		if (tmp_arg == NULL)
 		{
-			//dprintf(2, "NODE NOT FOUND: EMPTY WORD\n");
 			return (false);
 		}
 		tmp = tmp->next;

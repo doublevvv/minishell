@@ -6,12 +6,13 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 13:39:45 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/11 14:43:38 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/12 14:01:38 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+// Fonction non utilisee
 int	old_path(t_env *env, char *old_directory)
 {
 	t_env	*tmp;
@@ -31,7 +32,7 @@ int	old_path(t_env *env, char *old_directory)
 	}
 	return (0);
 }
-
+// Return nb ?
 int	ft_cd(t_main *msh, t_env *env)
 {
     char	*home;
@@ -54,7 +55,7 @@ int	ft_cd(t_main *msh, t_env *env)
     // }
 	if (ft_strncmp("cd", msh->cmd_array[0], 3) != 0)
 	{
-		printf("%s: command not found\n", msh->cmd_array[0]);//sortie d'erreur
+		ft_print_cmd_msg_error(msh, 1);
 		return (0);
 	}
 	while (cpy)
@@ -85,8 +86,10 @@ int	ft_cd(t_main *msh, t_env *env)
 			return(printf("les loutres: cd: %s: No such file or directory\n", msh->cmd_array[1]));//a mettre sur la sortie d'erreur
 		path = getcwd(NULL, 0);
 		if (!path)
-			return (0);
-        //proteger path
+		{
+			ft_print_error_message(ALLOCATION_FAILED, 0);
+			ft_free_all(msh, NULL, true);
+		}
 		printf("OLD : %s\n", old_path);
 		while (cpy)
 		{

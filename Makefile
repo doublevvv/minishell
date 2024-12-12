@@ -6,7 +6,7 @@
 #    By: evlim <evlim@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 08:37:40 by evlim             #+#    #+#              #
-#    Updated: 2024/12/11 17:29:00 by evlim            ###   ########.fr        #
+#    Updated: 2024/12/12 09:33:54 by evlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,21 +26,21 @@ SOURCES = srcs/main.c	\
 		srcs/parsing/lst_to_array.c	\
 		srcs/parsing/env_path.c	\
 		srcs/parsing/path.c	\
-		srcs/parsing/free.c	\
 		srcs/env/ft_env.c	\
 		srcs/env/env_to_tab.c	\
 		srcs/env/env_utils.c	\
 		srcs/execution/exec.c	\
 		srcs/execution/exec2.c	\
 		srcs/execution/redirection.c	\
-		srcs/execution/free.c	\
 		srcs/builtin/ft_echo.c	\
 		srcs/builtin/ft_exit.c	\
 		srcs/builtin/ft_pwd.c	\
 		srcs/builtin/ft_cd.c	\
 		srcs/builtin/ft_export.c	\
 		srcs/builtin/ft_unset.c	\
-		srcs/expand/expand.c	
+		srcs/expand/expand.c	\
+		srcs/free/free.c	\
+		srcs/free/free2.c
 
 SRCS = $(addprefix $(OBJ_DIR)/, $(SOURCES))
 

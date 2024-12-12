@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:54:35 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/11 13:17:02 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/12 17:44:41 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	lst_env_clear(t_env **lst_env)
 	*lst_env = NULL;
 }
 
-void	ft_display_lst_env(t_env *environ)
+void	ft_env(t_env *environ)
 {
 	t_env	*cpy;
 

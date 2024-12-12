@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:16:46 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/11 12:49:04 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/12 10:26:59 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,13 @@ int	ft_exit(t_main *msh, t_env *env)
 		if ((ft_atol(msh->cmd_array[1]) == true))
 		{
 			exit_code = 2;
-			ft_free_all(msh, NULL);
+			ft_free_all(msh, NULL, true);
 			(exit(printf("les loutres: exit: %s: numeric argument required\n", msh->cmd_array[1])));
 		}
 		if (is_numeric(msh->cmd_array[1]) == false)
 		{
 			exit_code = 2;
-			ft_free_all(msh, NULL);
+			ft_free_all(msh, NULL, true);
 			exit(write_error(&msh->cmd_array[1]));
 		}
 		if (msh->cmd_array[1] && msh->cmd_array[2])
@@ -100,8 +100,7 @@ int	ft_exit(t_main *msh, t_env *env)
 		}
 	}
 	printf("EXIT_CODE : %d\n", exit_code);
-	//ne pas oublier de free
-	ft_free_all(msh, NULL);
+	ft_free_all(msh, NULL, true);
 	exit(exit_code);
 }
 //gerer les cas ou exit est suivi d'un pipe ? 

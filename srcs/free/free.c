@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 09:31:31 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/11 18:36:34 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/12 17:47:11 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@ void	ft_free_double_array(char **array)
 	array = NULL;
 }
 
-void	ft_free_all(t_main *msh, char *error/*, bool exit*/)//rajouter un parametre indiquant si le shell doit exit ou non et faire un if(exit != false) free l'env et exit dans des accolades
+void	ft_free_all(t_main *msh, char *error, bool is_exit)
 {
-	dprintf(2, "\t\t\ton passe dans la fonction qui frree\n");
-	dprintf(2, "\t\t\tici on free le pid : %d et le tab qui free pas et a %p\n", getpid(), msh->cmd_array);
+	//dprintf(2, "\t\t\ton passe dans la fonction qui frree\n");
+	//dprintf(2, "\t\t\tici on free le pid : %d et le tab qui free pas et a %p\n", getpid(), msh->cmd_array);
 	if (error != NULL)
 	{
 		perror(error);
@@ -111,8 +111,23 @@ void	ft_free_all(t_main *msh, char *error/*, bool exit*/)//rajouter un parametre
 		msh->line = NULL;
 	}
 	if (msh->stdin_copy != -1)
+	{
+		dprintf(2, "msh->stdin_copy closed\n");
 		close(msh->stdin_copy);
+	}
 	if (msh->stdout_copy != -1)
+	{
+		dprintf(2, "msh->stdout_copy closed\n");
 		close(msh->stdout_copy);
-	//lst_env_clear(&msh->env);
+	}
+	if (is_exit != false)
+	{
+		dprintf(2, "ICICICICICICCICICIC\n");
+		if (msh->env != NULL)
+		{
+			dprintf(2, "msh->env freed\n");
+			lst_env_clear(&msh->env);
+		}
+		exit(EXIT_FAILURE);
+	}
 }
