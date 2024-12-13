@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 08:34:07 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/12 18:45:44 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 09:46:14 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	ft_open_file_error(t_main *msh, int fd_infile, int fd_outfile)
 	{
 		if (fd_infile != -1)
 		{
-			dprintf(2, "error fd_infile\n");
+			//dprintf(2, "error fd_infile\n");
 			close(fd_infile);
 		}
-		dprintf(2, "error fd_outfile\n");
+		//dprintf(2, "error fd_outfile\n");
 	}
 	ft_free_all(msh, "Error ", true);
 }

@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:18:24 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/12 14:22:07 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 08:58:41 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	print_ascii_order(t_env *env)
 	}
 }
 
-static void copy_var(char *src, char *dest, size_t size)
+static void	copy_var(char *src, char *dest, size_t size)
 {
 	size_t	j;
 
@@ -72,7 +72,9 @@ int	case_sensivity(char *arg)
 	i = 0;
 	while (arg[i] && arg[i] != '=')
 	{
-		if (!(ft_isalpha(arg[0]) && (ft_isdigit(arg[i]) || ft_isalpha(arg[i])))) //gerer underscore ? 
+		if (!((ft_isalpha(arg[0]) || arg[0] == '_') && (ft_isdigit(arg[i])
+					|| ft_isalpha(arg[i]) || arg[i] == '_')))
+		// gerer underscore ?
 		{
 			printf("les loutres: export: %s: not a valid identifier\n", arg);
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:25:39 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/12 17:48:17 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 10:55:47 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,13 @@ void	ft_join_cmd_to_path(t_main *msh, int i)
 
 void	ft_print_cmd_msg_error(t_main *msh, int msg)
 {
-	ft_putstr_fd(msh->cmd_array[0], 2);
 	if (msg == 1)
 	{
-		ft_putstr_fd(": command not found\n", 2);
+		ft_printf(2, "%s: command not found\n", msh->cmd_array[0]);
 	}
 	else if (msg == 2)
 	{
-		ft_putstr_fd(": Permission denied\n", 2);
+		ft_printf(2, "%s: Permission denied\n", msh->cmd_array[0]);
 	}
 }
 
@@ -83,7 +82,8 @@ void	ft_check_path(t_main *msh)
 		ft_print_cmd_msg_error(msh, 1);
 		//dprintf(2, "\t\tje suis le pid : %d\n", getpid());
 		ft_free_all(msh, NULL, true);
-		exit(127);
+		msh->code_status = 127;
+		//exit(127);
 	}
 }
 
@@ -93,7 +93,7 @@ about the command in a linked list. If not, we search for the command
 in the paths of the `PATH` environment variable. */
 void	ft_check_access(t_main *msh)
 {
-	//si commnd[0] == '\0' command not found et parti
+	//si commnd[0] == '\0' command not found et parti ??????????
 	if (access(msh->full_path, F_OK) == 0)
 	{
 		//dprintf(2, "fullpath: %s\n", msh->full_path);
@@ -112,6 +112,7 @@ void	ft_check_access(t_main *msh)
 	{
 		ft_print_cmd_msg_error(msh, 1);
 		ft_free_all(msh, NULL, true);
+		//msh->code_status = 127;
 		exit(127);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/12 18:20:04 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 11:08:47 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include <stdarg.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <limits.h>
+# include <signal.h>
 
 enum e_type
 {
@@ -195,9 +197,9 @@ void	ft_convert_lst_to_tab(t_main *msh);
 /*                                   EXPAND                                  */
 /* ************************************************************************* */
 
-char	*ft_expand(char *arg, t_env *env);
+char	*ft_expand(t_main *msh, char *arg, t_env *env);
 
-int		interrogation_mark(char *str, t_env *env);
+int		interrogation_mark(t_main *msh, char *str, t_env *env);
 
 int		check_quotes(char quote, int *index, int *quote_state);
 
@@ -263,7 +265,13 @@ void	ft_read_input_heredoc(char *cmd, int file);
 /*                                  LIBFT                                    */
 /* ************************************************************************* */
 
+int		ft_printf(int fd, const char *format, ...);
+
+int		ft_putstr(char *s, int fd);
+
 void	ft_putstr_fd(char *str, int fd);
+
+int		ft_putchar_fd(char c, int fd);
 
 int		ft_strlen(const char *str);
 
@@ -308,6 +316,16 @@ int		ft_lstsize(t_env *lst);
 void	ft_display_lst(t_lst *lst);
 
 bool	ft_verify_lst(t_lst *lst);
+
+/* ************************************************************************* */
+/*                                 SIGNAUX                                   */
+/* ************************************************************************* */
+
+void	sigint_handler(int signal);
+
+void	set_signal(void);
+
+void	here_doc_sig_handler();
 
 /* ************************************************************************* */
 /*                                    FREE                                   */

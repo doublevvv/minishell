@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 13:34:37 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/12 15:40:58 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 11:09:36 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-
 	ft_init_data(&msh, envp);
 	ft_msh_loop(&msh);
 	return (0);

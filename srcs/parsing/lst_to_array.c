@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 08:41:51 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/12 15:49:53 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 09:43:02 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_create_cmd_array(t_main *msh, t_lst *cmd)
 		if (cmd->token_type == WORD)
 		{
 			dprintf(2, "IT'S A WORD\n");
-			expand_result = ft_expand(cmd->u_data.word, msh->env);
+			expand_result = ft_expand(msh, cmd->u_data.word, msh->env);
 			dprintf(2, "expand_result = %s\n", expand_result);
 			free(cmd->u_data.word);
 			cmd->u_data.word = expand_result;

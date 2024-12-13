@@ -6,7 +6,7 @@
 #    By: evlim <evlim@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 08:37:40 by evlim             #+#    #+#              #
-#    Updated: 2024/12/12 09:33:54 by evlim            ###   ########.fr        #
+#    Updated: 2024/12/13 09:02:03 by evlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ HEADER = minishell.h
 SOURCES = srcs/main.c	\
 		srcs/libft/check.c	\
 		srcs/libft/lst.c	\
+		srcs/libft/ft_printf.c	\
 		srcs/libft/ft_split.c	\
 		srcs/libft/ft_str.c	\
 		srcs/libft/ft_str2.c	\
@@ -31,6 +32,7 @@ SOURCES = srcs/main.c	\
 		srcs/env/env_utils.c	\
 		srcs/execution/exec.c	\
 		srcs/execution/exec2.c	\
+		srcs/execution/signal.c	\
 		srcs/execution/redirection.c	\
 		srcs/builtin/ft_echo.c	\
 		srcs/builtin/ft_exit.c	\

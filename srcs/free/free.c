@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 09:31:31 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/12 17:47:11 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 11:02:51 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_print_error_message(int i, char c)
 	{
 		if (c != '\0')
 		{
-			printf("syntax error near unexpected token `%c`\n", c);
+			ft_printf(2, "syntax error near unexpected token `%c`\n", c);
 		}
 		else
 		{
@@ -112,17 +112,16 @@ void	ft_free_all(t_main *msh, char *error, bool is_exit)
 	}
 	if (msh->stdin_copy != -1)
 	{
-		dprintf(2, "msh->stdin_copy closed\n");
+		//dprintf(2, "msh->stdin_copy closed\n");
 		close(msh->stdin_copy);
 	}
 	if (msh->stdout_copy != -1)
 	{
-		dprintf(2, "msh->stdout_copy closed\n");
+		//dprintf(2, "msh->stdout_copy closed\n");
 		close(msh->stdout_copy);
 	}
 	if (is_exit != false)
 	{
-		dprintf(2, "ICICICICICICCICICIC\n");
 		if (msh->env != NULL)
 		{
 			dprintf(2, "msh->env freed\n");

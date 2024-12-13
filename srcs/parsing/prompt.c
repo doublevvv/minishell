@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/12 18:58:00 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 11:08:37 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ void	ft_execute_builtin(t_main *msh, int i)
 	if (i == ECHO)
 	{
 		dprintf(2, "APPEL ECHO FONCTION\n");
-		ft_echo(msh, msh->env);
+		exit(ft_echo(msh, msh->env));
 		//ft_free_all(msh);
-		//exit(echo(msh));
 	}
 	else if (i == CD)
 	{
@@ -168,7 +167,7 @@ bool	ft_check_prompt(t_main *msh, char *str)
 	while (str[i])
 	{
 		token = ft_identify_token(str, &i);
-		dprintf(2, "token = %d\n", token);
+		//dprintf(2, "token = %d\n", token);
 		if (token == PIPE)
 		{
 			if (ft_verify_lst(msh->head_command) == false)
@@ -200,6 +199,7 @@ bool	ft_check_prompt(t_main *msh, char *str)
 			//LEAK DANS HEREDOC
 			if (token == REDIRECTION_HEREDOC)
 			{
+				signal(SIGINT, here_doc_sig_handler);
 				dprintf(2, "WORD = REDIRECTION_HEREDOC\n");
 				ft_generate_random_filename(msh);
 				dprintf(2, "hd filename = %s\n", msh->heredoc_filename);
@@ -214,6 +214,7 @@ bool	ft_check_prompt(t_main *msh, char *str)
 				}
 				dprintf(2, "msh->cmd = %s\n", msh->cmd);
 				ft_read_input_heredoc(msh->cmd, msh->file);
+                //si globale != 0 set valur reouvrir stdin de retour
 				close (msh->file);
 				msh->file = -1;
 				fd_infile = open(msh->heredoc_filename, O_RDONLY);
@@ -231,6 +232,7 @@ bool	ft_check_prompt(t_main *msh, char *str)
 				msh->heredoc_filename = NULL;
 				dprintf(2, "fd_infile = %d\n", fd_infile);
 				command = ft_lstnew(token, msh->cmd, fd_infile);
+				signal(SIGINT, SIG_IGN);
 			}
 			else
 			{
@@ -259,6 +261,7 @@ void	ft_msh_loop(t_main *msh)
 {
 	while (1)
 	{
+		set_signal();
 		msh->stdin_copy = dup(STDIN_FILENO);
 		msh->stdout_copy = dup(STDOUT_FILENO);
 		if (msh->stdin_copy == -1 || msh->stdout_copy == -1)

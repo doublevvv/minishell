@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 08:22:11 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/12 10:08:27 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 08:55:57 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_env	*get_env(char **environ)
 	size_t	nbr;
 	size_t	nbr2;
 	size_t	nbr3;
+	t_env	*tmp_list;
 
 	i = -1;
 	list = NULL;
@@ -46,18 +47,18 @@ t_env	*get_env(char **environ)
 		nbr2 = ft_strlen(tmp + 1) + 1;
 		nbr3 = nbr - nbr2;
 		key = malloc(nbr3 + 1);
-		if (!key)
+        if (!key)
 		{
 			ft_print_error_message(ALLOCATION_FAILED, 0);
 			exit(EXIT_FAILURE);
 		}
-		// printf("environ[%d] ==%s, nbr == %zu , nbr 2 == %zu, nbr 3 == %zu\n", i, environ[i], nbr, nbr2, nbr3);
-		// size_t j;
-		// for (j = 0; j < nbr3; j++)
-		// 	key[j] = environ[i][j];
-		// key[j] = 0;
-		//ft_strncpy(key, environ[i], nbr3);
-		key[nbr3] = 0;//parcque e vraai ne met un \0 qu e si present dans les n octets le ft sans doute pas e soucis
+        // printf("environ[%d] ==%s, nbr == %zu , nbr 2 == %zu, nbr 3 == %zu\n", i, environ[i], nbr, nbr2, nbr3);
+        // size_t j;
+        // for (j = 0; j < nbr3; j++)
+        //     key[j] = environ[i][j];
+        // key[j] = 0;
+        //ft_strncpy(key, environ[i], nbr3);
+        key[nbr3] = 0;//parcque e vraai ne met un \0 qu e si present dans les n octets le ft sans doute pas e soucis
 		copy_var(key, environ[i], nbr3);
 		value = malloc(nbr2 + 1);
 		if (!value)
@@ -66,11 +67,11 @@ t_env	*get_env(char **environ)
 			free(key);
 			exit(EXIT_FAILURE);
 		}
-		//ft_strncpy(value, tmp + 1, nbr2);
+        //ft_strncpy(value, tmp + 1, nbr2);
 		copy_var(value, tmp + 1, nbr2);
-		// for (j = 0; j < nbr2; j++)
-		// 	value[j] = environ[i][j];
-		// value[j] = 0;
+        // for (j = 0; j < nbr2; j++)
+        //     value[j] = environ[i][j];
+        // value[j] = 0;
 		new = ft_lstnew_env(key, value);
 		if (!new)
 		{
@@ -81,5 +82,28 @@ t_env	*get_env(char **environ)
 		}
 		ft_lstadd_back_env(&list, new);
 	}
+	tmp_list = list;
+	while (tmp_list)
+	{
+		if (ft_strcmp("PWD", tmp_list->key) == 0)
+		{
+			tmp_list->value = getcwd(NULL, 0);
+			break ;
+		}
+		tmp_list = tmp_list->next;
+	}
+	if (tmp_list == NULL)
+	{
+		new = ft_lstnew_env("PWD", getcwd(NULL, 0));
+		if (!new)
+		{
+			ft_print_error_message(ALLOCATION_FAILED, 0);
+			free(key);
+			free(value);
+			exit(EXIT_FAILURE);
+		}
+		ft_lstadd_back_env(&list, new);
+	}
+	//mettr a jour pwd si il existe  sinon le creer
 	return (list);
 }

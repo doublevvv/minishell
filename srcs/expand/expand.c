@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 16:00:32 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/12 13:19:12 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 09:44:44 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,18 @@ int	check_quotes(char quote, int *index, int *quote_state)
 	return (1);
 }
 
-int	interrogation_mark(char *str, t_env *env)
+int	interrogation_mark(t_main *msh, char *str, t_env *env)
 {
+	(void)env;
 	int	i;
 
 	i = 0;
 	if (str[i] == '$' && str[i + 1] == '?')
-		return (env->exit_code);
+	{
+		dprintf(2, "\t\t\tcoucou\n");
+		dprintf(2, "msh->code_status = %d\n", msh->code_status);
+		return (msh->code_status);
+	}
 	// else if (str[i] != '$')
 	// {
 	// 	//printf("HERE\n");
@@ -119,7 +124,7 @@ int	interrogation_mark(char *str, t_env *env)
 	return (1);
 }
 
-char	*ft_expand(char *arg, t_env *env)
+char	*ft_expand(t_main *msh, char *arg, t_env *env)
 {
 	int		i;
 	int		quote_state;
@@ -140,7 +145,7 @@ char	*ft_expand(char *arg, t_env *env)
 	line.line_size = 0;
 	line.line = NULL;
 	printf("F :%d\n", ft_strlen(arg));
-	interrogation_mark(&arg[i], env);
+	interrogation_mark(msh, &arg[i], NULL);
 	while (arg[i] && arg[i] != '\0')
 	{
 		if (quote_state != NO_QUOTE)

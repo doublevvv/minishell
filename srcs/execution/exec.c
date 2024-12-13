@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:41:13 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/12 17:08:37 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 10:52:55 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ft_execute_command(t_main *msh)
 {
+	signal(SIGINT, SIG_DFL);
+    signal(SIGQUIT, SIG_DFL);
 	ft_convert_lst_to_tab(msh);
 	ft_search_env_path(msh);
 	if (ft_get_paths(msh) == false)
@@ -132,6 +134,8 @@ void	ft_handle_exec( t_main *msh, t_lst *tmp, int nb)
 	t_lst	*tmp_arg;
 	int		builtin;
 
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	tmp_arg = tmp->u_data.cmd_args;
 	if (msh->cmd_array != NULL)
 	{
@@ -273,7 +277,7 @@ void	ft_parent_wait(t_main *msh)
 
 void	ft_final_execution(t_main *msh)
 {
-	dprintf(2, "FINAL EXECUTION\n");
+	//dprintf(2, "FINAL EXECUTION\n");
 	if (msh->in_pipeline == 1)
 	{
 		ft_close_pipes_child(msh);
