@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 09:31:31 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/13 11:02:51 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 14:41:10 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void	ft_free_all(t_main *msh, char *error, bool is_exit)
 	}
 	if (is_exit != false)
 	{
+		// dprintf(2, "coucoupid == %d\n", getpid());
 		if (msh->env != NULL)
 		{
 			dprintf(2, "msh->env freed\n");

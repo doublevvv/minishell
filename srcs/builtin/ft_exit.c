@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:16:46 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/12 10:26:59 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 14:56:32 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ int	ft_exit(t_main *msh, t_env *env)
 {
 	(void)env;
 	int	exit_code;
-
+//ecire exit sur sorti d'erreur et ne pas ecrire exit si pas dans un tty (terminal)
 	//A VOIR
 	if (strncmp("exit", msh->cmd_array[0], 5) != 0)
 	{
 		printf("%s: command not found\n", msh->cmd_array[0]);
 		return (0);
 	}
-	write(1, "exit1\n", 6);
+	write(2, "exit1\n", 6);
 	exit_code = 0;
 	if (msh->cmd_array[1])
 	{
@@ -85,7 +85,8 @@ int	ft_exit(t_main *msh, t_env *env)
 		{
 			exit_code = 2;
 			ft_free_all(msh, NULL, true);
-			(exit(printf("les loutres: exit: %s: numeric argument required\n", msh->cmd_array[1])));
+			ft_printf(2, "les loutres: exit: %s: numeric argument required\n", msh->cmd_array[1]);
+			exit(2);
 		}
 		if (is_numeric(msh->cmd_array[1]) == false)
 		{
@@ -99,8 +100,12 @@ int	ft_exit(t_main *msh, t_env *env)
 			exit_code = 1;
 		}
 	}
+	else
+	{
+		exit(msh->code_status);	
+	}
 	printf("EXIT_CODE : %d\n", exit_code);
 	ft_free_all(msh, NULL, true);
-	exit(exit_code);
+	return (exit_code);
 }
 //gerer les cas ou exit est suivi d'un pipe ? 

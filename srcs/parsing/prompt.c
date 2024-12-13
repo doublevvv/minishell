@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/13 11:08:37 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 16:32:50 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,30 @@
 
 void	ft_execute_builtin(t_main *msh, int i)
 {
-	//int status;
-
 	if (i == ECHO)
 	{
 		dprintf(2, "APPEL ECHO FONCTION\n");
-		exit(ft_echo(msh, msh->env));
-		//ft_free_all(msh);
+		msh->code_status = ft_echo(msh, msh->env);
 	}
 	else if (i == CD)
 	{
 		dprintf(2, "APPEL CD FONCTION\n");
-		ft_cd(msh, msh->env);
+		msh->code_status = ft_cd(msh, msh->env);
 	}
 	else if (i == PWD)
 	{
 		dprintf(2, "APPEL PWD FONCTION\n");
-		ft_pwd(msh, NULL);
+		msh->code_status = ft_pwd(msh, NULL);
 	}
 	else if (i == EXPORT)
 	{
 		dprintf(2, "APPEL EXPORT FONCTION\n");
-		ft_export(msh, msh->env);
+		msh->code_status = ft_export(msh, msh->env);
 	}
 	else if (i == UNSET)
 	{
 		dprintf(2, "APPEL UNSET FONCTION\n");
-		ft_unset(msh, msh->env);
+		msh->code_status = ft_unset(msh, msh->env);
 	}
 	else if (i == ENV)
 	{
@@ -50,9 +47,8 @@ void	ft_execute_builtin(t_main *msh, int i)
 	else if (i == EXIT)
 	{
 		dprintf(2, "APPEL EXIT FONCTION\n");
-		ft_exit(msh, NULL);
+		msh->code_status = ft_exit(msh, NULL);
 	}
-	//return (status);
 }
 
 int	ft_is_builtin(char *str)
@@ -214,7 +210,16 @@ bool	ft_check_prompt(t_main *msh, char *str)
 				}
 				dprintf(2, "msh->cmd = %s\n", msh->cmd);
 				ft_read_input_heredoc(msh->cmd, msh->file);
-                //si globale != 0 set valur reouvrir stdin de retour
+				if (g_signal_global != 0)
+				{
+					if (dup2( msh->stdin_copy, STDIN_FILENO) == -1)
+					{
+						perror("signal heredoc echec dup2 stdin: ");
+						ft_free_all(msh, NULL, true);
+					}
+					msh->code_status = g_signal_global;
+					return (false);
+				}
 				close (msh->file);
 				msh->file = -1;
 				fd_infile = open(msh->heredoc_filename, O_RDONLY);
@@ -280,7 +285,8 @@ void	ft_msh_loop(t_main *msh)
 		add_history(msh->line);
 		if (ft_check_prompt(msh, msh->line) == false)
 		{
-			ft_free_all(msh, NULL, true);
+			ft_free_all(msh, NULL, false);
+			g_signal_global = 0;
 		}
 		else
 		{

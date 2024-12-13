@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 08:22:11 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/13 08:55:57 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 17:02:53 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ t_env	*get_env(char **environ)
 	{
 		if (ft_strcmp("PWD", tmp_list->key) == 0)
 		{
+			free(tmp_list->value);
 			tmp_list->value = getcwd(NULL, 0);
 			break ;
 		}

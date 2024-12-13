@@ -6,13 +6,13 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 09:29:27 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/13 11:08:41 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 14:00:53 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int signal_global;
+int g_signal_global;
 
 void	ft_bzero(void *s, size_t n)
 {
@@ -30,13 +30,9 @@ void	ft_bzero(void *s, size_t n)
 
 void	exit_code_sig(int signal)
 {
-	t_env	*env;
 
-	env = NULL;
 	if (signal == SIGINT)
-		env->exit_code = 130;
-	else if (signal == SIGQUIT)
-		env->exit_code = 131;
+		g_signal_global = 130;
 }
 
 void	sigint_handler(int signal)
@@ -77,6 +73,6 @@ void	set_signal(void)
 
 void	here_doc_sig_handler()
 {
-	signal_global = 130;
+	g_signal_global = 130;
 	close(STDIN_FILENO);
 }

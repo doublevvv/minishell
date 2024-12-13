@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 10:16:58 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/12 09:33:32 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 15:47:54 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,19 @@
 
 void	ft_close_pipes(t_main *msh)
 {
-	if (msh->pipefd[0] != -1)
-	{
-		close (msh->pipefd[0]);
-		//dprintf(2, "pipefd[0] closed\n");
-		msh->pipefd[0] = -1;
-	}
-	if (msh->pipefd[1] != -1)
+	if (msh->pipefd[1] > -1)
 	{
 		close (msh->pipefd[1]);
 		//dprintf(2, "pipefd[1] closed\n");
-		msh->pipefd[1] = -1;
+	}
+	if (msh->pipefd[0] > -1)
+	{
+		close (msh->pipefd[0]);
+		//dprintf(2, "pipefd[0] closed\n");
+	}
+	if (msh->prev_pipe > -1)
+	{
+		close(msh->prev_pipe);
 	}
 }
 

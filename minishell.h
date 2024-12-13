@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/13 11:08:47 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 16:56:03 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <sys/wait.h>
 # include <limits.h>
 # include <signal.h>
+
+extern int g_signal_global;
 
 enum e_type
 {
@@ -81,7 +83,6 @@ typedef struct s_env
 {
 	char			*key;
 	char			*value;
-	int				exit_code;
 	struct s_env	*next;
 }	t_env;
 
@@ -147,7 +148,7 @@ bool	ft_check_quote(char *str, int *i, char c);
 
 void	ft_exec(t_main *msh);
 
-void	ft_handle_exec( t_main *msh, t_lst *tmp, int nb);
+void	ft_handle_exec( t_main *msh, t_lst *cmd, int nb);
 
 void	ft_count_cmds(t_main *msh, t_lst *lst);
 
@@ -170,6 +171,8 @@ void	ft_check_access(t_main *msh);
 void	ft_check_path(t_main *msh);
 
 void	ft_join_cmd_to_path(t_main *msh, int i);
+
+void	ft_execute_parent(t_main *msh);
 
 void	ft_final_execution(t_main *msh);
 
@@ -199,7 +202,7 @@ void	ft_convert_lst_to_tab(t_main *msh);
 
 char	*ft_expand(t_main *msh, char *arg, t_env *env);
 
-int		interrogation_mark(t_main *msh, char *str, t_env *env);
+char	*interrogation_mark(t_main *msh);
 
 int		check_quotes(char quote, int *index, int *quote_state);
 
@@ -255,7 +258,7 @@ void	ft_handle_redirections(t_main *msh, t_lst *cmd_args);
 
 void	ft_open_redir(t_main *msh, t_lst *cmd_args);
 
-void	ft_redirect_pipes(t_main *msh, int old_fd, int new_fd); //a utiliser
+void	ft_redirect_pipes(t_main *msh, int old_fd, int new_fd);
 
 void	ft_generate_random_filename(t_main *msh);
 
@@ -303,6 +306,12 @@ char	ft_isalnum(char c);
 
 void	*ft_memcpy(void *dest, const void *src, unsigned int n);
 
+void	ft_bzero(void *s, size_t n);
+
+char	*ft_itoa(int n);
+
+int		ft_count_digit(long int number);
+
 /* ************************************************************************* */
 /*                               LISTES CHAINEES                             */
 /* ************************************************************************* */
@@ -337,7 +346,7 @@ void	ft_print_cmd_msg_error(t_main *msh, int msg);
 
 void	ft_open_file_error(t_main *msh, int fd_infile, int fd_outfile);
 
-void	ft_close_pipes(t_main *msh); //?
+void	ft_close_pipes(t_main *msh);
 
 void	ft_close_pipes_child(t_main *msh);
 

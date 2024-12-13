@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:48:35 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/12 10:14:28 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 14:44:15 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,5 @@ void	ft_init_data_bis(t_main *msh)
 	msh->stdin_copy = in;
 	msh->stdout_copy = out;
 	msh->file = -1;
+	msh->in_pipeline = 0;
 }

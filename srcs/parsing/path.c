@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:25:39 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/13 10:55:47 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/13 17:13:29 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_check_path(t_main *msh)
 			else
 			{
 				ft_print_cmd_msg_error(msh, 2);
-				ft_free_all(msh, NULL, true);
+				ft_free_all(msh, NULL, false);
 				exit(126);
 			}
 		}
@@ -81,9 +81,12 @@ void	ft_check_path(t_main *msh)
 	{
 		ft_print_cmd_msg_error(msh, 1);
 		//dprintf(2, "\t\tje suis le pid : %d\n", getpid());
-		ft_free_all(msh, NULL, true);
-		msh->code_status = 127;
-		//exit(127);
+		ft_free_all(msh, NULL, false);
+		if (msh->env != NULL)
+		{
+			lst_env_clear(&msh->env);
+		}
+		exit(127);
 	}
 }
 
@@ -104,15 +107,18 @@ void	ft_check_access(t_main *msh)
 		else
 		{
 			ft_print_cmd_msg_error(msh, 2);
-			ft_free_all(msh, NULL, true);
+			ft_free_all(msh, NULL, false);
 			exit(126);
 		}
 	}
 	else
 	{
 		ft_print_cmd_msg_error(msh, 1);
-		ft_free_all(msh, NULL, true);
-		//msh->code_status = 127;
+		ft_free_all(msh, NULL, false);
+		if (msh->env != NULL)
+		{
+			lst_env_clear(&msh->env);
+		}
 		exit(127);
 	}
 }
