@@ -32,7 +32,6 @@ SOURCES = srcs/main.c	\
 		srcs/env/env_utils.c	\
 		srcs/execution/exec.c	\
 		srcs/execution/exec2.c	\
-		srcs/execution/signal.c	\
 		srcs/execution/redirection.c	\
 		srcs/builtin/ft_echo.c	\
 		srcs/builtin/ft_exit.c	\
@@ -41,6 +40,7 @@ SOURCES = srcs/main.c	\
 		srcs/builtin/ft_export.c	\
 		srcs/builtin/ft_unset.c	\
 		srcs/expand/expand.c	\
+		srcs/signal/signal.c	\
 		srcs/free/free.c	\
 		srcs/free/free2.c
 

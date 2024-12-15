@@ -13,7 +13,7 @@
 #include "../../minishell.h"
 
 /* The ft_search_env_path() function searches for the `PATH` environement
-variable stored in `envp`. */
+variable stored in the env linked list. */
 void	ft_search_env_path(t_main *msh)
 {
 	int	i;
@@ -35,7 +35,7 @@ void	ft_search_env_path(t_main *msh)
 }
 
 /* The ft_get_paths() function splits the `PATH` value into individual paths 
-and stores them in `msh->paths` and count how many paths there are. */
+and stores them in `msh->paths`. */
 bool	ft_get_paths(t_main *msh)
 {
 	msh->paths = ft_split(&msh->env_path[5], ':');

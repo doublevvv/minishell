@@ -25,7 +25,8 @@ void	ft_open_file_error(t_main *msh, int fd_infile, int fd_outfile)
 	}
 	ft_free_all(msh, "Error ", true);
 }
-
+/* The ft_generate_random_filename() function creates a random filename for
+the here_doc. */
 void	ft_generate_random_filename(t_main *msh)
 {
 	unsigned char	*rand;
@@ -50,6 +51,9 @@ void	ft_generate_random_filename(t_main *msh)
 	}
 }
 
+/* The ft_read_input_heredoc() function reads from the standard input and
+stores each line except the limiter in a temporary file.
+This temporary file is taken as the infile of the program.*/
 void	ft_read_input_heredoc(char *cmd, int file)
 {
 	char	*line;
@@ -62,12 +66,8 @@ void	ft_read_input_heredoc(char *cmd, int file)
 			close(file);
 			break ;
 		}
-		dprintf(2, "delimiter = %s\n", cmd);
-		dprintf(2, "line = %s\n", line);
-		dprintf(2, "return strcmp = %d\n", ft_strcmp(cmd, line));
 		if (ft_strcmp(cmd, line) == 0)
 		{
-			dprintf(2, "IDEM\n");
 			free(line);
 			close(file);
 			break ;
@@ -80,6 +80,12 @@ void	ft_read_input_heredoc(char *cmd, int file)
 		free(line);
 	}
 }
+
+
+/* The ft_open_redir() function handles input and output redirection.
+Depending on the type of the redirection (e.g., input, output or heredoc),
+it opens the appropriate files and updates the corresponding file descriptors
+(fd_infile or fd_outfile). */
 void	ft_open_redir(t_main *msh, t_lst *cmd_args)
 {
 	int	fd_infile;
@@ -89,45 +95,38 @@ void	ft_open_redir(t_main *msh, t_lst *cmd_args)
 	fd_outfile = -1;
 	if (cmd_args->token_type == REDIRECTION_IN)
 	{
-		dprintf(2, "REDIRECTION IN\n");
 		fd_infile = open(cmd_args->u_data.word, O_RDONLY);
-		dprintf(2, "ICI fd_infile: %d\n", fd_infile);
 		if (fd_infile == -1)
 		{
 			ft_open_file_error(msh, 0, 0);
-			ft_free_all(msh, NULL, true);
 		}
 	}
 	else if (cmd_args->token_type == REDIRECTION_OUT)
 	{
-		dprintf(2, "REDIRECTION OUT\n");
 		fd_outfile = open(cmd_args->u_data.word, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		//dprintf(2, "ICI fd_outfile: %d\n", fd_outfile);
 		if (fd_outfile == -1)
 		{
 			ft_open_file_error(msh, 0, -1);
-			ft_free_all(msh, NULL, true);
 		}
 	}
 	else if (cmd_args->token_type == REDIRECTION_HEREDOC)
 	{
-		dprintf(2, "cmd_args %d\n", cmd_args->u_data.fd);
 		fd_infile = cmd_args->u_data.fd;
-		dprintf(2, "fd_infile %d\n", fd_infile);
 	}
 	else if (cmd_args->token_type == REDIRECTION_APPEND)
 	{
-		dprintf(2, "REDIRECTION APPEND\n");
-		//dprintf(2, "cmd_args->u.data.word = %s\n", cmd_args->u_data.word);
 		fd_outfile = open(cmd_args->u_data.word, O_CREAT | O_WRONLY | O_APPEND, 0644);
-		//dprintf(2, "LA fd_outfile: %d\n", fd_outfile);
 		if (fd_outfile == -1)
 		{
 			ft_open_file_error(msh, 0, -1);
-			ft_free_all(msh, NULL, true);
 		}
 	}
-	//dup de la redir function
+	ft_dup_redirections(msh, fd_infile, fd_outfile);
+	ft_close_redirections(fd_infile, fd_outfile);
+}
+
+void	ft_dup_redirections(t_main *msh, int fd_infile, int fd_outfile)
+{
 	if (fd_infile > -1 && dup2(fd_infile, STDIN_FILENO) == -1)
 	{
 		ft_free_all(msh, "1 => dup2 failed", true);
@@ -136,7 +135,10 @@ void	ft_open_redir(t_main *msh, t_lst *cmd_args)
 	{
 		ft_free_all(msh, "2 => dup2 failed", true);
 	}
-	//close function
+}
+
+void	ft_close_redirections(int fd_infile, int fd_outfile)
+{
 	if (fd_infile != -1)
 	{
 		dprintf(2, "fd_infile closed\n");
@@ -149,4 +151,32 @@ void	ft_open_redir(t_main *msh, t_lst *cmd_args)
 		close(fd_outfile);
 		fd_outfile = -1;
 	}
+}
+
+/* The ft_handle_redirections() function:
+- If the token is not a word, it calls ft_open_redir() to handle redirections.
+- Otherwise, it adds the token to the command array, which stores the command's
+name and its arguments.*/
+void	ft_handle_redirections(t_main *msh, t_lst *cmd_args)
+{
+	int	i;
+
+	i = 0;
+	while (cmd_args != NULL)
+	{
+		if (cmd_args->token_type != WORD)
+		{
+			ft_open_redir(msh, cmd_args);
+		}
+		else
+		{
+			if (cmd_args->u_data.word != NULL)
+			{
+				msh->cmd_array[i] = cmd_args->u_data.word;
+				i++;
+			}
+		}
+		cmd_args = cmd_args->next;
+	}
+	msh->cmd_array[i] = NULL;
 }

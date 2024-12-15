@@ -37,9 +37,9 @@ void	exit_code_sig(int signal)
 
 void	sigint_handler(int signal)
 {
-	int	child;
+	//int	child;
 
-	child = 0;
+	//child = 0;
 	// if (signal == SIGQUIT)
 		// printf("Quit (core dumped)\n");
 	if (signal == SIGINT)

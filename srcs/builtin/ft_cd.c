@@ -27,6 +27,10 @@ int	old_path(t_env *env, char *old_directory)
 			if (tmp->value)
 				free(tmp->value);
 			cpy = ft_strjoin("OLDPWD=", old_directory);
+			if (!cpy)
+			{
+				;
+			}
 			//proteger
 		}
 	}

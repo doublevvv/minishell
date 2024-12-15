@@ -12,30 +12,6 @@
 
 #include "../../minishell.h"
 
-// The ft_parent_wait() waits for the children processes to finish.
-/*
-WIFEXITED(wstatus)
-	returns true if the child terminated normally,
-    that is, by calling exit(3) or _exit(2), or by
-    returning from main().
-
-WEXITSTATUS(wstatus)
-	returns the exit status of  the  child.
-	This consists of the least significant 8 bits of
-	the status argument that the child specified
-	in a call to exit(3) or _exit(2) or as the argument
-	for a return statement in main().
-	This macro should be employed only if WIFEXITED returned true.
-
-WIFSIGNALED(wstatus)
-    returns true if the child process  was  terminated by a signal.
-
-WTERMSIG(wstatus)
-    returns  the  number of the signal that caused
-    the child process to  terminate.
-	This macro should be employed only if WIFSIGNALED returned true.
-*/
-
 void	ft_execute_parent(t_main *msh)
 {
 	if (msh->prev_pipe != -1)
@@ -49,6 +25,17 @@ void	ft_execute_parent(t_main *msh)
 	}
 }
 
+/* The ft_parent_wait() function waits for all the child processes to finish.
+It updates a status code based on how each child process terminates
+(normal or abnormal termination).
+
+WIFEXITED(status) returns true if the child terminated normally 
+(via exit or returning from main).
+WEXITSTATUS(status) returns the exit status of the child.
+
+WIFSIGNALED(status) returns true if the child process was terminated by a signal.
+WTERMSIG(status) returns the number of the signal that caused the child process 
+to terminate. */
 void	ft_parent_wait(t_main *msh)
 {
 	t_lst	*cmd;
@@ -58,10 +45,7 @@ void	ft_parent_wait(t_main *msh)
 	cmd = msh->head_command;
 	while (cmd != NULL)
 	{
-		//dprintf(2, "cmd->pid = %d\n", cmd->pid);
 		waitpid(cmd->pid, &status, 0);
-		//dprintf(2, "word is %s\n", cmd->u_data.cmd_args->u_data.word);
-		//dprintf(2, "On a attendu le pid %d\n", cmd->pid);
 		if (WIFEXITED(status))
 		{
 			msh->code_status = WEXITSTATUS(status);
@@ -69,7 +53,7 @@ void	ft_parent_wait(t_main *msh)
 		else if (WIFSIGNALED(status))
 		{
 			msh->code_status = WTERMSIG(status);
-			msh->code_status += 128; // cf wait
+			msh->code_status += 128;
 		}
 		cmd = cmd->next;
 	}
@@ -77,14 +61,11 @@ void	ft_parent_wait(t_main *msh)
 
 void	ft_final_execution(t_main *msh)
 {
-	//dprintf(2, "FINAL EXECUTION\n");
 	if (msh->in_pipeline == 1)
 	{
 		ft_close_pipes_child(msh);
-	}
-	if (msh->in_pipeline == 1)
-	{
 		ft_parent_wait(msh);
+
 	}
 	ft_free_all(msh, NULL, false);
 }

@@ -50,8 +50,8 @@ void	ft_print_cmd_msg_error(t_main *msh, int msg)
 }
 
 /* The ft_check_path() function searches for the command in the paths of
-the `PATH` environment and checks whether the command exists and is executable
-and stores all the informations about the command in a linked list. */
+the `PATH` environment and checks whether the command exists and 
+is executable. */
 void	ft_check_path(t_main *msh)
 {
 	int	i;
@@ -80,7 +80,6 @@ void	ft_check_path(t_main *msh)
 	if (msh->paths[i] == NULL)
 	{
 		ft_print_cmd_msg_error(msh, 1);
-		//dprintf(2, "\t\tje suis le pid : %d\n", getpid());
 		ft_free_all(msh, NULL, false);
 		if (msh->env != NULL)
 		{
@@ -91,15 +90,12 @@ void	ft_check_path(t_main *msh)
 }
 
 /* In the ft_check_access() function, if the command is a full path, it checks
-whether the command exists and is executable, then stores all the informations
-about the command in a linked list. If not, we search for the command
-in the paths of the `PATH` environment variable. */
+whether the command exists and is executable. */
 void	ft_check_access(t_main *msh)
 {
 	//si commnd[0] == '\0' command not found et parti ??????????
 	if (access(msh->full_path, F_OK) == 0)
 	{
-		//dprintf(2, "fullpath: %s\n", msh->full_path);
 		if (access(msh->full_path, X_OK) == 0)
 		{
 			msh->cmd_valid = 1;
@@ -139,13 +135,11 @@ bool	ft_search_for_slash(t_main *msh)
 		tmp_arg = tmp->u_data.cmd_args;
 		while (tmp_arg != NULL)
 		{
-			//dprintf(2, "u_data->word: %s\n", tmp_arg->u_data.word);
 			while (tmp_arg->u_data.word[i] != '\0')
 			{
 				if (ft_strchr(&tmp_arg->u_data.word[i], '/') == 1)
 				{
 					msh->full_path = tmp_arg->u_data.word;
-					//dprintf(2, "msh->full_path = %s\n", msh->full_path);
 					return (true);
 				}
 				i++;

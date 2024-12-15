@@ -122,7 +122,7 @@ char	*ft_expand(t_main *msh, char *arg, t_env *env)
 	int		quote_state;
 	int		quote_true;
 	int		var_size;
-	int		res_index;
+	//int		res_index;
 	char	*res;
 	t_env	*cpy;
 	t_size	line;
@@ -131,7 +131,7 @@ char	*ft_expand(t_main *msh, char *arg, t_env *env)
 	quote_state = NO_QUOTE;
 	quote_true = 0;
 	var_size = 0;
-	res_index = 0;
+	//res_index = 0;
 	res = NULL;
 	line.capacity = 0;
 	line.line_size = 0;

@@ -21,7 +21,6 @@ void	ft_create_cmd_array(t_main *msh, t_lst *cmd)
 	{
 		if (cmd->token_type == WORD)
 		{
-			dprintf(2, "IT'S A WORD\n");
 			expand_result = ft_expand(msh, cmd->u_data.word, msh->env);
 			dprintf(2, "expand_result = %s\n", expand_result);
 			free(cmd->u_data.word);
@@ -39,7 +38,7 @@ void	ft_create_cmd_array(t_main *msh, t_lst *cmd)
 	if (!msh->cmd_array)
 	{
 		ft_print_error_message(ALLOCATION_FAILED, 0);
-		ft_free_all(msh, NULL, true);
+		ft_free_all(msh, "Failed to create commands array", true);
 	}
 }
 

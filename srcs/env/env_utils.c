@@ -64,7 +64,6 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 
 void	lst_env_clear(t_env **lst_env)
 {
-	dprintf(2, "\t\t\t\t\t\tDANS LISTE ENV\n");
 	t_env	*tmp;
 	t_env	*current;
 
@@ -73,12 +72,10 @@ void	lst_env_clear(t_env **lst_env)
 	{
 		if (current->key)
 		{
-			dprintf(2, "key freed\n");
 			free(current->key);
 		}
 		if (current->value)
 		{
-			dprintf(2, "key value\n");
 			free(current->value);
 		}
 		tmp = current->next;

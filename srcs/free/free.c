@@ -78,8 +78,6 @@ void	ft_free_double_array(char **array)
 
 void	ft_free_all(t_main *msh, char *error, bool is_exit)
 {
-	//dprintf(2, "\t\t\ton passe dans la fonction qui frree\n");
-	//dprintf(2, "\t\t\tici on free le pid : %d et le tab qui free pas et a %p\n", getpid(), msh->cmd_array);
 	if (error != NULL)
 	{
 		perror(error);
@@ -91,9 +89,7 @@ void	ft_free_all(t_main *msh, char *error, bool is_exit)
 	}
 	if (msh->cmd_array != NULL)
 	{
-		//dprintf(2, "\t\t\tici on free le pid : %d et le tab qui free pas et a %p\n", getpid(), msh->cmd_array);
 		free(msh->cmd_array);
-		//ft_free_double_array(msh->cmd_array);
 		msh->cmd_array = NULL;
 	}
 	if (msh->envp != NULL)
@@ -125,7 +121,6 @@ void	ft_free_all(t_main *msh, char *error, bool is_exit)
 		// dprintf(2, "coucoupid == %d\n", getpid());
 		if (msh->env != NULL)
 		{
-			dprintf(2, "msh->env freed\n");
 			lst_env_clear(&msh->env);
 		}
 		exit(EXIT_FAILURE);

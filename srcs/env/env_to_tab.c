@@ -33,7 +33,9 @@ char	*ft_join_key_to_value(t_main *msh, t_env *lst_env)
 	return (result);
 }
 
-void	ft_convert_lst_to_tab(t_main *msh)
+/* The ft_convert_env_lst_to_array() function converts the env linked list
+into an array. */
+void	ft_convert_env_lst_to_array(t_main *msh)
 {
 	int		nb_env_variable;
 	int		i;
@@ -41,9 +43,8 @@ void	ft_convert_lst_to_tab(t_main *msh)
 	t_env	*current;
 
 	nb_env_variable = ft_lstsize(msh->env);
-	//dprintf(2, "env_size = %d\n", nb_env_variable);
-	i = 0;
 	current = msh->env;
+	i = 0;
 	msh->envp = malloc((nb_env_variable + 1) * sizeof(char *));
 	if (!msh->envp)
 	{
@@ -62,7 +63,7 @@ void	ft_convert_lst_to_tab(t_main *msh)
 				i--;
 				y++;
 			}
-			ft_putstr_fd("Failed to join\n", 2);
+			ft_putstr_fd("Failed to join key to value\n", 2);
 			ft_free_all(msh, NULL, true);
 		}
 		i++;

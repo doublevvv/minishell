@@ -158,6 +158,8 @@ void	ft_display_cmd_array(t_main *msh);
 
 void	ft_dup_pipes(t_main *msh, int nb);
 
+void	ft_redirect_pipes(t_main *msh, int old_fd, int new_fd);
+
 void	ft_execute_command(t_main *msh);
 
 void	ft_search_env_path(t_main *msh);
@@ -171,6 +173,10 @@ void	ft_check_access(t_main *msh);
 void	ft_check_path(t_main *msh);
 
 void	ft_join_cmd_to_path(t_main *msh, int i);
+
+void	ft_not_in_pipeline(t_main *msh, t_lst *cmd, int builtin);
+
+void	ft_in_pipeline(t_main *msh, t_lst *cmd, int builtin);
 
 void	ft_execute_parent(t_main *msh);
 
@@ -194,7 +200,7 @@ void	ft_env(t_env *environ);
 
 char	*ft_join_key_to_value(t_main *msh, t_env *lst_env);
 
-void	ft_convert_lst_to_tab(t_main *msh);
+void	ft_convert_env_lst_to_array(t_main *msh);
 
 /* ************************************************************************* */
 /*                                   EXPAND                                  */
@@ -258,7 +264,9 @@ void	ft_handle_redirections(t_main *msh, t_lst *cmd_args);
 
 void	ft_open_redir(t_main *msh, t_lst *cmd_args);
 
-void	ft_redirect_pipes(t_main *msh, int old_fd, int new_fd);
+void	ft_dup_redirections(t_main *msh, int fd_infile, int fd_outfile);
+
+void	ft_close_redirections(int fd_infile, int fd_outfile);
 
 void	ft_generate_random_filename(t_main *msh);
 
@@ -313,7 +321,7 @@ char	*ft_itoa(int n);
 int		ft_count_digit(long int number);
 
 /* ************************************************************************* */
-/*                               LISTES CHAINEES                             */
+/*                                 LINKED LIST                               */
 /* ************************************************************************* */
 
 t_lst	*ft_lstnew(int type, char *name, int file);
@@ -327,7 +335,7 @@ void	ft_display_lst(t_lst *lst);
 bool	ft_verify_lst(t_lst *lst);
 
 /* ************************************************************************* */
-/*                                 SIGNAUX                                   */
+/*                                    SIGNAL                                 */
 /* ************************************************************************* */
 
 void	sigint_handler(int signal);

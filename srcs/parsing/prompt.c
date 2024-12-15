@@ -12,6 +12,8 @@
 
 #include "../../minishell.h"
 
+/* The ft_execute_builtin() function calls the corresponding builtin command's 
+function and updates the code status accordingly. */
 void	ft_execute_builtin(t_main *msh, int i)
 {
 	if (i == ECHO)
@@ -51,6 +53,9 @@ void	ft_execute_builtin(t_main *msh, int i)
 	}
 }
 
+/* The ft_is_builtin() function checks whether the given string matches one of 
+the builtin commands and returns the corresponding index of the command in the 
+builtin array. If the command is not found, it returns -1. */
 int	ft_is_builtin(char *str)
 {
 	int			i;
@@ -64,6 +69,7 @@ int	ft_is_builtin(char *str)
 		if (ft_strcmp(builtin[i], str) == 0)
 		{
 			builtin_found = i;
+			break ;
 		}
 		i++;
 	}
