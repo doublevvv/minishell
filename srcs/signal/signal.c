@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 09:29:27 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/16 10:18:15 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 15:21:52 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,8 @@ void	sigint_handler(int signal)
 		// printf("Quit (core dumped)\n");
 	if (signal == SIGINT)
 	{	
-		//mettre a jour la globale
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		g_signal_global = 130;
+		close(STDIN_FILENO);
 	}
 	else
 		return ;
@@ -71,8 +68,9 @@ void	set_signal(void)
 //debut exec/parent, signal(SIGINT, SIG_IGN)
 
 
-void	here_doc_sig_handler()
+void	here_doc_sig_handler(int signal)
 {
+	(void)signal;
 	g_signal_global = 130;
 	close(STDIN_FILENO);
 }

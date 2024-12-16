@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/16 10:50:22 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 15:25:48 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ typedef struct s_main
 	int			file;
 	char		*heredoc_filename;
 	int			code_status;
+	bool		is_signal;
 	bool		is_exit;
 	t_env		*env;
 	t_lst		*head_command;
@@ -190,6 +191,8 @@ void	ft_check_access(t_main *msh);
 
 void	ft_check_path(t_main *msh);
 
+void	ft_path_not_found(t_main *msh, int i);
+
 void	ft_join_cmd_to_path(t_main *msh, int i);
 
 void	ft_execute_parent(t_main *msh);
@@ -260,6 +263,12 @@ void	ft_handle_redirections(t_main *msh, t_lst *cmd_args);
 
 void	ft_open_redir(t_main *msh, t_lst *cmd_args);
 
+void	ft_handle_redir_in(t_main *msh, char *filename, int *fd);
+
+void	ft_handle_redir_out(t_main *msh, char *filename, int *fd);
+
+void	ft_handle_redir_append(t_main *msh, char *filename, int *fd);
+
 void	ft_dup_redirections(t_main *msh, int fd_infile, int fd_outfile);
 
 void	ft_close_redirections(int fd_infile, int fd_outfile);
@@ -326,8 +335,6 @@ void	ft_lstadd_back(t_main *msh, t_lst **lst, t_lst *new);
 
 int		ft_lstsize(t_env *lst);
 
-void	ft_display_lst(t_lst *lst);
-
 bool	ft_verify_lst(t_lst *lst);
 
 /* ************************************************************************* */
@@ -338,7 +345,7 @@ void	set_signal(void);
 
 void	sigint_handler(int signal);
 
-void	here_doc_sig_handler();
+void	here_doc_sig_handler(int signal);
 
 /* ************************************************************************* */
 /*                                    FREE                                   */
@@ -359,6 +366,8 @@ void	ft_free_double_array(char **array);
 void	ft_free_lst(t_lst **lst);
 
 void	lst_env_clear(t_env **lst_env);
+
+void	ft_free_array(t_main *msh);
 
 void	ft_free_all(t_main *msh, char *error, bool is_exit);
 

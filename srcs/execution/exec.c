@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:41:13 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/16 10:23:42 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 16:19:35 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,18 +106,12 @@ void	ft_handle_exec( t_main *msh, t_lst *cmd, int nb)
 	}
 	ft_handle_redirections(msh, cmd_arg);
 	if (msh->cmd_array[0] == NULL)
-	{
-		return ;// ???
-	}
+		return ;
 	builtin = ft_is_builtin(msh->cmd_array[0]);
 	if (msh->in_pipeline == 0)
-	{
 		ft_not_in_pipeline(msh, cmd, builtin);
-	}
 	else
-	{
 		ft_in_pipeline(msh, cmd, builtin);
-	}
 }
 
 void	ft_count_cmds(t_main *msh, t_lst *lst)
@@ -155,9 +149,7 @@ void	ft_exec(t_main *msh)
 		cmd = cmd->next;
 		if (dup2(msh->stdout_copy, STDIN_FILENO) == -1 \
 			|| dup2(msh->stdout_copy, STDOUT_FILENO) == -1)
-		{
 			ft_free_all(msh, "Failed to restore stdin/stdout", true);
-		}
 	}
 	ft_final_execution(msh);
 }

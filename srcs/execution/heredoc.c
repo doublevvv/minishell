@@ -33,7 +33,7 @@ void	ft_generate_random_filename(t_main *msh)
 	msh->heredoc_filename = ft_strjoin(path, str);
 	if (!msh->heredoc_filename)
 	{
-		ft_putstr_fd("Failed to join to create heredoc file name\n", 2);
+		ft_putstr_fd("Failed to join to create heredoc filename\n", 2);
 		ft_free_all(msh, NULL, true);
 	}
 }

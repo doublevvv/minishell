@@ -52,6 +52,8 @@ void	ft_parent_wait(t_main *msh)
 		}
 		else if (WIFSIGNALED(status))
 		{
+			printf("\n");
+			msh->is_signal = false;
 			msh->code_status = WTERMSIG(status);
 			msh->code_status += 128;
 		}

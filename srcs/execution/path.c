@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:25:39 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/16 10:49:52 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 16:17:20 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,21 @@ void	ft_print_cmd_msg_error(t_main *msh, int msg)
 	}
 }
 
+void	ft_path_not_found(t_main *msh, int i)
+{
+	if (msh->paths[i] == NULL)
+	{
+		ft_print_cmd_msg_error(msh, 1);
+		ft_free_all(msh, NULL, false);
+		if (msh->env != NULL)
+		{
+			lst_env_clear(&msh->env);
+		}
+		msh->code_status = 127;
+		exit(msh->code_status);
+	}
+}
+
 /* The ft_check_path() function searches for the command in the paths of
 the `PATH` environment and checks whether the command exists and 
 is executable. */
@@ -71,29 +86,20 @@ void	ft_check_path(t_main *msh)
 			{
 				ft_print_cmd_msg_error(msh, 2);
 				ft_free_all(msh, NULL, false);
-				exit(126);
+				msh->code_status = 126;
+				exit(msh->code_status);
 			}
 		}
 		free(msh->full_path);
 		i++;
 	}
-	if (msh->paths[i] == NULL)
-	{
-		ft_print_cmd_msg_error(msh, 1);
-		ft_free_all(msh, NULL, false);
-		if (msh->env != NULL)
-		{
-			lst_env_clear(&msh->env);
-		}
-		exit(127);
-	}
+	ft_path_not_found(msh, i);
 }
 
 /* In the ft_check_access() function, if the command is a full path, it checks
 whether the command exists and is executable. */
 void	ft_check_access(t_main *msh)
 {
-	//si commnd[0] == '\0' command not found et parti ??????????
 	if (access(msh->full_path, F_OK) == 0)
 	{
 		if (access(msh->full_path, X_OK) == 0)
@@ -104,7 +110,8 @@ void	ft_check_access(t_main *msh)
 		{
 			ft_print_cmd_msg_error(msh, 2);
 			ft_free_all(msh, NULL, false);
-			exit(126);
+			msh->code_status = 126;
+			exit(msh->code_status);
 		}
 	}
 	else
@@ -115,6 +122,7 @@ void	ft_check_access(t_main *msh)
 		{
 			lst_env_clear(&msh->env);
 		}
-		exit(127);
+		msh->code_status = 127;
+		exit(msh->code_status);
 	}
 }

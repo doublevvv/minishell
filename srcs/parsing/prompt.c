@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/16 10:40:03 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 15:26:22 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,8 @@ bool	ft_check_prompt(t_main *msh, char *str)
 						perror("signal heredoc echec dup2 stdin: ");
 						ft_free_all(msh, NULL, true);
 					}
-					msh->code_status = g_signal_global;
+					msh->code_status = 130;
+					write(1, "\n", 1);
 					return (false);
 				}
 				close (msh->file);
@@ -258,8 +259,6 @@ bool	ft_check_prompt(t_main *msh, char *str)
 		}
 		ft_isspace(str, &i);
 	}
-	// Laisser la fonction (lst.c) en commentaire
-	ft_display_lst(msh->head_command);
 	if (ft_verify_lst(msh->head_command) == false)
 	{
 		ft_print_error_message(EMPTY_WORD, 0);
@@ -282,17 +281,32 @@ void	ft_msh_loop(t_main *msh)
 		}
 		ft_init_data_bis(msh);
 		msh->line = readline("les loutres > ");
+		if (g_signal_global != 0)
+		{
+			if (msh->is_signal == false)
+			{
+				printf("\n");
+				msh->is_signal = true;
+			}
+			msh->code_status = 130;
+			g_signal_global = 0;
+			if (dup2(msh->stdin_copy, STDIN_FILENO) == -1)
+			{
+				ft_free_all(msh, NULL, true);
+			}
+			close(msh->stdin_copy);
+			close(msh->stdout_copy);
+			continue ;
+		}
 		if (!msh->line)
 		{
-			//check erno == ENOMEN;
-			ft_free_all(msh, NULL, false); //a verifier
-			break ;
+			ft_free_all(msh, NULL, true);
 		}
 		add_history(msh->line);
 		if (ft_check_prompt(msh, msh->line) == false)
 		{
-			ft_free_all(msh, NULL, false);
 			g_signal_global = 0;
+			ft_free_all(msh, NULL, false);
 		}
 		else
 		{

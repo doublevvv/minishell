@@ -47,7 +47,8 @@ void	ft_free_lst(t_lst **lst)
 		tmp_arg = current->u_data.cmd_args;
 		while (tmp_arg != NULL)
 		{
-			if (tmp_arg->token_type != REDIRECTION_HEREDOC && tmp_arg->u_data.word != NULL)
+			if (tmp_arg->token_type != REDIRECTION_HEREDOC \
+				&& tmp_arg->u_data.word != NULL)
 			{
 				free(tmp_arg->u_data.word);
 			}
@@ -76,12 +77,8 @@ void	ft_free_double_array(char **array)
 	array = NULL;
 }
 
-void	ft_free_all(t_main *msh, char *error, bool is_exit)
+void	ft_free_array(t_main *msh)
 {
-	if (error != NULL)
-	{
-		perror(error);
-	}
 	if (msh->paths != NULL)
 	{
 		ft_free_double_array(msh->paths);
@@ -97,32 +94,30 @@ void	ft_free_all(t_main *msh, char *error, bool is_exit)
 		ft_free_double_array(msh->envp);
 		msh->envp = NULL;
 	}
+}
+
+void	ft_free_all(t_main *msh, char *error, bool is_exit)
+{
+	if (error != NULL)
+		perror(error);
+	ft_free_array(msh);
 	if (msh->head_command != NULL)
-	{
 		ft_free_lst(&msh->head_command);
-	}
 	if (msh->line != NULL)
 	{
 		free(msh->line);
 		msh->line = NULL;
 	}
 	if (msh->stdin_copy != -1)
-	{
-		//dprintf(2, "msh->stdin_copy closed\n");
 		close(msh->stdin_copy);
-	}
 	if (msh->stdout_copy != -1)
-	{
-		//dprintf(2, "msh->stdout_copy closed\n");
 		close(msh->stdout_copy);
-	}
 	if (is_exit != false)
 	{
-		// dprintf(2, "coucoupid == %d\n", getpid());
 		if (msh->env != NULL)
 		{
 			lst_env_clear(&msh->env);
 		}
-		exit(EXIT_FAILURE);
+		exit(msh->code_status);
 	}
 }
