@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 09:25:07 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/13 13:32:28 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 18:28:36 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	*ft_calloc(size_t count, size_t n)
 	}
 	return ((void *)nouvellezone);
 }
-//INT MAX ??? 
 
 int	ft_isalpha(int c)
 {
@@ -65,7 +64,6 @@ void	*ft_memcpy(void *dest, const void *src, unsigned int n)
 
 	csrc = (char *)src;
 	cdest = (char *)dest;
-	// cdest = malloc(sizeof(char *) + 1);
 	if (!dest && !src)
 		return (NULL);
 	i = 0;

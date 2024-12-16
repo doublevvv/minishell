@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/16 18:09:34 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 18:58:49 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,7 @@ bool	ft_check_prompt(t_main *msh, char *str)
 	}
 	return (true);
 }
+
 void	ft_handle_signal_in_loop(t_main *msh)
 {
 	if (msh->is_signal == false)

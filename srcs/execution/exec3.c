@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 09:53:33 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/16 09:53:42 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 18:23:49 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	ft_final_execution(t_main *msh)
 	{
 		ft_close_pipes_child(msh);
 		ft_parent_wait(msh);
-
 	}
 	ft_free_all(msh, NULL, false);
 }

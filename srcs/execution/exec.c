@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:41:13 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/16 16:19:35 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 18:24:12 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ void	ft_handle_exec( t_main *msh, t_lst *cmd, int nb)
 void	ft_count_cmds(t_main *msh, t_lst *lst)
 {
 	msh->nb_cmd = 0;
-
 	while (lst != NULL)
 	{
 		msh->nb_cmd++;

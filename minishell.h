@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/16 18:05:45 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 18:59:15 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,15 +263,9 @@ bool	is_numeric(char *str);
 /*                               REDIRECTION                                 */
 /* ************************************************************************* */
 
-void	ft_case_redirection_word(t_main *msh, int token, t_lst *command);
-
-bool	ft_handle_redirection_heredoc(t_main *msh, t_lst *command, int token);
-
 void	ft_generate_random_filename(t_main *msh);
 
 void	ft_read_input_heredoc(char *cmd, int file);
-
-bool	ft_handle_signal_heredoc(t_main *msh);
 
 void	ft_handle_redirections(t_main *msh, t_lst *cmd_args);
 
