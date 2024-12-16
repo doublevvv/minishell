@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/16 15:26:22 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 18:09:34 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,37 +18,30 @@ void	ft_execute_builtin(t_main *msh, int i)
 {
 	if (i == ECHO)
 	{
-		dprintf(2, "APPEL ECHO FONCTION\n");
 		msh->code_status = ft_echo(msh, msh->env);
 	}
 	else if (i == CD)
 	{
-		dprintf(2, "APPEL CD FONCTION\n");
 		msh->code_status = ft_cd(msh, msh->env);
 	}
 	else if (i == PWD)
 	{
-		dprintf(2, "APPEL PWD FONCTION\n");
 		msh->code_status = ft_pwd(msh, NULL);
 	}
 	else if (i == EXPORT)
 	{
-		dprintf(2, "APPEL EXPORT FONCTION\n");
 		msh->code_status = ft_export(msh, msh->env);
 	}
 	else if (i == UNSET)
 	{
-		dprintf(2, "APPEL UNSET FONCTION\n");
 		msh->code_status = ft_unset(msh, msh->env);
 	}
 	else if (i == ENV)
 	{
-		dprintf(2, "APPEL ENV FONCTION\n");
 		ft_env(msh->env);
 	}
 	else if (i == EXIT)
 	{
-		dprintf(2, "APPEL EXIT FONCTION\n");
 		msh->code_status = ft_exit(msh, NULL);
 	}
 }
@@ -117,9 +110,7 @@ int	ft_get_word(t_main *msh, char *str, int *i)
 	end = 0;
 	ft_isspace(str, i);
 	if (str[*i] == '\0')
-	{
 		return (EMPTY_LINE);
-	}
 	start = *i;
 	while (str[*i] != '\0' && str[*i] != ' ' && str[*i] != '\t' && str[*i] != '>' \
 		&& str[*i] != '<' && str[*i] != '|')
@@ -133,13 +124,9 @@ int	ft_get_word(t_main *msh, char *str, int *i)
 	end = *i;
 	msh->cmd = ft_substr(str, start, end - start);
 	if (!msh->cmd)
-	{
 		return (ALLOCATION_FAILED);
-	}
 	if (start == end)
-	{
 		return (EMPTY_WORD);
-	}
 	return (SUCCESS);
 }
 
@@ -169,7 +156,6 @@ bool	ft_check_prompt(t_main *msh, char *str)
 	while (str[i])
 	{
 		token = ft_identify_token(str, &i);
-		//dprintf(2, "token = %d\n", token);
 		if (token == PIPE)
 		{
 			if (ft_verify_lst(msh->head_command) == false)
@@ -177,8 +163,6 @@ bool	ft_check_prompt(t_main *msh, char *str)
 				ft_print_error_message(EMPTY_WORD, '|');
 				return (false);
 			}
-			//verifier que la current cmd est valide avant de creer la nouvelle cmd
-			//dprintf(2, "FOUND PIPE\n");
 			current_command = ft_lstnew(token, NULL, -1);
 			if (!current_command)
 			{
@@ -198,30 +182,21 @@ bool	ft_check_prompt(t_main *msh, char *str)
 				}
 				return (false);
 			}
-			//LEAK DANS HEREDOC
 			if (token == REDIRECTION_HEREDOC)
 			{
 				signal(SIGINT, here_doc_sig_handler);
-				dprintf(2, "WORD = REDIRECTION_HEREDOC\n");
 				ft_generate_random_filename(msh);
-				dprintf(2, "hd filename = %s\n", msh->heredoc_filename);
 				msh->file = open(msh->heredoc_filename, O_CREAT | O_WRONLY, 0644);
 				if (msh->file == -1)
 				{
-					dprintf(2, "HELLO HELLO\n");
 					ft_open_file_error(msh, 0, 0);
-					unlink(msh->heredoc_filename);
-					free(msh->heredoc_filename);
-					ft_free_all(msh, NULL, true);
 				}
-				dprintf(2, "msh->cmd = %s\n", msh->cmd);
 				ft_read_input_heredoc(msh->cmd, msh->file);
 				if (g_signal_global != 0)
 				{
 					if (dup2( msh->stdin_copy, STDIN_FILENO) == -1)
 					{
-						perror("signal heredoc echec dup2 stdin: ");
-						ft_free_all(msh, NULL, true);
+						ft_free_all(msh, "Signal heredoc failed to dup2 stdin\n", true);
 					}
 					msh->code_status = 130;
 					write(1, "\n", 1);
@@ -230,19 +205,13 @@ bool	ft_check_prompt(t_main *msh, char *str)
 				close (msh->file);
 				msh->file = -1;
 				fd_infile = open(msh->heredoc_filename, O_RDONLY);
-				dprintf(2, "msh->fd_infile: %d\n", fd_infile);
 				if (fd_infile == -1)
 				{
 					ft_open_file_error(msh, 0, 0);
-					unlink(msh->heredoc_filename);
-					free(msh->heredoc_filename);
-					ft_free_all(msh, NULL, true);
 				}
-				dprintf(2, "file: %d\n", msh->file);
 				unlink(msh->heredoc_filename);
 				free(msh->heredoc_filename);
 				msh->heredoc_filename = NULL;
-				dprintf(2, "fd_infile = %d\n", fd_infile);
 				command = ft_lstnew(token, msh->cmd, fd_infile);
 				signal(SIGINT, SIG_IGN);
 			}
@@ -266,42 +235,49 @@ bool	ft_check_prompt(t_main *msh, char *str)
 	}
 	return (true);
 }
+void	ft_handle_signal_in_loop(t_main *msh)
+{
+	if (msh->is_signal == false)
+	{
+		printf("\n");
+		msh->is_signal = true;
+	}
+	msh->code_status = 130;
+	g_signal_global = 0;
+	if (dup2(msh->stdin_copy, STDIN_FILENO) == -1)
+	{
+		ft_free_all(msh, NULL, true);
+	}
+	close(msh->stdin_copy);
+	close(msh->stdout_copy);
+}
+
+void	ft_copy_stdin_stdout(t_main *msh)
+{
+	msh->stdin_copy = dup(STDIN_FILENO);
+	msh->stdout_copy = dup(STDOUT_FILENO);
+	if (msh->stdin_copy == -1 || msh->stdout_copy == -1)
+	{
+		ft_putstr_fd("Failed to dup stdin/stdout\n", 2);
+		ft_free_all(msh, NULL, true);
+	}
+}
 
 void	ft_msh_loop(t_main *msh)
 {
 	while (1)
 	{
 		set_signal();
-		msh->stdin_copy = dup(STDIN_FILENO);
-		msh->stdout_copy = dup(STDOUT_FILENO);
-		if (msh->stdin_copy == -1 || msh->stdout_copy == -1)
-		{
-			ft_putstr_fd("Failed to dup stdin/stdout\n", 2);
-			ft_free_all(msh, NULL, true);
-		}
+		ft_copy_stdin_stdout(msh);
 		ft_init_data_bis(msh);
 		msh->line = readline("les loutres > ");
 		if (g_signal_global != 0)
 		{
-			if (msh->is_signal == false)
-			{
-				printf("\n");
-				msh->is_signal = true;
-			}
-			msh->code_status = 130;
-			g_signal_global = 0;
-			if (dup2(msh->stdin_copy, STDIN_FILENO) == -1)
-			{
-				ft_free_all(msh, NULL, true);
-			}
-			close(msh->stdin_copy);
-			close(msh->stdout_copy);
+			ft_handle_signal_in_loop(msh);
 			continue ;
 		}
 		if (!msh->line)
-		{
 			ft_free_all(msh, NULL, true);
-		}
 		add_history(msh->line);
 		if (ft_check_prompt(msh, msh->line) == false)
 		{

@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/16 15:25:48 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 18:05:45 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,11 @@ void	*ft_memset(void *s, int c, size_t n);
 
 void	ft_msh_loop(t_main *msh);
 
+void	ft_copy_stdin_stdout(t_main *msh);
+
 void	ft_init_data_bis(t_main *msh);
+
+void	ft_handle_signal_in_loop(t_main *msh);
 
 bool	ft_check_prompt(t_main *msh, char *str);
 
@@ -259,6 +263,16 @@ bool	is_numeric(char *str);
 /*                               REDIRECTION                                 */
 /* ************************************************************************* */
 
+void	ft_case_redirection_word(t_main *msh, int token, t_lst *command);
+
+bool	ft_handle_redirection_heredoc(t_main *msh, t_lst *command, int token);
+
+void	ft_generate_random_filename(t_main *msh);
+
+void	ft_read_input_heredoc(char *cmd, int file);
+
+bool	ft_handle_signal_heredoc(t_main *msh);
+
 void	ft_handle_redirections(t_main *msh, t_lst *cmd_args);
 
 void	ft_open_redir(t_main *msh, t_lst *cmd_args);
@@ -272,10 +286,6 @@ void	ft_handle_redir_append(t_main *msh, char *filename, int *fd);
 void	ft_dup_redirections(t_main *msh, int fd_infile, int fd_outfile);
 
 void	ft_close_redirections(int fd_infile, int fd_outfile);
-
-void	ft_generate_random_filename(t_main *msh);
-
-void	ft_read_input_heredoc(char *cmd, int file);
 
 /* ************************************************************************* */
 /*                                  LIBFT                                    */
