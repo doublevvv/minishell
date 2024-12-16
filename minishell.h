@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/13 16:56:03 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 10:50:22 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,48 +143,6 @@ bool	ft_has_quote(char *str, int *i);
 bool	ft_check_quote(char *str, int *i, char c);
 
 /* ************************************************************************* */
-/*                                  EXECUTION                                */
-/* ************************************************************************* */
-
-void	ft_exec(t_main *msh);
-
-void	ft_handle_exec( t_main *msh, t_lst *cmd, int nb);
-
-void	ft_count_cmds(t_main *msh, t_lst *lst);
-
-void	ft_create_cmd_array(t_main *msh, t_lst *cmd);
-
-void	ft_display_cmd_array(t_main *msh);
-
-void	ft_dup_pipes(t_main *msh, int nb);
-
-void	ft_redirect_pipes(t_main *msh, int old_fd, int new_fd);
-
-void	ft_execute_command(t_main *msh);
-
-void	ft_search_env_path(t_main *msh);
-
-bool	ft_get_paths(t_main *msh);
-
-bool	ft_search_for_slash(t_main *msh);
-
-void	ft_check_access(t_main *msh);
-
-void	ft_check_path(t_main *msh);
-
-void	ft_join_cmd_to_path(t_main *msh, int i);
-
-void	ft_not_in_pipeline(t_main *msh, t_lst *cmd, int builtin);
-
-void	ft_in_pipeline(t_main *msh, t_lst *cmd, int builtin);
-
-void	ft_execute_parent(t_main *msh);
-
-void	ft_final_execution(t_main *msh);
-
-void	ft_parent_wait(t_main *msh);
-
-/* ************************************************************************* */
 /*                                     ENV                                   */
 /* ************************************************************************* */
 
@@ -201,6 +159,44 @@ void	ft_env(t_env *environ);
 char	*ft_join_key_to_value(t_main *msh, t_env *lst_env);
 
 void	ft_convert_env_lst_to_array(t_main *msh);
+
+/* ************************************************************************* */
+/*                                  EXECUTION                                */
+/* ************************************************************************* */
+
+void	ft_exec(t_main *msh);
+
+void	ft_count_cmds(t_main *msh, t_lst *lst);
+
+void	ft_handle_exec( t_main *msh, t_lst *cmd, int nb);
+
+void	ft_create_cmd_array(t_main *msh, t_lst *cmd);
+
+void	ft_dup_pipes(t_main *msh, int nb);
+
+void	ft_redirect_pipes(t_main *msh, int old_fd, int new_fd);
+
+void	ft_not_in_pipeline(t_main *msh, t_lst *cmd, int builtin);
+
+void	ft_in_pipeline(t_main *msh, t_lst *cmd, int builtin);
+
+void	ft_execute_command(t_main *msh);
+
+void	ft_search_env_path(t_main *msh);
+
+bool	ft_get_paths(t_main *msh);
+
+void	ft_check_access(t_main *msh);
+
+void	ft_check_path(t_main *msh);
+
+void	ft_join_cmd_to_path(t_main *msh, int i);
+
+void	ft_execute_parent(t_main *msh);
+
+void	ft_final_execution(t_main *msh);
+
+void	ft_parent_wait(t_main *msh);
 
 /* ************************************************************************* */
 /*                                   EXPAND                                  */
@@ -338,9 +334,9 @@ bool	ft_verify_lst(t_lst *lst);
 /*                                    SIGNAL                                 */
 /* ************************************************************************* */
 
-void	sigint_handler(int signal);
-
 void	set_signal(void);
+
+void	sigint_handler(int signal);
 
 void	here_doc_sig_handler();
 

@@ -6,7 +6,7 @@
 #    By: evlim <evlim@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 08:37:40 by evlim             #+#    #+#              #
-#    Updated: 2024/12/13 09:02:03 by evlim            ###   ########.fr        #
+#    Updated: 2024/12/16 10:08:48 by evlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,14 +24,16 @@ SOURCES = srcs/main.c	\
 		srcs/libft/ft_str3.c	\
 		srcs/parsing/init.c	\
 		srcs/parsing/prompt.c	\
-		srcs/parsing/lst_to_array.c	\
-		srcs/parsing/env_path.c	\
-		srcs/parsing/path.c	\
 		srcs/env/ft_env.c	\
 		srcs/env/env_to_tab.c	\
 		srcs/env/env_utils.c	\
+		srcs/execution/cmd_lst_to_array.c	\
 		srcs/execution/exec.c	\
 		srcs/execution/exec2.c	\
+		srcs/execution/exec3.c	\
+		srcs/execution/heredoc.c	\
+		srcs/execution/env_path.c	\
+		srcs/execution/path.c	\
 		srcs/execution/redirection.c	\
 		srcs/builtin/ft_echo.c	\
 		srcs/builtin/ft_exit.c	\

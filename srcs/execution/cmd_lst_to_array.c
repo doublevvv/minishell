@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_to_array.c                                     :+:      :+:    :+:   */
+/*   cmd_lst_to_array.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 08:41:51 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/13 09:43:02 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 10:01:41 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ void	ft_create_cmd_array(t_main *msh, t_lst *cmd)
 	}
 }
 
-void	ft_display_cmd_array(t_main *msh)
-{
-	int	i;
+// void	ft_display_cmd_array(t_main *msh)
+// {
+// 	int	i;
 
-	i = 0;
-	dprintf(2, "Array of commands\n");
-	while (msh->cmd_array[i] != NULL)
-	{
-		dprintf(2, "cmd %d : %s\n", i, msh->cmd_array[i]);
-		i++;
-	}
-}
+// 	i = 0;
+// 	dprintf(2, "Array of commands\n");
+// 	while (msh->cmd_array[i] != NULL)
+// 	{
+// 		dprintf(2, "cmd %d : %s\n", i, msh->cmd_array[i]);
+// 		i++;
+// 	}
+// }

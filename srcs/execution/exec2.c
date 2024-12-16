@@ -6,66 +6,45 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 08:39:02 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/13 17:13:52 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 10:52:51 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	ft_execute_parent(t_main *msh)
+void	ft_redirect_pipes(t_main *msh, int old_fd, int new_fd)
 {
-	if (msh->prev_pipe != -1)
+	if (old_fd > -1 && dup2(old_fd, new_fd) == -1)
 	{
-		close(msh->prev_pipe);
+		ft_free_all(msh, "dup2 failed", true);
 	}
-	msh->prev_pipe = msh->pipefd[0];
-	if (msh->pipefd[1] != -1)
+}
+
+/* The dup_pipes() function manages file descriptors for input and output 
+redirection depending on the command's position in the pipeline. */
+void	ft_dup_pipes(t_main *msh, int nb)
+{
+	if (nb == 0)
+	{
+		ft_redirect_pipes(msh, msh->pipefd[1], STDOUT_FILENO);
+		close(msh->pipefd[1]);
+		msh->prev_pipe = -1;
+	}
+	else if (nb == (msh->nb_cmd - 1))
 	{
 		close(msh->pipefd[1]);
+		msh->pipefd[1] = -1;
+		ft_redirect_pipes(msh, msh->prev_pipe, STDIN_FILENO);
+		close(msh->prev_pipe);
+		msh->prev_pipe = -1;
 	}
-}
-
-/* The ft_parent_wait() function waits for all the child processes to finish.
-It updates a status code based on how each child process terminates
-(normal or abnormal termination).
-
-WIFEXITED(status) returns true if the child terminated normally 
-(via exit or returning from main).
-WEXITSTATUS(status) returns the exit status of the child.
-
-WIFSIGNALED(status) returns true if the child process was terminated by a signal.
-WTERMSIG(status) returns the number of the signal that caused the child process 
-to terminate. */
-void	ft_parent_wait(t_main *msh)
-{
-	t_lst	*cmd;
-	int		status;
-
-	status = 0;
-	cmd = msh->head_command;
-	while (cmd != NULL)
+	else
 	{
-		waitpid(cmd->pid, &status, 0);
-		if (WIFEXITED(status))
-		{
-			msh->code_status = WEXITSTATUS(status);
-		}
-		else if (WIFSIGNALED(status))
-		{
-			msh->code_status = WTERMSIG(status);
-			msh->code_status += 128;
-		}
-		cmd = cmd->next;
+		ft_redirect_pipes(msh, msh->prev_pipe, STDIN_FILENO);
+		close(msh->prev_pipe);
+		msh->prev_pipe = -1;
+		ft_redirect_pipes(msh, msh->pipefd[1], STDOUT_FILENO);
+		close(msh->pipefd[1]);
+		msh->pipefd[1] = -1;
 	}
-}
-
-void	ft_final_execution(t_main *msh)
-{
-	if (msh->in_pipeline == 1)
-	{
-		ft_close_pipes_child(msh);
-		ft_parent_wait(msh);
-
-	}
-	ft_free_all(msh, NULL, false);
 }

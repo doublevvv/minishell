@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 08:34:07 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/13 09:46:14 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 10:57:57 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,62 +25,34 @@ void	ft_open_file_error(t_main *msh, int fd_infile, int fd_outfile)
 	}
 	ft_free_all(msh, "Error ", true);
 }
-/* The ft_generate_random_filename() function creates a random filename for
-the here_doc. */
-void	ft_generate_random_filename(t_main *msh)
-{
-	unsigned char	*rand;
-	int				i;
-	char			str[9];
-	char			*path;
 
-	path = "/tmp/";
-	rand = (unsigned char *)&msh;
-	i = 0;
-	while (i < 8)
+void	ft_dup_redirections(t_main *msh, int fd_infile, int fd_outfile)
+{
+	if (fd_infile > -1 && dup2(fd_infile, STDIN_FILENO) == -1)
 	{
-		str[i] = ((rand[i] % 26) + 'a');
-		i++;
+		ft_free_all(msh, "1 => dup2 failed", true);
 	}
-	str[8] = '\0';
-	msh->heredoc_filename = ft_strjoin(path, str);
-	if (!msh->heredoc_filename)
+	if (fd_outfile > -1 && dup2(fd_outfile, STDOUT_FILENO) == -1)
 	{
-		ft_putstr_fd("Failed to join to create heredoc file name\n", 2);
-		ft_free_all(msh, NULL, true);
+		ft_free_all(msh, "2 => dup2 failed", true);
 	}
 }
 
-/* The ft_read_input_heredoc() function reads from the standard input and
-stores each line except the limiter in a temporary file.
-This temporary file is taken as the infile of the program.*/
-void	ft_read_input_heredoc(char *cmd, int file)
+void	ft_close_redirections(int fd_infile, int fd_outfile)
 {
-	char	*line;
-
-	while (1)
+	if (fd_infile != -1)
 	{
-		line = readline("> ");
-		if (!line)
-		{
-			close(file);
-			break ;
-		}
-		if (ft_strcmp(cmd, line) == 0)
-		{
-			free(line);
-			close(file);
-			break ;
-		}
-		else
-		{
-			ft_putstr_fd(line, file);
-			write(file, "\n", 1);
-		}
-		free(line);
+		dprintf(2, "fd_infile closed\n");
+		close(fd_infile);
+		fd_infile = -1;
+	}
+	if (fd_outfile != -1)
+	{
+		dprintf(2, "fd_outfile closed\n");
+		close(fd_outfile);
+		fd_outfile = -1;
 	}
 }
-
 
 /* The ft_open_redir() function handles input and output redirection.
 Depending on the type of the redirection (e.g., input, output or heredoc),
@@ -123,34 +95,6 @@ void	ft_open_redir(t_main *msh, t_lst *cmd_args)
 	}
 	ft_dup_redirections(msh, fd_infile, fd_outfile);
 	ft_close_redirections(fd_infile, fd_outfile);
-}
-
-void	ft_dup_redirections(t_main *msh, int fd_infile, int fd_outfile)
-{
-	if (fd_infile > -1 && dup2(fd_infile, STDIN_FILENO) == -1)
-	{
-		ft_free_all(msh, "1 => dup2 failed", true);
-	}
-	if (fd_outfile > -1 && dup2(fd_outfile, STDOUT_FILENO) == -1)
-	{
-		ft_free_all(msh, "2 => dup2 failed", true);
-	}
-}
-
-void	ft_close_redirections(int fd_infile, int fd_outfile)
-{
-	if (fd_infile != -1)
-	{
-		dprintf(2, "fd_infile closed\n");
-		close(fd_infile);
-		fd_infile = -1;
-	}
-	if (fd_outfile != -1)
-	{
-		dprintf(2, "fd_outfile closed\n");
-		close(fd_outfile);
-		fd_outfile = -1;
-	}
 }
 
 /* The ft_handle_redirections() function:

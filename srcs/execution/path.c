@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:25:39 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/13 17:13:29 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 10:49:52 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,36 +117,4 @@ void	ft_check_access(t_main *msh)
 		}
 		exit(127);
 	}
-}
-
-/* The ft_search_for_slash() function checks whether the command contains
-a `/` character. If a `/` is found, the command is given as a full path
-(relative/absolute path). */
-bool	ft_search_for_slash(t_main *msh)
-{
-	int		i;
-	t_lst	*tmp;
-	t_lst	*tmp_arg;
-
-	i = 0;
-	tmp = msh->head_command;
-	while (tmp != NULL)
-	{
-		tmp_arg = tmp->u_data.cmd_args;
-		while (tmp_arg != NULL)
-		{
-			while (tmp_arg->u_data.word[i] != '\0')
-			{
-				if (ft_strchr(&tmp_arg->u_data.word[i], '/') == 1)
-				{
-					msh->full_path = tmp_arg->u_data.word;
-					return (true);
-				}
-				i++;
-			}
-			tmp_arg = tmp_arg->next;
-		}
-		tmp = tmp->next;
-	}
-	return (false);
 }

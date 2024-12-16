@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 09:26:02 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/12 17:04:35 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/16 10:04:32 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,4 @@ void	ft_convert_env_lst_to_array(t_main *msh)
 		current = current->next;
 	}
 	msh->envp[i] = NULL;
-	//A SUPPRIMER
-	// i = 0;
-	// dprintf(2, "ENV TAB\n");
-	// while (msh->envp[i] != NULL)
-	// {
-	// 	dprintf(2, "msh->envp[%d] = %s\n", i, msh->envp[i]);
-	// 	i++;
-	// }
 }
