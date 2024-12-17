@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 08:34:07 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/16 16:53:26 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/17 14:05:04 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	ft_open_file_error(t_main *msh, int fd_infile, int fd_outfile)
 	}
 	if (msh->heredoc_filename != NULL)
 	{
-		dprintf(2, "\t\t\theredoc_filename not null\n");
 		unlink(msh->heredoc_filename);
 		free(msh->heredoc_filename);
 	}
-	ft_free_all(msh, "Error ", true);
+	perror("Error: ");
+	msh->code_status = 1;
 }
 
 void	ft_handle_redir_in(t_main *msh, char *filename, int *fd)

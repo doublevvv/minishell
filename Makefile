@@ -6,7 +6,7 @@
 #    By: evlim <evlim@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 08:37:40 by evlim             #+#    #+#              #
-#    Updated: 2024/12/16 15:06:21 by evlim            ###   ########.fr        #
+#    Updated: 2024/12/17 08:48:14 by evlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SOURCES = srcs/main.c	\
 		srcs/libft/ft_str3.c	\
 		srcs/parsing/init.c	\
 		srcs/parsing/prompt.c	\
+		srcs/parsing/prompt2.c	\
 		srcs/env/ft_env.c	\
 		srcs/env/env_to_tab.c	\
 		srcs/env/env_utils.c	\
@@ -45,7 +46,7 @@ SOURCES = srcs/main.c	\
 		srcs/expand/expand.c	\
 		srcs/signal/signal.c	\
 		srcs/free/free.c	\
-		srcs/free/free2.c
+		srcs/free/close.c
 
 SRCS = $(addprefix $(OBJ_DIR)/, $(SOURCES))
 

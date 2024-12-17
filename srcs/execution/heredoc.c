@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 09:49:24 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/16 09:49:51 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/17 17:47:14 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_generate_random_filename(t_main *msh)
 	if (!msh->heredoc_filename)
 	{
 		ft_putstr_fd("Failed to join to create heredoc filename\n", 2);
+		free(msh->cmd);
 		ft_free_all(msh, NULL, true);
 	}
 }

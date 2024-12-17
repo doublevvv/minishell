@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 09:26:02 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/16 10:04:32 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/17 18:56:00 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ char	*ft_join_key_to_value(t_main *msh, t_env *lst_env)
 	char	*result;
 
 	tmp = ft_strjoin(lst_env->key, "=");
-	if (!tmp)
+	if (!tmp) //PB
 	{
 		ft_putstr_fd("Failed to join\n", 2);
 		ft_free_all(msh, NULL, true);
 	}
 	result = ft_strjoin(tmp, lst_env->value);
 	free(tmp);
-	if (!result)
+	if (!result) //PB
 	{
 		ft_putstr_fd("Failed to join\n", 2);
 		ft_free_all(msh, NULL, true);

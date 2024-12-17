@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:25:39 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/16 16:17:20 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/17 19:05:49 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_join_cmd_to_path(t_main *msh, int i)
 	path_tmp = ft_strjoin(msh->paths[i], "/");
 	if (!path_tmp)
 	{
-		ft_putstr_fd("Failed to join\n", 2);
+		ft_putstr_fd("Failed to join `/` to path\n", 2);
 		ft_free_all(msh, NULL, true);
 	}
 	msh->full_path = ft_strjoin(path_tmp, msh->cmd_array[0]);
@@ -32,7 +32,8 @@ void	ft_join_cmd_to_path(t_main *msh, int i)
 			free(path_tmp);
 			path_tmp = NULL;
 		}
-		ft_free_double_array(msh->cmd_array);
+		ft_putstr_fd("Failed to join command to path\n", 2);
+		ft_free_all(msh, NULL, true);
 	}
 	free(path_tmp);
 }
@@ -59,6 +60,7 @@ void	ft_path_not_found(t_main *msh, int i)
 		{
 			lst_env_clear(&msh->env);
 		}
+		dprintf(2, "NO PATH Command not found\n");
 		msh->code_status = 127;
 		exit(msh->code_status);
 	}
@@ -86,6 +88,7 @@ void	ft_check_path(t_main *msh)
 			{
 				ft_print_cmd_msg_error(msh, 2);
 				ft_free_all(msh, NULL, false);
+				dprintf(2, "NO PATH Permission denied\n");
 				msh->code_status = 126;
 				exit(msh->code_status);
 			}
@@ -108,8 +111,9 @@ void	ft_check_access(t_main *msh)
 		}
 		else
 		{
+			dprintf(2, "PATH Permission denied\n");
 			ft_print_cmd_msg_error(msh, 2);
-			ft_free_all(msh, NULL, false);
+			ft_free_all(msh, NULL, true);
 			msh->code_status = 126;
 			exit(msh->code_status);
 		}
@@ -122,6 +126,7 @@ void	ft_check_access(t_main *msh)
 		{
 			lst_env_clear(&msh->env);
 		}
+		dprintf(2, "PATH Command not found\n");
 		msh->code_status = 127;
 		exit(msh->code_status);
 	}

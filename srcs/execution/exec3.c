@@ -6,24 +6,11 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 09:53:33 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/16 18:23:49 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/17 08:52:56 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-void	ft_execute_parent(t_main *msh)
-{
-	if (msh->prev_pipe != -1)
-	{
-		close(msh->prev_pipe);
-	}
-	msh->prev_pipe = msh->pipefd[0];
-	if (msh->pipefd[1] != -1)
-	{
-		close(msh->pipefd[1]);
-	}
-}
 
 /* The ft_parent_wait() function waits for all the child processes to finish.
 It updates a status code based on how each child process terminates

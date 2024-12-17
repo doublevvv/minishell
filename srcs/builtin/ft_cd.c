@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 13:39:45 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/12 14:01:38 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/17 10:19:38 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_cd(t_main *msh, t_env *env)
 		write(2, "les loutres: cd: too many arguments\n", 37);
 		return (0);
 	}
-	printf("PATH : %s\n", old_path);
+	// printf("PATH : %s\n", old_path);
     // while (cpy)
     // {
     //     printf("key : %s, value : %s\n", cpy->key, cpy->value);
@@ -67,7 +67,7 @@ int	ft_cd(t_main *msh, t_env *env)
 		if (ft_strnstr(cpy->key, "HOME", 6))
 		{
 			home = cpy->value;
-			printf("PATH HOME : %s\n", home);
+			// printf("PATH HOME : %s\n", home);
 		}
 		cpy = cpy->next;
 	}
@@ -94,17 +94,17 @@ int	ft_cd(t_main *msh, t_env *env)
 			ft_print_error_message(ALLOCATION_FAILED, 0);
 			ft_free_all(msh, NULL, true);
 		}
-		printf("OLD : %s\n", old_path);
+		// printf("OLD : %s\n", old_path);
 		while (cpy)
 		{
 			if (ft_strnstr(cpy->key, "OLDPWD", 6))
 			{
 				cpy->value = old_path;
-				printf("LST VALUE : %s\n", cpy->value);
+				// printf("LST VALUE : %s\n", cpy->value);
 			}
 			cpy = cpy->next;
 		}
-		printf("HERE : %s\n", path);
+		// printf("HERE e: %s\n", path);
 	}
 	return (0);
 }

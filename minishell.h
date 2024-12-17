@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/16 18:59:15 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/17 14:55:03 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,10 @@ void	ft_handle_signal_in_loop(t_main *msh);
 
 bool	ft_check_prompt(t_main *msh, char *str);
 
+t_lst	*ft_heredoc_case(t_main *msh, int token);
+
+bool	ft_handle_signal_heredoc(t_main *msh);
+
 int		ft_identify_token(char *str, int *index);
 
 int		ft_get_word(t_main *msh, char *str, int *i);
@@ -199,7 +203,7 @@ void	ft_path_not_found(t_main *msh, int i);
 
 void	ft_join_cmd_to_path(t_main *msh, int i);
 
-void	ft_execute_parent(t_main *msh);
+void	ft_close_pipes_parent(t_main *msh);
 
 void	ft_final_execution(t_main *msh);
 
@@ -340,6 +344,8 @@ void	ft_lstadd_back(t_main *msh, t_lst **lst, t_lst *new);
 int		ft_lstsize(t_env *lst);
 
 bool	ft_verify_lst(t_lst *lst);
+
+void	ft_display_lst(t_lst *lst);
 
 /* ************************************************************************* */
 /*                                    SIGNAL                                 */

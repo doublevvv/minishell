@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 16:00:32 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/13 14:24:14 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/17 10:12:39 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	check_quotes(char quote, int *index, int *quote_state)
 
 char	*interrogation_mark(t_main *msh)
 {
-	dprintf(2, "msh->code_status = %d\n", msh->code_status);
+	// dprintf(2, "msh->code_status = %d\n", msh->code_status);
 	// return (msh->code_status);
 	// else if (str[i] != '$')
 	// {
@@ -136,7 +136,7 @@ char	*ft_expand(t_main *msh, char *arg, t_env *env)
 	line.capacity = 0;
 	line.line_size = 0;
 	line.line = NULL;
-	printf("F :%d\n", ft_strlen(arg));
+	// printf("F :%d\n", ft_strlen(arg));
 	while (arg[i] && arg[i] != '\0')
 	{
 		if (quote_state != NO_QUOTE)
@@ -149,7 +149,7 @@ char	*ft_expand(t_main *msh, char *arg, t_env *env)
 		if (arg[i] == '$' && arg[i + 1] != '\0' && quote_state != SINGLE_QUOTE) //gerer le else si ce n'est pas un dollar, cpier juste caractere dasn variable
 		{
 			i++;
-			printf("I = %d\n", i);
+			// printf("I = %d\n", i);
 			if (arg[i] == '?')
 			{
 				res = interrogation_mark(msh);

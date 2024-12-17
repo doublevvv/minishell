@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 13:28:50 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/16 15:20:44 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/17 19:01:08 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_lstadd_back(t_main *msh, t_lst **lst, t_lst *new)
 
 	if (!new)
 	{
+		free(msh->cmd);
 		ft_free_all(msh, NULL, true);
 	}
 	if (!*lst)
@@ -54,40 +55,40 @@ void	ft_lstadd_back(t_main *msh, t_lst **lst, t_lst *new)
 	}
 }
 
-// void	ft_display_lst(t_lst *lst)
-// {
-// 	int		i;
-// 	t_lst	*tmp;
-// 	t_lst	*tmp_arg;
+void	ft_display_lst(t_lst *lst)
+{
+	int		i;
+	t_lst	*tmp;
+	t_lst	*tmp_arg;
 
-// 	i = 0;
-// 	tmp = lst;
-// 	dprintf(2, "-------------------------------------------\n");
-// 	dprintf(2, "DANS LISTE\n");
-// 	while (tmp != NULL)
-// 	{
-// 		tmp_arg = tmp->u_data.cmd_args;
-// 		dprintf(2, "Node %d\n", i);
-// 		while (tmp_arg != NULL)
-// 		{
-// 			dprintf(2, "-----\n");
-// 			dprintf(2, "token type: %d\n", tmp_arg->token_type);
-// 			dprintf(2, "pid: %d\n", tmp_arg->pid);
-// 			if (tmp_arg->token_type == REDIRECTION_HEREDOC)
-// 			{
-// 				dprintf(2, "fd: %d\n", tmp_arg->u_data.fd);
-// 			}
-// 			else
-// 			{
-// 				dprintf(2, "u_data->word: %s\n", tmp_arg->u_data.word);
-// 			}
-// 			tmp_arg = tmp_arg->next;
-// 		}
-// 		dprintf(2, "-------------------------\n");
-// 		i++;
-// 		tmp = tmp->next;
-// 	}
-// }
+	i = 0;
+	tmp = lst;
+	dprintf(2, "-------------------------------------------\n");
+	dprintf(2, "DANS LISTE\n");
+	while (tmp != NULL)
+	{
+		tmp_arg = tmp->u_data.cmd_args;
+		dprintf(2, "Node %d\n", i);
+		while (tmp_arg != NULL)
+		{
+			dprintf(2, "-----\n");
+			dprintf(2, "token type: %d\n", tmp_arg->token_type);
+			dprintf(2, "pid: %d\n", tmp_arg->pid);
+			if (tmp_arg->token_type == REDIRECTION_HEREDOC)
+			{
+				dprintf(2, "fd: %d\n", tmp_arg->u_data.fd);
+			}
+			else
+			{
+				dprintf(2, "u_data->word: %s\n", tmp_arg->u_data.word);
+			}
+			tmp_arg = tmp_arg->next;
+		}
+		dprintf(2, "-------------------------\n");
+		i++;
+		tmp = tmp->next;
+	}
+}
 
 bool	ft_verify_lst(t_lst *lst)
 {
