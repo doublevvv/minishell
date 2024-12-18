@@ -6,7 +6,7 @@
 #    By: evlim <evlim@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 08:37:40 by evlim             #+#    #+#              #
-#    Updated: 2024/12/17 19:41:36 by evlim            ###   ########.fr        #
+#    Updated: 2024/12/18 12:00:17 by evlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SOURCES = srcs/main.c	\
 		srcs/execution/redirection2.c	\
 		srcs/builtin/ft_echo.c	\
 		srcs/builtin/ft_exit.c	\
+		srcs/builtin/ft_exit2.c	\
 		srcs/builtin/ft_pwd.c	\
 		srcs/builtin/ft_cd.c	\
 		srcs/builtin/ft_export.c	\

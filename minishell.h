@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/18 10:33:03 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/18 11:57:24 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,14 @@ bool	option_echo(char *str);
 
 int		ft_exit(t_main *msh, t_env *env);
 
+bool	ft_overflow(char *str);
+
+void	is_overflow(t_main *msh);
+
+bool	is_numeric(char *str);
+
+void	ft_is_numeric(t_main *msh);
+
 int		ft_cd(t_main *msh, t_env *env);
 
 int		get_home(t_main *msh, t_env *env);
@@ -266,8 +274,6 @@ int		ft_unset(t_main *msh, t_env *env);
 int		delete_var(char *arg, t_env *head);
 
 void	ft_env(t_env *environ);
-
-bool	is_numeric(char *str);
 
 /* ************************************************************************* */
 /*                               REDIRECTION                                 */
@@ -338,6 +344,8 @@ char	ft_isalnum(char c);
 void	*ft_memcpy(void *dest, const void *src, unsigned int n);
 
 void	ft_bzero(void *s, size_t n);
+
+int		ft_atoi(const char *str);
 
 long	ft_atol(char *str, bool *overflow);
 
