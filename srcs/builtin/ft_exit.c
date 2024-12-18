@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:16:46 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/18 11:55:35 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/18 12:47:13 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_exit(t_main *msh, t_env *env)
 	int	exit_code;
 
 	(void)env;
-	write(2, "exit1\n", 6);
+	write(2, "exit\n", 5);
 	exit_code = 0;
 	if (msh->cmd_array[1])
 	{

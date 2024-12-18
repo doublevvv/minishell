@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/18 11:57:24 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/18 17:05:12 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ extern int g_signal_global;
 enum e_type
 {
 	PIPE,
-	REDIRECTION_IN, // `<`
-	REDIRECTION_OUT, // `>`
-	REDIRECTION_HEREDOC, // `<<`
-	REDIRECTION_APPEND, // `>>`
+	REDIRECTION_IN,
+	REDIRECTION_OUT,
+	REDIRECTION_HEREDOC,
+	REDIRECTION_APPEND,
 	WORD
 };
 
@@ -137,7 +137,7 @@ void	ft_handle_signal_in_loop(t_main *msh);
 
 bool	ft_check_prompt(t_main *msh, char *str);
 
-bool	ft_check_str(t_main *msh, t_lst *command, t_lst *current_command, char *str, int i);
+bool	ft_check_str(t_main *msh, t_lst *current_command, char *str, int i);
 
 int		ft_identify_token(char *str, int *index);
 

@@ -6,13 +6,13 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 09:29:27 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/16 15:21:52 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/18 12:55:32 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int g_signal_global;
+int	g_signal_global;
 
 void	ft_bzero(void *s, size_t n)
 {
@@ -59,14 +59,9 @@ void	set_signal(void)
 	act.sa_handler = &sigint_handler;
 	sigemptyset(&act.sa_mask);
 	sigaction(SIGINT, &act, NULL);
-	// sigaction(SIGQUIT, &act, NULL);
 	signal(SIGQUIT, SIG_IGN);
 	//exit_code_sig(signal);
 }
-// dans le here doc, fermer strdin(close[0]) et fermer la globale
-//restaurer dans les forks signal(SIGQUIT/INT, SIG_DFL)
-//debut exec/parent, signal(SIGINT, SIG_IGN)
-
 
 void	here_doc_sig_handler(int signal)
 {

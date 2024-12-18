@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:41:13 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/17 17:58:45 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/18 13:11:48 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,7 @@ void	ft_handle_exec( t_main *msh, t_lst *cmd, int nb)
 	msh->code_status = 0;
 	cmd_arg = cmd->u_data.cmd_args;
 	if (msh->cmd_array != NULL)
-	{
 		free(msh->cmd_array);
-	}
 	ft_create_cmd_array(msh, cmd_arg);
 	builtin = 0;
 	if (msh->nb_cmd > 1)
@@ -82,9 +80,7 @@ void	ft_handle_exec( t_main *msh, t_lst *cmd, int nb)
 	}
 	ft_handle_redirections(msh, cmd_arg);
 	if (msh->code_status != 0)
-	{
 		return ;
-	}
 	if (msh->cmd_array[0] == NULL)
 		return ;
 	builtin = ft_is_builtin(msh->cmd_array[0]);

@@ -43,3 +43,137 @@ echo "$PWD" => /home/evlim/Documents/minishell
 echo '$PWD' => $PWD
 echo "$PWD|abc" => /home/evlim/Documents/minishell|abc
 echo '$PWD|abc' => $PWD|abc
+
+
+
+bool ft_test (t_main *msh)
+{
+	ft_print_error_message(ALLOCATION_FAILED, 0);
+	free(msh->cmd);
+	return (false);
+}
+
+bool ft_jesaispas(t_main *msh, t_lst *command)
+{
+	if (!command)
+		return (ft_test(msh));
+	return (true);
+}
+bool ft_structure(t_main *msh, char *str, int i, int token)
+{
+	int		is_word;
+
+	is_word = ft_get_word(msh, str, &i);
+	if (is_word != SUCCESS)
+	{
+		if (is_word != EMPTY_LINE)
+			ft_print_error_message(is_word, str[i]);
+		return (false);
+	}
+	if (token == REDIRECTION_HEREDOC)
+		return (ft_jesaispas(msh, ft_heredoc_case(msh, token)));
+	else
+		return (ft_jesaispas(msh, ft_lstnew(token, msh->cmd, -1)));
+}
+bool	ft_check_str(t_main *msh, t_lst *current_command, char *str, int i)
+{
+	int	token;
+
+	token = 0;
+	while (str[i])
+	{
+		token = ft_identify_token(str, &i);
+		if (token == PIPE)
+		{
+			current_command = ft_pipe_case(msh, token);
+			if (!current_command)
+				return (ft_test(msh));
+		}
+		else
+		{
+      if (!ft_structure(msh, str, i, token))
+        return (false);
+      else
+        ft_lstadd_back(msh, &msh->head_command->u_data.cmd_args, command);
+		}
+		ft_isspace(str, &i);
+	}
+	return (true);
+}
+
+
+
+
+
+
+
+
+
+
+
+bool ft_test (t_main *msh)
+{
+	ft_print_error_message(ALLOCATION_FAILED, 0);
+	free(msh->cmd);
+	return (false);
+}
+
+bool ft_jesaispas(t_main *msh, t_lst *command)
+{
+	if (!command)
+		return (ft_test(msh));
+	return (true);
+}
+bool ft_structure(t_main *msh, char *str, int i, int token)
+{
+	int		is_word;
+
+	is_word = ft_get_word(msh, str, &i);
+	if (is_word != SUCCESS)
+	{
+		if (is_word != EMPTY_LINE)
+			ft_print_error_message(is_word, str[i]);
+		return (false);
+	}
+	if (token == REDIRECTION_HEREDOC)
+		return (ft_jesaispas(msh, ft_heredoc_case(msh, token)));
+	else
+		return (ft_jesaispas(msh, ft_lstnew(token, msh->cmd, -1)));
+}
+
+void ft_ajoutemacommandeamalistechainer(t_main *msh, int token)
+{
+	t_lst *command;
+
+	if (token == REDIRECTION_HEREDOC)
+		command = ft_heredoc_case(msh, token);
+	else
+		command = ft_lstnew(token, msh->cmd, -1);
+	ft_lstadd_back(msh, &msh->head_command->u_data.cmd_args, command);
+}
+
+bool	ft_check_str(t_main *msh, t_lst *current_command, char *str, int i)
+{
+	int	token;
+
+	token = 0;
+	while (str[i])
+	{
+		token = ft_identify_token(str, &i);
+		if (token == PIPE)
+		{
+			current_command = ft_pipe_case(msh, token);
+			if (!current_command)
+				return (ft_test(msh));
+		}
+		else
+		{
+			if (!ft_structure(msh, str, i, token))
+				return (false);
+			else
+				ft_ajoutemacommandeamalistechainer(msh, token);
+		}
+		ft_isspace(str, &i);
+	}
+	return (true);
+}
