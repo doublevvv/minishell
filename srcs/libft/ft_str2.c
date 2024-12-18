@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 11:06:23 by evlim             #+#    #+#             */
-/*   Updated: 2024/11/20 15:46:14 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/18 09:53:35 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,30 +55,47 @@ bool	ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+int	ft_count_digit(long int number)
 {
-	char	*new_string;
-	int		i;
-	int		j;
-	size_t	length;
+	int	digit;
 
-	if (!s1 || !s2)
-		return (NULL);
-	length = ft_strlen(s1) + ft_strlen(s2);
-	new_string = malloc((length + 1) * sizeof(char));
-	if (!new_string)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
+	digit = 0;
+	if (number == 0)
+		return (1);
+	if (number < 0)
 	{
-		new_string[j++] = s1[i++];
+		number = number * (-1);
+		digit++;
 	}
-	i = 0;
-	while (s2[i] != '\0')
+	while (number > 0)
 	{
-		new_string[j++] = s2[i++];
+		number = number / 10;
+		digit++;
 	}
-	new_string[j] = '\0';
-	return (new_string);
+	return (digit);
+}
+
+char	*ft_itoa(int n)
+{
+	int			digit_counter;
+	long int	nb;
+	char		*dest;
+
+	nb = n;
+	digit_counter = ft_count_digit(nb);
+	dest = malloc((digit_counter + 1) * sizeof(char));
+	if (!dest)
+		return (NULL);
+	dest[digit_counter] = '\0';
+	if (nb < 0)
+		nb = nb * (-1);
+	while (digit_counter - 1 >= 0)
+	{
+		dest[digit_counter - 1] = (nb % 10) + '0';
+		nb = nb / 10;
+		digit_counter--;
+	}
+	if (n < 0)
+		dest[0] = '-';
+	return (dest);
 }

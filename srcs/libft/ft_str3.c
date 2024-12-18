@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 09:25:07 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/16 18:28:36 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/18 09:53:27 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,50 +72,5 @@ void	*ft_memcpy(void *dest, const void *src, unsigned int n)
 		cdest[i] = csrc[i];
 		i++;
 	}
-	return (dest);
-}
-
-int	ft_count_digit(long int number)
-{
-	int	digit;
-
-	digit = 0;
-	if (number == 0)
-		return (1);
-	if (number < 0)
-	{
-		number = number * (-1);
-		digit++;
-	}
-	while (number > 0)
-	{
-		number = number / 10;
-		digit++;
-	}
-	return (digit);
-}
-
-char	*ft_itoa(int n)
-{
-	int			digit_counter;
-	long int	nb;
-	char		*dest;
-
-	nb = n;
-	digit_counter = ft_count_digit(nb);
-	dest = malloc((digit_counter + 1) * sizeof(char));
-	if (!dest)
-		return (NULL);
-	dest[digit_counter] = '\0';
-	if (nb < 0)
-		nb = nb * (-1);
-	while (digit_counter - 1 >= 0)
-	{
-		dest[digit_counter - 1] = (nb % 10) + '0';
-		nb = nb / 10;
-		digit_counter--;
-	}
-	if (n < 0)
-		dest[0] = '-';
 	return (dest);
 }

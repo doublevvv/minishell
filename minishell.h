@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/17 14:55:03 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/18 10:33:03 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,13 +137,17 @@ void	ft_handle_signal_in_loop(t_main *msh);
 
 bool	ft_check_prompt(t_main *msh, char *str);
 
-t_lst	*ft_heredoc_case(t_main *msh, int token);
-
-bool	ft_handle_signal_heredoc(t_main *msh);
+bool	ft_check_str(t_main *msh, t_lst *command, t_lst *current_command, char *str, int i);
 
 int		ft_identify_token(char *str, int *index);
 
+t_lst	*ft_pipe_case(t_main *msh, int token);
+
 int		ft_get_word(t_main *msh, char *str, int *i);
+
+t_lst	*ft_heredoc_case(t_main *msh, int token);
+
+bool	ft_handle_signal_heredoc(t_main *msh);
 
 void	ft_isspace(char *str, int *i);
 
@@ -237,7 +241,11 @@ int		ft_echo(t_main *msh, t_env *env);
 
 bool	option_echo(char *str);
 
+int		ft_exit(t_main *msh, t_env *env);
+
 int		ft_cd(t_main *msh, t_env *env);
+
+int		get_home(t_main *msh, t_env *env);
 
 int		ft_pwd(t_main *msh, t_env *env);
 
@@ -245,7 +253,9 @@ int		ft_export(t_main *msh, t_env *env);
 
 int		case_sensivity(char *arg);
 
-int		add_var(t_main *msh, char *arg, t_env *env);
+int		add_var(t_main *msh, char *arg, t_env *env, size_t nbr, size_t nbr2);
+
+int		change_value(char *key, char *value, t_env *env);
 
 t_env	*ft_lstnew_env(char *key, char *value);
 
@@ -256,10 +266,6 @@ int		ft_unset(t_main *msh, t_env *env);
 int		delete_var(char *arg, t_env *head);
 
 void	ft_env(t_env *environ);
-
-int		ft_exit(t_main *msh, t_env *env);
-
-long	ft_atol(char *str);
 
 bool	is_numeric(char *str);
 
@@ -297,27 +303,31 @@ void	ft_putstr_fd(char *str, int fd);
 
 int		ft_putchar_fd(char c, int fd);
 
-int		ft_strlen(const char *str);
-
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+
+int		ft_strlen(const char *str);
 
 char	*ft_substr(char const *s, int start, int len);
 
 int		ft_strcmp(const char *s1, const char *s2);
 
-char	*ft_substr(char const *s, int start, int len);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 
-void	*ft_calloc(size_t count, size_t n);
-
 char	**ft_split(char const *s, char c);
-
-char	*ft_strchr_char(const char *str, int c);
 
 bool	ft_strchr(const char *s, int c);
 
-char	*ft_strjoin(char const *s1, char const *s2);
+void	*ft_calloc(size_t count, size_t n);
+
+char	*ft_strchr_char(const char *str, int c);
+
+void	ft_isspace(char *str, int *i);
+
+bool	ft_has_quote(char *str, int *i);
+
+bool	ft_check_quote(char *str, int *i, char c);
 
 int		ft_isalpha(int c);
 
@@ -328,6 +338,8 @@ char	ft_isalnum(char c);
 void	*ft_memcpy(void *dest, const void *src, unsigned int n);
 
 void	ft_bzero(void *s, size_t n);
+
+long	ft_atol(char *str, bool *overflow);
 
 char	*ft_itoa(int n);
 

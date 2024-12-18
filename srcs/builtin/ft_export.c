@@ -6,20 +6,11 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:18:24 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/13 08:58:41 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/18 09:05:51 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-static void	print_ascii_order(t_env *env)
-{
-	while (env)
-	{
-		printf("declare -x %s=\"%s\"\n", env->key, env->value);
-		env = env->next;
-	}
-}
 
 static void	copy_var(char *src, char *dest, size_t size)
 {
@@ -31,19 +22,64 @@ static void	copy_var(char *src, char *dest, size_t size)
 	src[j] = 0;
 }
 
-int	add_var(t_main *msh, char *arg, t_env *env)
+static void	print_ascii_order(t_env *env)
+{
+	while (env)
+	{
+		printf("declare -x %s=\"%s\"\n", env->key, env->value);
+		env = env->next;
+	}
+}
+
+int	change_value(char *key, char *value, t_env *env)
+{
+	t_env	*tmp;
+
+	tmp = env;
+	while (tmp)
+	{
+		if (comp_var(key, tmp->key, ft_strlen(key)) == 0)
+		{
+			// free(tmp->value);
+			// ft_memcpy(tmp->value, value, ft_strlen(value));
+			tmp->value = value;
+			// env->value = tmp->value;
+			return (1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+t_env	*add_to_linkedlist(t_main *msh, char *key, char *value, t_env *new)
+{
+	new = ft_lstnew_env(key, value);
+	if (!new)
+	{
+		ft_print_error_message(ALLOCATION_FAILED, 0);
+		free(key);
+		free(value);
+		ft_free_all(msh, NULL, true);
+	}
+	return (new);
+}
+
+int	add_var(t_main *msh, char *arg, t_env *env, size_t nbr, size_t nbr2)
 {
 	char	*tmp;
 	char	*key;
 	char	*value;
 	t_env	*new;
-	size_t	nbr;
-	size_t	nbr2;
 
 	nbr = ft_strlen(arg);
 	tmp = ft_strchr_char(arg, '=');
 	nbr2 = ft_strlen(tmp + 1) + 1;
 	key = ft_calloc(nbr - nbr2 + 1, sizeof(char));
+	if (!key)
+	{
+		ft_print_error_message(ALLOCATION_FAILED, 0);
+		ft_free_all(msh, NULL, true);
+	}
 	copy_var(key, arg, nbr - nbr2);
 	value = malloc(nbr2 + 1);
 	if (!value)
@@ -53,6 +89,8 @@ int	add_var(t_main *msh, char *arg, t_env *env)
 		ft_free_all(msh, NULL, true);
 	}
 	copy_var(value, tmp + 1, nbr2);
+	if (change_value(key, value, env))
+		return (1);
 	new = ft_lstnew_env(key, value);
 	if (!new)
 	{
@@ -74,9 +112,8 @@ int	case_sensivity(char *arg)
 	{
 		if (!((ft_isalpha(arg[0]) || arg[0] == '_') && (ft_isdigit(arg[i])
 					|| ft_isalpha(arg[i]) || arg[i] == '_')))
-		// gerer underscore ?
 		{
-			printf("les loutres: export: %s: not a valid identifier\n", arg);
+			ft_printf(2, "les loutres: export: %s: not a valid identifier\n", arg);
 			return (1);
 		}
 		i++;
@@ -105,15 +142,8 @@ int	ft_export(t_main *msh, t_env *env)
 			i++;
 			continue ;
 		}
-		if (msh->cmd_array[0] && msh->cmd_array[i]) // add var to env
-		{
-			add_var(msh, msh->cmd_array[i], env);
-			while (cpy)
-			{
-				printf("KEY : %s | VALUE : %s\n", cpy->key, cpy->value);
-				cpy = cpy->next;
-			}
-		}
+		if (msh->cmd_array[0] && msh->cmd_array[i])
+			add_var(msh, msh->cmd_array[i], env, 0, 0);
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/17 18:58:49 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/18 11:15:36 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,10 @@ bool	ft_handle_signal_heredoc(t_main *msh)
 
 t_lst	*ft_heredoc_case(t_main *msh, int token)
 {
-	(void)token;
 	int		fd_infile;
 	t_lst	*command;
 
+	(void)token;
 	fd_infile = -1;
 	command = NULL;
 	signal(SIGINT, here_doc_sig_handler);
@@ -171,43 +171,44 @@ t_lst	*ft_heredoc_case(t_main *msh, int token)
 	return (command);
 }
 
-bool	ft_check_prompt(t_main *msh, char *str)
+t_lst	*ft_pipe_case(t_main *msh, int token)
 {
-	int		i;
-	int		token;
-	int		is_word;
 	t_lst	*current_command;
-	t_lst	*command;
 
-	i = 0;
-	token = 0;
-	current_command = ft_lstnew(-1, NULL, -1);
+	current_command = NULL;
+	if (ft_verify_lst(msh->head_command) == false)
+	{
+		ft_print_error_message(EMPTY_WORD, '|');
+		return (false);
+	}
+	current_command = ft_lstnew(token, NULL, -1);
 	if (!current_command)
 	{
 		ft_print_error_message(ALLOCATION_FAILED, 0);
 		return (false);
 	}
-	msh->head_command = current_command;
-	command = NULL;
-	if (str[i] == '\0')
-		return (false);
+	ft_lstadd_back(msh, &msh->head_command, current_command);
+	return (current_command);
+}
+
+bool	ft_check_str(t_main *msh, t_lst *command, t_lst *current_command, char *str, int i)
+{
+	int	token;
+	int	is_word;
+
+	token = 0;
 	while (str[i])
 	{
 		token = ft_identify_token(str, &i);
 		if (token == PIPE)
 		{
-			if (ft_verify_lst(msh->head_command) == false)
-			{
-				ft_print_error_message(EMPTY_WORD, '|');
-				return (false);
-			}
-			current_command = ft_lstnew(token, NULL, -1);
+			current_command = ft_pipe_case(msh, token);
 			if (!current_command)
 			{
 				ft_print_error_message(ALLOCATION_FAILED, 0);
+				free(msh->cmd);
 				return (false);
 			}
-			ft_lstadd_back(msh, &msh->head_command, current_command);
 		}
 		else
 		{
@@ -215,7 +216,9 @@ bool	ft_check_prompt(t_main *msh, char *str)
 			if (is_word != SUCCESS)
 			{
 				if (is_word != EMPTY_LINE)
+				{
 					ft_print_error_message(is_word, str[i]);
+				}
 				return (false);
 			}
 			if (token == REDIRECTION_HEREDOC)
@@ -224,6 +227,7 @@ bool	ft_check_prompt(t_main *msh, char *str)
 				if (!command)
 				{
 					ft_print_error_message(ALLOCATION_FAILED, 0);
+					free(msh->cmd);
 					return (false);
 				}
 				else
@@ -235,6 +239,7 @@ bool	ft_check_prompt(t_main *msh, char *str)
 				if (!command)
 				{
 					ft_print_error_message(ALLOCATION_FAILED, 0);
+					free(msh->cmd);
 					return (false);
 				}
 				else
@@ -242,6 +247,30 @@ bool	ft_check_prompt(t_main *msh, char *str)
 			}
 		}
 		ft_isspace(str, &i);
+	}
+	return (true);
+}
+
+bool	ft_check_prompt(t_main *msh, char *str)
+{
+	int		i;
+	t_lst	*current_command;
+	t_lst	*command;
+
+	i = 0;
+	current_command = ft_lstnew(-1, NULL, -1);
+	if (!current_command)
+	{
+		ft_print_error_message(ALLOCATION_FAILED, 0);
+		return (false);
+	}
+	msh->head_command = current_command;
+	command = NULL;
+	if (str[i] == '\0')
+		return (false);
+	if (ft_check_str(msh, command, current_command, str, i) == false)
+	{
+		return (false);
 	}
 	ft_display_lst(msh->head_command); //A SUPPRIMER
 	if (ft_verify_lst(msh->head_command) == false)
@@ -298,8 +327,6 @@ void	ft_msh_loop(t_main *msh)
 		if (ft_check_prompt(msh, msh->line) == false)
 		{
 			g_signal_global = 0;
-			if (msh->cmd != NULL)
-				free(msh->cmd);
 			ft_free_all(msh, NULL, false);
 		}
 		else
