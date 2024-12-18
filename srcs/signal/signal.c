@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 09:29:27 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/18 12:55:32 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/18 18:07:51 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	ft_bzero(void *s, size_t n)
 
 void	exit_code_sig(int signal)
 {
-
 	if (signal == SIGINT)
 		g_signal_global = 130;
 }

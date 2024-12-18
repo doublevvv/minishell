@@ -6,7 +6,7 @@
 #    By: evlim <evlim@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 08:37:40 by evlim             #+#    #+#              #
-#    Updated: 2024/12/18 12:00:17 by evlim            ###   ########.fr        #
+#    Updated: 2024/12/18 17:25:37 by evlim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SOURCES = srcs/main.c	\
 		srcs/parsing/init.c	\
 		srcs/parsing/prompt.c	\
 		srcs/parsing/prompt2.c	\
+		srcs/parsing/prompt3.c	\
 		srcs/env/ft_env.c	\
 		srcs/env/env_to_tab.c	\
 		srcs/env/env_utils.c	\

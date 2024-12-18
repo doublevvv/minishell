@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/18 17:07:09 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/18 17:37:49 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,259 +56,14 @@ int	ft_is_builtin(char *str)
 	return (builtin_found);
 }
 
-/* The ft_identify_token() function allows us to identify specific tokens in
-a string like pipes (|) and redirections (<, >, <<, >>). By updating the index,
-we move past the token and continue checking the rest of the string.
-The return value indicates the specific token identified or defaults to WORD
-when no token is found, indicating that the current part of the string is a
-regular word or an argument. */
-int	ft_identify_token(char *str, int *index)
+void	ft_copy_stdin_stdout(t_main *msh)
 {
-	int				i;
-	int				token_found;
-	const char		*token[] = {"|", "<", ">", "<<", ">>", NULL};
-
-	i = 0;
-	token_found = -1;
-	while (token[i] != NULL)
+	msh->stdin_copy = dup(STDIN_FILENO);
+	msh->stdout_copy = dup(STDOUT_FILENO);
+	if (msh->stdin_copy == -1 || msh->stdout_copy == -1)
 	{
-		if (ft_strncmp(token[i], str + *index, ft_strlen(token[i])) == 0)
-		{
-			token_found = i;
-		}
-		i++;
+		ft_free_all(msh, "Failed to dup stdin/stdout", true);
 	}
-	if (token_found != -1)
-	{
-		(*index) += ft_strlen(token[token_found]);
-	}
-	else
-	{
-		token_found = WORD;
-	}
-	return (token_found);
-}
-
-int	ft_get_word(t_main *msh, char *str, int *i)
-{
-	int	start;
-	int	end;
-
-	end = 0;
-	ft_isspace(str, i);
-	if (str[*i] == '\0')
-		return (EMPTY_LINE);
-	start = *i;
-	while (str[*i] != '\0' && str[*i] != ' ' && str[*i] != '\t' \
-		&& str[*i] != '>' && str[*i] != '<' && str[*i] != '|')
-	{
-		if (ft_has_quote(str, i) == 0)
-		{
-			return (UNCLOSED_QUOTE);
-		}
-		(*i)++;
-	}
-	end = *i;
-	msh->cmd = ft_substr(str, start, end - start);
-	if (!msh->cmd)
-		return (ALLOCATION_FAILED);
-	if (start == end)
-		return (EMPTY_WORD);
-	return (SUCCESS);
-}
-
-bool	ft_handle_signal_heredoc(t_main *msh)
-{
-	if (g_signal_global != 0)
-	{
-		if (dup2(msh->stdin_copy, STDIN_FILENO) == -1)
-		{
-			free(msh->cmd);
-			ft_free_all(msh, "Signal heredoc failed to dup2 stdin\n", true);
-		}
-		msh->code_status = 130;
-		write(1, "\n", 1);
-		return (false);
-	}
-	return (true);
-}
-
-t_lst	*ft_heredoc_case(t_main *msh, int token)
-{
-	int		fd_infile;
-	t_lst	*command;
-
-	fd_infile = -1;
-	command = NULL;
-	signal(SIGINT, here_doc_sig_handler);
-	ft_generate_random_filename(msh);
-	msh->file = open(msh->heredoc_filename, O_CREAT | O_WRONLY, 0644);
-	if (msh->file == -1)
-	{
-		ft_open_file_error(msh, 0, 0);
-	}
-	ft_read_input_heredoc(msh->cmd, msh->file);
-	if (ft_handle_signal_heredoc(msh) == false)
-	{
-		return (NULL);
-	}
-	close (msh->file);
-	msh->file = -1;
-	fd_infile = open(msh->heredoc_filename, O_RDONLY);
-	if (fd_infile == -1) // PB : ne rentre pas dans la condition
-	{
-		dprintf(2, "\t\t\tHELLO\n");
-		ft_open_file_error(msh, 0, 0);
-	}
-	unlink(msh->heredoc_filename);
-	free(msh->heredoc_filename);
-	msh->heredoc_filename = NULL;
-	command = ft_lstnew(token, msh->cmd, fd_infile);
-	if (!command)
-	{
-		close(fd_infile);
-		return (false);
-	}
-	free(msh->cmd);
-	signal(SIGINT, SIG_IGN);
-	return (command);
-}
-
-t_lst	*ft_pipe_case(t_main *msh, int token)
-{
-	t_lst	*current_command;
-
-	current_command = NULL;
-	if (ft_verify_lst(msh->head_command) == false)
-	{
-		ft_print_error_message(EMPTY_WORD, '|');
-		return (NULL);
-	}
-	current_command = ft_lstnew(token, NULL, -1);
-	if (!current_command)
-	{
-		ft_print_error_message(ALLOCATION_FAILED, 0);
-		return (NULL);
-	}
-	ft_lstadd_back(msh, &msh->head_command, current_command);
-	return (current_command);
-}
-
-bool ft_test (t_main *msh)
-{
-	ft_print_error_message(ALLOCATION_FAILED, 0);
-	free(msh->cmd);
-	return (false);
-}
-
-bool ft_structure(t_main *msh, t_lst *current_command, char *str, int i, int token)
-{
-	int		is_word;
-	t_lst	*command;
-
-	command = NULL;
-	is_word = ft_get_word(msh, str, &i);
-	if (is_word != SUCCESS)
-	{
-		if (is_word != EMPTY_LINE)
-			ft_print_error_message(is_word, str[i]);
-		return (false);
-	}
-	if (token == REDIRECTION_HEREDOC)
-	{
-		command = ft_heredoc_case(msh, token);
-		if (!command)
-			return (ft_test(msh));
-	}
-	else
-	{
-		command = ft_lstnew(token, msh->cmd, -1);
-		if (!command)
-			return (ft_test(msh));
-	}
-	ft_lstadd_back(msh, &current_command->u_data.cmd_args, command);
-	return (true);
-}
-
-bool ft_isword(char *str, int is_word, int i)
-{
-
-	if (is_word != SUCCESS)
-	{
-		if (is_word != EMPTY_LINE)
-			ft_print_error_message(is_word, str[i]);
-		return (false);
-	}
-	return (true);
-}
-
-t_lst *ft_command(t_main *msh, int token)
-{
-	t_lst	*command;
-
-	if (token == REDIRECTION_HEREDOC)
-		command = ft_heredoc_case(msh, token);
-	else
-		command = ft_lstnew(token, msh->cmd, -1);
-	return (command);
-}
-
-bool	ft_check_str(t_main *msh, t_lst *current_command, char *str, int i)
-{
-	int		token;
-	t_lst	*command;
-
-	command = NULL;
-	token = 0;
-	while (str[i])
-	{
-		token = ft_identify_token(str, &i);
-		if (token == PIPE)
-		{
-			current_command = ft_pipe_case(msh, token);
-			if (!current_command)
-				return (ft_test(msh));
-		}
-		else
-		{
-			if (ft_isword(str, ft_get_word(msh, str, &i), i) == false)
-				return (false);
-			command = ft_command(msh, token);
-			ft_lstadd_back(msh, &current_command->u_data.cmd_args, command);
-		}
-		ft_isspace(str, &i);
-	}
-	return (true);
-}
-
-bool	ft_check_prompt(t_main *msh, char *str)
-{
-	int		i;
-	t_lst	*current_command;
-	t_lst	*command;
-
-	i = 0;
-	current_command = ft_lstnew(-1, NULL, -1);
-	if (!current_command)
-	{
-		ft_print_error_message(ALLOCATION_FAILED, 0);
-		return (false);
-	}
-	msh->head_command = current_command;
-	command = NULL;
-	if (str[i] == '\0')
-		return (false);
-	if (ft_check_str(msh, current_command, str, i) == false)
-	{
-		return (false);
-	}
-	ft_display_lst(msh->head_command); //A SUPPRIMER
-	if (ft_verify_lst(msh->head_command) == false)
-	{
-		ft_print_error_message(EMPTY_WORD, 0);
-		return (false);
-	}
-	return (true);
 }
 
 void	ft_handle_signal_in_loop(t_main *msh)
@@ -326,16 +81,6 @@ void	ft_handle_signal_in_loop(t_main *msh)
 	}
 	close(msh->stdin_copy);
 	close(msh->stdout_copy);
-}
-
-void	ft_copy_stdin_stdout(t_main *msh)
-{
-	msh->stdin_copy = dup(STDIN_FILENO);
-	msh->stdout_copy = dup(STDOUT_FILENO);
-	if (msh->stdin_copy == -1 || msh->stdout_copy == -1)
-	{
-		ft_free_all(msh, "Failed to dup stdin/stdout", true);
-	}
 }
 
 void	ft_msh_loop(t_main *msh)

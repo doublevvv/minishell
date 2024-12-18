@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/18 17:05:12 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/18 17:20:25 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,9 +143,15 @@ int		ft_identify_token(char *str, int *index);
 
 t_lst	*ft_pipe_case(t_main *msh, int token);
 
+bool	ft_isword(char *str, int is_word, int i);
+
 int		ft_get_word(t_main *msh, char *str, int *i);
 
+t_lst	*ft_command(t_main *msh, int token);
+
 t_lst	*ft_heredoc_case(t_main *msh, int token);
+
+bool	ft_display_error(t_main *msh);
 
 bool	ft_handle_signal_heredoc(t_main *msh);
 
