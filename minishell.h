@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 08:37:03 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/18 17:20:25 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/19 09:29:34 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,12 @@ enum e_quote
 	DOUBLE_QUOTE
 };
 
-typedef struct s_lst
+typedef struct s_chars
 {
-	int				token_type;
-	pid_t			pid;
-	union
-	{
-		char			*word;
-		struct s_lst	*cmd_args;
-		int				fd;
-	} u_data;
-	struct s_lst	*next;
-}	t_lst;
+	char	*tmp;
+	char	*key;
+	char	*value;
+}	t_chars;
 
 typedef struct s_env
 {
@@ -92,6 +86,28 @@ typedef struct s_size
 	int		capacity;
 	int		line_size;
 }	t_size;
+
+typedef struct s_expand_vars
+{
+	int		quote_true;
+	int		quote_state;
+	t_env	*cpy;
+	char	*arg;
+	t_size	line;
+}	t_expand_vars;
+
+typedef struct s_lst
+{
+	int				token_type;
+	pid_t			pid;
+	union
+	{
+		char			*word;
+		struct s_lst	*cmd_args;
+		int				fd;
+	} u_data;
+	struct s_lst	*next;
+}	t_lst;
 
 typedef struct s_main
 {
@@ -117,6 +133,7 @@ typedef struct s_main
 	bool		is_exit;
 	t_env		*env;
 	t_lst		*head_command;
+	bool		is_env;
 }	t_main;
 
 /* ************************************************************************* */
@@ -149,11 +166,7 @@ int		ft_get_word(t_main *msh, char *str, int *i);
 
 t_lst	*ft_command(t_main *msh, int token);
 
-t_lst	*ft_heredoc_case(t_main *msh, int token);
-
 bool	ft_display_error(t_main *msh);
-
-bool	ft_handle_signal_heredoc(t_main *msh);
 
 void	ft_isspace(char *str, int *i);
 
@@ -165,19 +178,27 @@ bool	ft_check_quote(char *str, int *i, char c);
 /*                                     ENV                                   */
 /* ************************************************************************* */
 
-t_env	*get_env(char **environ);
+t_env	*get_env(char **environ, size_t nbr, size_t nbr2, size_t nbr3);
+
+int		init_nbrs(size_t *nbr, size_t *nbr2, char *environ, char **tmp);
+
+int		init_env_val(size_t nbr2, size_t nbr3, char **key, char **value);
+
+void	ft_error_new(char **value, char **key, t_env **env);
 
 t_env	*ft_lstnew_env(char *key, char *value);
 
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
 
+int		ft_update_pwd(t_env **list);
+
 void	lst_env_clear(t_env **lst_env);
 
-void	ft_env(t_env *environ);
+void	ft_convert_env_lst_to_array(t_main *msh);
 
 char	*ft_join_key_to_value(t_main *msh, t_env *lst_env);
 
-void	ft_convert_env_lst_to_array(t_main *msh);
+void	ft_free_envp_error_case(t_main *msh, int i);
 
 /* ************************************************************************* */
 /*                                  EXECUTION                                */
@@ -225,15 +246,21 @@ void	ft_parent_wait(t_main *msh);
 
 char	*ft_expand(t_main *msh, char *arg, t_env *env);
 
-char	*interrogation_mark(t_main *msh);
+void	expand_loop(t_main *msh, int *i, t_env *env, t_expand_vars *q_vars);
 
 int		check_quotes(char quote, int *index, int *quote_state);
 
+int		fill_var(t_main *msh, t_expand_vars *vars, int i);
+
+int		exit_code_case(t_main *msh, t_expand_vars *vars);
+
 int		comp_var(char *var_name, char *key, int var_size);
+
+int		add_size(t_size *line, char c);
 
 int		add_size_to_str(t_size *line, char *str);
 
-int		add_size(t_size *line, char c);
+void	fail_alloc_expand(t_main *msh, t_size *line, char *res);
 
 /* ************************************************************************* */
 /*                                  BUILT-IN                                 */
@@ -247,11 +274,13 @@ int		ft_echo(t_main *msh, t_env *env);
 
 bool	option_echo(char *str);
 
+int		echo_arg(t_main *msh, int i);
+
 int		ft_exit(t_main *msh, t_env *env);
 
-bool	ft_overflow(char *str);
-
 void	is_overflow(t_main *msh);
+
+bool	ft_overflow(char *str);
 
 bool	is_numeric(char *str);
 
@@ -267,9 +296,13 @@ int		ft_export(t_main *msh, t_env *env);
 
 int		case_sensivity(char *arg);
 
-int		add_var(t_main *msh, char *arg, t_env *env, size_t nbr, size_t nbr2);
+int		add_var(t_main *msh, char *arg, t_env *env, size_t nbr);
 
 int		change_value(char *key, char *value, t_env *env);
+
+void	error_value(char *value, char *key, t_main *msh);
+
+t_env	*add_to_linkedlist(t_main *msh, char *key, char *value, t_env *env);
 
 t_env	*ft_lstnew_env(char *key, char *value);
 
@@ -277,17 +310,23 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new);
 
 int		ft_unset(t_main *msh, t_env *env);
 
-int		delete_var(char *arg, t_env *head);
+int		delete_var(char *arg, t_env **head);
 
-void	ft_env(t_env *environ);
+void	ft_env(t_main *msh, t_env *environ);
 
 /* ************************************************************************* */
 /*                               REDIRECTION                                 */
 /* ************************************************************************* */
 
+t_lst	*ft_heredoc_case(t_main *msh, int token);
+
+bool	heredoc_operations(t_main *msh, int *fd_infile);
+
 void	ft_generate_random_filename(t_main *msh);
 
 void	ft_read_input_heredoc(char *cmd, int file);
+
+bool	ft_handle_signal_heredoc(t_main *msh);
 
 void	ft_handle_redirections(t_main *msh, t_lst *cmd_args);
 

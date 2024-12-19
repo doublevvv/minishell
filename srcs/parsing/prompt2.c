@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 08:47:54 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/18 18:05:56 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/19 09:51:05 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ bool	ft_check_prompt(t_main *msh, char *str)
 	{
 		return (false);
 	}
-	ft_display_lst(msh->head_command); //A SUPPRIMER
 	if (ft_verify_lst(msh->head_command) == false)
 	{
 		ft_print_error_message(EMPTY_WORD, 0);

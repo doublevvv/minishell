@@ -6,18 +6,18 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:39:29 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/18 08:55:59 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/18 22:09:07 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	delete_var(char *arg, t_env *head)
+int	delete_var(char *arg, t_env **head)
 {
 	t_env	*current;
 	t_env	*previous;
 
-	current = head;
+	current = *head;
 	previous = NULL;
 	if (!arg || current == NULL)
 		return (0);
@@ -28,7 +28,7 @@ int	delete_var(char *arg, t_env *head)
 			free(current->key);
 			free(current->value);
 			if (previous == NULL)
-				head = current->next;
+				*head = current->next;
 			else
 				previous->next = current->next;
 			free(current);
@@ -45,11 +45,13 @@ int	ft_unset(t_main *msh, t_env *env)
 	int	i;
 
 	i = 1;
+	(void) env;
 	while (msh->cmd_array[i])
 	{
 		if (msh->cmd_array[0] && msh->cmd_array[i])
-			delete_var(msh->cmd_array[i], env);
+			delete_var(msh->cmd_array[i], &msh->env);
 		i++;
 	}
+	msh->is_signal = false;
 	return (0);
 }

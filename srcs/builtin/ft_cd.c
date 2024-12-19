@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 13:39:45 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/18 08:49:57 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/19 08:01:26 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,9 @@ int	ft_cd(t_main *msh, t_env *env)
 	if (msh->cmd_array[1])
 	{
 		if (chdir(msh->cmd_array[1]) == -1)
-			return (ft_printf(2, "les loutres: cd: %s: No such file or directory\n",
-                    msh->cmd_array[1]));
+			return (ft_printf(2,
+					"les loutres: cd: %s: No such file or directory\n",
+					msh->cmd_array[1]));
 		path = getcwd(NULL, 0);
 		if (!path)
 		{

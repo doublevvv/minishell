@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:48:35 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/17 11:42:52 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/18 22:08:07 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ void	*ft_memset(void *s, int c, size_t n)
 void	ft_init_data(t_main *msh, char **envp)
 {
 	ft_memset(msh, 0, sizeof(t_main));
-	msh->env = get_env(envp);
+	msh->env = get_env(envp, 0, 0, 0);
+	if (envp[0] == NULL)
+		msh->is_env = true;
 	msh->is_exit = false;
 }
 

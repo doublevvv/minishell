@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:54:35 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/18 08:52:25 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/19 08:49:35 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,19 @@ void	lst_env_clear(t_env **lst_env)
 	*lst_env = NULL;
 }
 
-void	ft_env(t_env *environ)
+void	ft_env(t_main *msh, t_env *environ)
 {
 	t_env	*cpy;
 
 	cpy = environ;
-	printf("LISTE ENV\n");
+	printf("ENV LIST\n");
 	while (cpy != NULL)
 	{
-		printf("KEY : %s | ", cpy->key); //retourner une valeur en cas d'echec d'ecriture: 2
-		printf("VALUE : %s\n", cpy->value); //retourner une valeur en cas d'echec d'ecriture
+		if (printf("%s=%s\n", cpy->key, cpy->value) < 0)
+		{
+			ft_print_error_message(ALLOCATION_FAILED, 0);
+			ft_free_all(msh, NULL, true);
+		}
 		cpy = cpy->next;
 	}
 	printf("----------------------------------\n");

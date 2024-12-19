@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:41:13 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/18 13:11:48 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/18 18:28:20 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ void	ft_handle_exec( t_main *msh, t_lst *cmd, int nb)
 
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	msh->code_status = 0;
 	cmd_arg = cmd->u_data.cmd_args;
 	if (msh->cmd_array != NULL)
 		free(msh->cmd_array);
 	ft_create_cmd_array(msh, cmd_arg);
+	msh->code_status = 0;
 	builtin = 0;
 	if (msh->nb_cmd > 1)
 	{

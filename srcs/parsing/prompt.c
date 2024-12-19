@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:24:01 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/18 17:37:49 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/19 09:14:26 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_execute_builtin(t_main *msh, int i)
 	else if (i == UNSET)
 		msh->code_status = ft_unset(msh, msh->env);
 	else if (i == ENV)
-		ft_env(msh->env);
+		ft_env(msh, msh->env);
 	else if (i == EXIT)
 		msh->code_status = ft_exit(msh, NULL);
 }
@@ -87,6 +87,8 @@ void	ft_msh_loop(t_main *msh)
 {
 	while (1)
 	{
+		if (msh->is_env == true)
+			msh->is_signal = false;
 		set_signal();
 		ft_copy_stdin_stdout(msh);
 		ft_init_data_bis(msh);

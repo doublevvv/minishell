@@ -6,7 +6,7 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:25:39 by evlim             #+#    #+#             */
-/*   Updated: 2024/12/17 19:05:49 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/19 09:50:36 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_path_not_found(t_main *msh, int i)
 		{
 			lst_env_clear(&msh->env);
 		}
-		dprintf(2, "NO PATH Command not found\n");
+		//dprintf(2, "NO PATH Command not found\n");
 		msh->code_status = 127;
 		exit(msh->code_status);
 	}
@@ -88,7 +88,7 @@ void	ft_check_path(t_main *msh)
 			{
 				ft_print_cmd_msg_error(msh, 2);
 				ft_free_all(msh, NULL, false);
-				dprintf(2, "NO PATH Permission denied\n");
+				//dprintf(2, "NO PATH Permission denied\n");
 				msh->code_status = 126;
 				exit(msh->code_status);
 			}
@@ -111,7 +111,7 @@ void	ft_check_access(t_main *msh)
 		}
 		else
 		{
-			dprintf(2, "PATH Permission denied\n");
+			//dprintf(2, "PATH Permission denied\n");
 			ft_print_cmd_msg_error(msh, 2);
 			ft_free_all(msh, NULL, true);
 			msh->code_status = 126;
@@ -126,7 +126,7 @@ void	ft_check_access(t_main *msh)
 		{
 			lst_env_clear(&msh->env);
 		}
-		dprintf(2, "PATH Command not found\n");
+		//dprintf(2, "PATH Command not found\n");
 		msh->code_status = 127;
 		exit(msh->code_status);
 	}

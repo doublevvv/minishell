@@ -6,105 +6,74 @@
 /*   By: evlim <evlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 08:22:11 by vlaggoun          #+#    #+#             */
-/*   Updated: 2024/12/13 17:02:53 by evlim            ###   ########.fr       */
+/*   Updated: 2024/12/19 09:04:35 by evlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void	copy_var(char *src, char *dest, size_t size)
+static void	copy_var(char *dest, char *src, size_t size)
 {
 	size_t	j;
 
 	j = 0;
 	while (j < size)
 	{
-		src[j] = dest[j];
+		dest[j] = src[j];
 		j++;
 	}
-	src[j] = 0;
+	dest[j] = 0;
 }
 
-t_env	*get_env(char **environ)
+int	init_env_val(size_t nbr2, size_t nbr3, char **key, char **value)
+{
+	(void)nbr2;
+	(void)nbr3;
+	*key = malloc(nbr3 + 1);
+	if (!*key)
+	{
+		return (0);
+	}
+	*value = malloc(nbr2 + 1);
+	if (!value)
+	{
+		free(*key);
+		return (0);
+	}
+	return (1);
+}
+
+int	init_nbrs(size_t *nbr, size_t *nbr2, char *environ, char **tmp)
+{
+	*nbr = ft_strlen(environ);
+	*tmp = ft_strchr_char(environ, '=');
+	*nbr2 = ft_strlen(*tmp + 1) + 1;
+	return (*nbr - *nbr2);
+}
+
+t_env	*get_env(char **environ, size_t nbr, size_t nbr2, size_t nbr3)
 {
 	int		i;
-	char	*tmp;
-	char	*key;
-	char	*value;
 	t_env	*list;
 	t_env	*new;
-	size_t	nbr;
-	size_t	nbr2;
-	size_t	nbr3;
-	t_env	*tmp_list;
+	t_chars	vars;
 
 	i = -1;
 	list = NULL;
 	while (environ[++i])
 	{
-		nbr = ft_strlen(environ[i]);
-		tmp = ft_strchr_char(environ[i], '=');
-		nbr2 = ft_strlen(tmp + 1) + 1;
-		nbr3 = nbr - nbr2;
-		key = malloc(nbr3 + 1);
-        if (!key)
-		{
-			ft_print_error_message(ALLOCATION_FAILED, 0);
-			exit(EXIT_FAILURE);
-		}
-        // printf("environ[%d] ==%s, nbr == %zu , nbr 2 == %zu, nbr 3 == %zu\n", i, environ[i], nbr, nbr2, nbr3);
-        // size_t j;
-        // for (j = 0; j < nbr3; j++)
-        //     key[j] = environ[i][j];
-        // key[j] = 0;
-        //ft_strncpy(key, environ[i], nbr3);
-        key[nbr3] = 0;//parcque e vraai ne met un \0 qu e si present dans les n octets le ft sans doute pas e soucis
-		copy_var(key, environ[i], nbr3);
-		value = malloc(nbr2 + 1);
-		if (!value)
-		{
-			ft_print_error_message(ALLOCATION_FAILED, 0);
-			free(key);
-			exit(EXIT_FAILURE);
-		}
-        //ft_strncpy(value, tmp + 1, nbr2);
-		copy_var(value, tmp + 1, nbr2);
-        // for (j = 0; j < nbr2; j++)
-        //     value[j] = environ[i][j];
-        // value[j] = 0;
-		new = ft_lstnew_env(key, value);
+		nbr3 = init_nbrs(&nbr, &nbr2, environ[i], &vars.tmp);
+		if (!init_env_val(nbr2, nbr3, &vars.key, &vars.value))
+			ft_error_new(NULL, NULL, &list);
+		vars.key[nbr3] = 0;
+		copy_var(vars.key, environ[i], nbr3);
+		copy_var(vars.value, vars.tmp + 1, nbr2);
+		new = ft_lstnew_env(vars.key, vars.value);
 		if (!new)
-		{
-			ft_print_error_message(ALLOCATION_FAILED, 0);
-			free(key);
-			free(value);
-			exit(EXIT_FAILURE);
-		}
+			ft_error_new(&vars.value, &vars.key, &list);
 		ft_lstadd_back_env(&list, new);
 	}
-	tmp_list = list;
-	while (tmp_list)
-	{
-		if (ft_strcmp("PWD", tmp_list->key) == 0)
-		{
-			free(tmp_list->value);
-			tmp_list->value = getcwd(NULL, 0);
-			break ;
-		}
-		tmp_list = tmp_list->next;
-	}
-	if (tmp_list == NULL)
-	{
-		new = ft_lstnew_env("PWD", getcwd(NULL, 0));
-		if (!new)
-		{
-			ft_print_error_message(ALLOCATION_FAILED, 0);
-			free(key);
-			free(value);
-			exit(EXIT_FAILURE);
-		}
-		ft_lstadd_back_env(&list, new);
-	}
-	//mettr a jour pwd si il existe  sinon le creer
+	if (ft_update_pwd(&list) == 0)
+		ft_error_new(&vars.value, &vars.key, &list);
 	return (list);
 }
